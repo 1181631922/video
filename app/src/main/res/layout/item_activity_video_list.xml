@@ -27,7 +27,6 @@
                 android:id="@+id/videolist_title"
                 android:layout_width="wrap_content"
                 android:layout_height="73dp"
-                android:layout_gravity="center"
                 android:paddingTop="16dp"
                 android:maxLines="2"
                 android:ellipsize="marquee"

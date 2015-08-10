@@ -866,6 +866,7 @@ public class HomePageFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        indexListViewAdapter.update();
     }
 
     @Override

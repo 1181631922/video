@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -127,7 +128,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
     private ViewPager video_playing_viewpager;
     private List<Fragment> fragmentList;
-    private TextView video_recommend, video_evaluate, video_palying_title;
+    private TextView video_recommend, video_evaluate, video_palying_title, video_view_title;
     private int selectedColor, unSelectedColor;
     private Drawable selectedButton, unSelectedButton;
     private ImageView video_recommend_img, video_evaluate_img;
@@ -224,6 +225,11 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         laughSQLiteOpenHelper = new LaughSQLiteOpenHelper(this);
         laughSQLiteOpenHelper.getWritableDatabase();
         gestureDetector = new GestureDetector(this, this);
+
+        Configuration configuration = this.getResources().getConfiguration();
+        int ori = configuration.orientation;
+
+
         initRock();
 
         Intent intent = this.getIntent();
@@ -279,7 +285,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         oks.setSiteUrl("http://video.ktdsp.com/index.php");
         oks.show(this);
     }
-
 
 
     private void initTextView() {
@@ -477,6 +482,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
      * 初始化界面
      */
     private void initUI() {
+        video_view_title = (TextView) findViewById(R.id.video_view_title);
         root1 = (RelativeLayout) findViewById(R.id.root1);
         root1.setOnTouchListener(new onDoubleClick());
         root1.setOnClickListener(this);
@@ -623,7 +629,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             }
         });
         OnSeekBarChangeListener osbc1 = new OnSeekBarChangeListener() {
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // TODO Auto-generated method stub
                 //Log.v(TAG, "progress: " + progress);
                 updateTextViewWithTimeFormat(mCurrPostion, progress);
@@ -677,11 +683,18 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                 showShare();
                 break;
             case R.id.video_playing_back:
-                finish();
-//                fullScreen();
+//                finish();
+                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {// 当屏幕是竖屏时
+                    finish();
+                } else {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    //显示其他组件
+                    video_down_linearlayout.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.video_playing_back_relativelayout:
-                finish();
+//                finish();
                 break;
             case R.id.video_play_collect:
                 Thread loadThread = new Thread(new LoadThread(id_info, "collect"));
@@ -720,6 +733,10 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             //隐藏其他组件的代码
             video_down_linearlayout.setVisibility(View.GONE);
+            video_playing_back_relativelayout.bringToFront();
+            video_view_title.setText(title_info);
+            video_view_title.bringToFront();
+
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -1036,5 +1053,28 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     @Override
     public void onSensorChanged(SensorEvent event) {
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            //显示其他组件
+            video_down_linearlayout.setVisibility(View.VISIBLE);
+        }
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // 点击后变横屏
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 设置当前activity为横屏
+            // 当横屏时 把除了视频以外的都隐藏
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            //隐藏其他组件的代码
+            video_down_linearlayout.setVisibility(View.GONE);
+            video_playing_back_relativelayout.bringToFront();
+            video_view_title.setText(title_info);
+            video_view_title.bringToFront();
+        }
     }
 }

@@ -1,15 +1,19 @@
 package com.cj.dreams.video.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +25,7 @@ import com.cj.dreams.video.bean.LocalRecordBean;
 import com.cj.dreams.video.dbhelper.LaughSQLiteOpenHelper;
 import com.cj.dreams.video.dbhelper.RecordTableCourse;
 import com.cj.dreams.video.dboperate.RecordOperate;
+import com.cj.dreams.video.util.L;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +40,7 @@ public class LocalRecordActivity extends BaseNoActionbarActivity {
     private LaughSQLiteOpenHelper laughSQLiteOpenHelper;
     private RecordOperate recordOperate;
     private SQLiteDatabase db = null;
-    private TextView local_title;
+    private TextView local_title, local_record_empty;
     private String my_title;
     private ImageView local_record_back;
 
@@ -50,7 +55,7 @@ public class LocalRecordActivity extends BaseNoActionbarActivity {
         my_title = intent.getStringExtra("local_title");
         initView();
         if (my_title.equals("播放记录")) {
-            initLocalRecord();
+            initLocalRecord(1);
         }
         if (my_title.equals("我的收藏")) {
             initFavorite();
@@ -58,6 +63,8 @@ public class LocalRecordActivity extends BaseNoActionbarActivity {
     }
 
     private void initView() {
+        local_record_empty = (TextView) findViewById(R.id.local_record_empty);
+        local_record_empty.setOnClickListener(this);
         local_record_back = (ImageView) findViewById(R.id.local_record_back);
         local_record_back.setOnClickListener(this);
         local_title = (TextView) findViewById(R.id.local_title);
@@ -68,7 +75,11 @@ public class LocalRecordActivity extends BaseNoActionbarActivity {
         local_record_listview.setOnItemClickListener(new IndexOnItemClickListener());
     }
 
-    private void initLocalRecord() {
+    private void initLocalRecord(int i) {
+        LocalRecordActivity.this.laughSQLiteOpenHelper = new LaughSQLiteOpenHelper(LocalRecordActivity.this);
+        laughSQLiteOpenHelper.getWritableDatabase();
+        db = this.openOrCreateDatabase("laughvideo.db", Context.MODE_PRIVATE, null);
+        local_record_empty.setVisibility(View.VISIBLE);
         String sql = "SELECT v_id,v_image,v_title,v_url FROM t_record WHERE v_image like ?";
         String args[] = new String[]{"%" + "http" + "%"};
         Cursor cursor = db.rawQuery(sql, args);
@@ -88,6 +99,10 @@ public class LocalRecordActivity extends BaseNoActionbarActivity {
             videoInfoList.add(idmap);
         }
         db.close();
+        if (i == 0) {
+            localRecordBeanList.clear();
+            videoInfoList.clear();
+        }
         localRecordAdapter.update();
     }
 
@@ -138,8 +153,102 @@ public class LocalRecordActivity extends BaseNoActionbarActivity {
             case R.id.local_record_back:
                 finish();
                 break;
+            case R.id.local_record_empty:
+                EmptyRecordDialog dialog = new EmptyRecordDialog(this, R.style.mystyle, R.layout.dialog_exit_main);
+                dialog.show();
+
+                break;
         }
     }
+
+    public class EmptyRecordDialog extends Dialog implements View.OnClickListener {
+        int layoutRes;
+        Context context;
+        private TextView dialog_exit_title;
+        private TextView dialog_exit_detail;
+        private Button confirmBtn;
+        private Button cancelBtn;
+        private LaughSQLiteOpenHelper laughSQLiteOpenHelper;
+        private SQLiteDatabase db = null;
+
+        public EmptyRecordDialog(Context context) {
+            super(context);
+            this.context = context;
+        }
+
+        /**
+         * @param context
+         * @param resLayout
+         */
+        public EmptyRecordDialog(Context context, int resLayout) {
+            super(context);
+            this.context = context;
+            this.layoutRes = resLayout;
+        }
+
+        /**
+         * @param context
+         * @param theme
+         * @param resLayout
+         */
+        public EmptyRecordDialog(Context context, int theme, int resLayout) {
+            super(context, theme);
+            this.context = context;
+            this.layoutRes = resLayout;
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            this.setContentView(layoutRes);
+            this.laughSQLiteOpenHelper = new LaughSQLiteOpenHelper(context);
+            laughSQLiteOpenHelper.getWritableDatabase();
+            db = context.openOrCreateDatabase("laughvideo.db", Context.MODE_PRIVATE, null);
+            dialog_exit_title = (TextView) findViewById(R.id.dialog_exit_title);
+            dialog_exit_title.setText("清空历史");
+            dialog_exit_detail = (TextView) findViewById(R.id.dialog_exit_detail);
+            dialog_exit_detail.setText("确认要清空播放记录？");
+            confirmBtn = (Button) findViewById(R.id.confirm_btn);
+            cancelBtn = (Button) findViewById(R.id.cancel_btn);
+
+            confirmBtn.setTextColor(0xff1E90FF);
+            cancelBtn.setTextColor(0xff1E90FF);
+
+            confirmBtn.setOnClickListener(this);
+            cancelBtn.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.confirm_btn:
+                    db = laughSQLiteOpenHelper.getWritableDatabase();
+                    db.execSQL("DELETE FROM " + "t_record");
+                    db.close();
+                    Message message = Message.obtain();
+                    message.what = 0;
+                    emptyHandler.sendMessage(message);
+                    EmptyRecordDialog.this.dismiss();
+                    break;
+                case R.id.cancel_btn:
+                    EmptyRecordDialog.this.dismiss();
+                    break;
+            }
+        }
+
+    }
+
+    Handler emptyHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    initLocalRecord(0);
+                    break;
+            }
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

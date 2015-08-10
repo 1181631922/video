@@ -114,37 +114,34 @@
 
                     <RelativeLayout
                         android:id="@+id/personal_login_relativelayout"
-                        android:layout_width="fill_parent"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
-                        android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="124dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:paddingTop="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="75dp"
+                            android:gravity="center_horizontal"
                             android:src="@drawable/personal_icon"
-                            android:paddingLeft="13.5dp"
-                            android:id="@+id/imageView" />
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/personal_user_ico" />
 
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="点击登录"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/imageView"
-                            android:layout_toEndOf="@+id/imageView" />
+                            android:text="登陆"
+                            android:gravity="center_horizontal"
+                            android:textColor="@color/black"
+                            android:paddingTop="10dp"
+                            android:layout_below="@+id/personal_user_ico"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
 
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
 
                     </RelativeLayout>
                 </LinearLayout>

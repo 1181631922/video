@@ -1,5 +1,6 @@
 package com.cj.dreams.video.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.cj.dreams.video.R;
+import com.cj.dreams.video.activity.LoginActivity;
 import com.cj.dreams.video.adapter.EvaluateAdapter;
 import com.cj.dreams.video.bean.EvaluateUserBean;
 import com.cj.dreams.video.bean.UserInfoBean;
@@ -171,7 +173,11 @@ public class EvaluateFragment extends BaseFragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    T.showShort(getActivity(), "发送失败,请先登录");
+                    /**
+                     * 不登陆不允许评论
+                     */
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
 
                     break;
                 case 1:
@@ -307,7 +313,6 @@ public class EvaluateFragment extends BaseFragment {
                         MinId = periodicalinfo.getString("comment_id");
                         L.d("最小的id", MinId);
                     }
-//                    MinId = periodicalinfo.getString("id");
                     if (Integer.parseInt(MaxId) <= Integer.parseInt(periodicalinfo.getString("comment_id"))) {
                         MaxId = periodicalinfo.getString("comment_id");
                         L.d("最大的id", MaxId);
@@ -315,8 +320,6 @@ public class EvaluateFragment extends BaseFragment {
                     L.d("最小的comment_id", MinId);
                     evaluateUserBean.setEvaluateUser(periodicalinfo.getString("user_id"));
                     evaluateUserBean.setEvaluateTime(periodicalinfo.getString("comment_date"));
-//                    EncryptUtil.encryptBASE64("password")
-//                    evaluateUserBean.setEvaluateDetail(periodicalinfo.getString("comment_content"));
                     //base64解密
                     evaluateUserBean.setEvaluateDetail(EncryptUtil.decryptBASE64(periodicalinfo.getString("comment_content")));
                     evaluateUserBean.setEvaluateGoodTimes(periodicalinfo.getString("comment_praise_number"));

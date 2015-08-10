@@ -41,10 +41,17 @@ public class RecordOperate {
         this.db.close();
     }
 
-    //删除数据库
+    //删除数据库单个
     public void delete(String v_id) {
         String whereClause = "v_id=?";
         String whereArgs[] = new String[]{String.valueOf(v_id)};
+        this.db.delete(TABLENAME, whereClause, whereArgs);
+        this.db.close();
+    }
+
+    public void deleteUrl(String v_url) {
+        String whereClause = "v_url=?";
+        String whereArgs[] = new String[]{String.valueOf(v_url)};
         this.db.delete(TABLENAME, whereClause, whereArgs);
         this.db.close();
     }

@@ -236,6 +236,7 @@ public class RankingFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        videoListAdapter.update();
     }
 
     @Override
