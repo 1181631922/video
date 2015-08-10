@@ -1,0 +1,105 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#dcdce0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:paddingLeft="10.5dp"
+        android:paddingRight="10.5dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="45dp">
+
+            <ImageView
+                android:id="@+id/evaluate_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/evaluate_icon" />
+
+            <LinearLayout
+                android:id="@+id/evaluate_input_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/evaluate_input_background"
+                android:layout_toRightOf="@+id/evaluate_icon"
+                android:layout_toLeftOf="@+id/evaluate_ib"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:paddingLeft="1dp"
+                    android:src="@drawable/evaluate_input_icon" />
+
+                <EditText
+                    android:id="@+id/evaluate_input"
+                    android:background="@android:color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="我来说几句" />
+            </LinearLayout>
+
+
+            <ImageButton
+                android:id="@+id/evaluate_ib"
+                android:layout_width="51dp"
+                android:layout_height="25dp"
+                android:background="@drawable/evaluate_send"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#dcdce0" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <com.cj.dreams.video.layout.PullToRefreshLayout
+            android:id="@+id/refresh_evaluate_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/refresh_head" />
+
+            <com.cj.dreams.video.view.PullableListView
+                android:id="@+id/evaluate_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:cacheColorHint="#00000000"
+                android:dividerHeight="1px" />
+
+
+            <include layout="@layout/load_more" />
+
+        </com.cj.dreams.video.layout.PullToRefreshLayout>
+    </LinearLayout>
+
+</LinearLayout>

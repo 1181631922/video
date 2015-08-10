@@ -1,0 +1,522 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/upmost"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:background="#eb2a35"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="38dp"
+                android:layout_gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="我的"
+                    android:textColor="@color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/textView" />
+
+                <TextView
+                    android:id="@+id/personal_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="退出登录"
+                    android:textColor="@color/white"
+                    android:layout_alignBottom="@+id/textView"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="10.5dp"
+                    android:visibility="gone"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:background="#dcdce0"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/personal_logined_linearlayout"
+                    android:layout_width="wrap_content"
+                    android:paddingTop="1.5dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_logined_relativelayout"
+                        android:background="@drawable/personal_item_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="124dp">
+
+                        <ImageView
+                            android:paddingTop="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="75dp"
+                            android:gravity="center_horizontal"
+                            android:src="@drawable/personal_icon"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/personal_user_icon" />
+
+                        <TextView
+                            android:id="@+id/personal_user_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="登陆者名字"
+                            android:gravity="center_horizontal"
+                            android:textColor="@color/black"
+                            android:paddingTop="10dp"
+                            android:layout_below="@+id/personal_user_icon"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/personal_login_linearlayout"
+                    android:layout_width="fill_parent"
+                    android:paddingTop="1.5dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:paddingBottom="6.5dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_login_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_icon"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/imageView" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="点击登录"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/imageView"
+                            android:layout_toEndOf="@+id/imageView" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/personal_setting_linearlayout"
+                    android:layout_width="fill_parent"
+                    android:paddingTop="1.5dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_setting_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_setting"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/personal_setting_icon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设置"
+                            android:paddingLeft="4dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/personal_setting_icon"
+                            android:layout_toEndOf="@+id/personal_setting_icon" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:paddingTop="1.5dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_history_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_history"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/personal_history_icon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="播放记录"
+                            android:paddingLeft="4dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/personal_history_icon"
+                            android:layout_toEndOf="@+id/personal_history_icon" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_favorate_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_favorite"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/personal_favorite_icon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="我的收藏"
+                            android:paddingLeft="4dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/personal_favorite_icon"
+                            android:layout_toEndOf="@+id/personal_favorite_icon" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:paddingTop="1.5dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_empty_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_empty"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/personal_empty_icon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="清空缓存"
+                            android:paddingLeft="4dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/personal_empty_icon"
+                            android:layout_toEndOf="@+id/personal_empty_icon" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:paddingTop="1.5dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_grade_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_grade"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/personal_grade_icon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="打个分"
+                            android:paddingLeft="4dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/personal_grade_icon"
+                            android:layout_toEndOf="@+id/personal_grade_icon" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:paddingTop="1.5dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_feedback_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_feedback"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/personal_feedback_icon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="用户反馈"
+                            android:paddingLeft="4dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/personal_feedback_icon"
+                            android:layout_toEndOf="@+id/personal_feedback_icon" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:paddingTop="1.5dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_about_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_about"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/personal_about_icon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="关于我们"
+                            android:paddingLeft="4dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/personal_about_icon"
+                            android:layout_toEndOf="@+id/personal_about_icon" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="10.5dp"
+                    android:paddingRight="10.5dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/personal_declare_relativelayout"
+                        android:layout_width="fill_parent"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_height="43dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/personal_declare"
+                            android:paddingLeft="13.5dp"
+                            android:id="@+id/personal_declare_icon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="免责声明"
+                            android:paddingLeft="4dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/personal_declare_icon"
+                            android:layout_toEndOf="@+id/personal_declare_icon" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jt"
+                            android:paddingRight="13.5dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/custom_test"
+                    android:text="一般测试用的按钮"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</RelativeLayout>

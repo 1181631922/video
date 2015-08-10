@@ -1,0 +1,56 @@
+php的主目录网址http://video.ktdsp.com
+首页php是：/get_home_videoInfo.php
+post消息：上传参数名：devicetype=>android
+updatetype分为3种：update_home（第一次加载视频信息时调用），update_home_2down（向上滑动到最后的时候，调用加载以往视频），update_home_2top（在顶部向下滑动，重新加载视频信息）
+periodicalid：update_home时传0  update_home_2down时传最小的期刊id  update_home_2top时传最大期刊ID
+
+1.根路径
+    http://video.ktdsp.com/
+2.获取首页数据（不包括下拉刷新，上拉加载）
+    get_home_videoInfo.php
+    devicetype=android，updatetype＝update_home， periodicalid＝0
+    ---------------------------------测试团队---------------------------------------
+    邯郸团队测试包测试固定值
+    map.put("testvideo","1");
+3.得到播放网址后需要解析真实播放地址
+    video_api/url_to_m3u8.php
+    url="视频地址"
+4.下拉刷新，上拉加载更多
+    get_home_videoInfo.php
+  上拉加载
+    devicetype=android，updatetype＝update_home_2down， periodicalid＝｛最小id｝（期刊id）
+  下拉刷新
+    devicetype=android，updatetype＝update_home_2top， periodicalid＝｛最大id｝（期刊id）
+5.首页单个item点击更多
+    get_more_videoInfo.php
+    type = android，periodicalid ={id}（对应期刊id），videoid = {0}(首次为0);
+    上拉加载
+    type = android，periodicalid ={id}（对应期刊id），videoid = {最小id}(首次为0);
+    下拉刷新
+    type = android，periodicalid ={id}（对应期刊id），videoid = {最大id}(首次为0);
+6.获取播放前一百视频
+    playtop100.php
+7.播放页面接口
+    1>推荐接口
+    recommended_video.php
+    devicetype=android
+    2>评论接口
+    get_user_comment.php
+    videoid={传过来的video的id}，updatetype={更新数据,和首页差不多}update_comment（第一次，无下拉刷新），update_comment_2down(上拉加载)，commentid={id}最小的评论id,devicetype=android
+8.点赞，收藏，播放接口
+    update_videoInfo.php
+    1>点赞接口
+    videoid={视频的id}，type =｛praise｝
+    2>收藏接口
+    videoid={视频的id}，type =｛collect｝
+    3>播放接口
+    videoid={视频的id}，type =｛play｝
+9.发送相应视频的评价
+    user_comment.php
+    videoid={视频id},userid={用户的id}， content={发送评价内容}
+10.分享
+    /share.php?id=
+    id={视频id}
+11.登录向服务器传数据接口
+    set_userinfo.php
+    userid={用户的id},userimage={用户头像，16进制},username={用户的姓名}
