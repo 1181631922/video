@@ -128,7 +128,7 @@
                             android:layout_alignParentTop="true"
                             android:gravity="center_horizontal"
                             android:paddingTop="20dp"
-                            android:src="@drawable/personal_icon" />
+                            android:src="@drawable/tx_dl" />
 
 
                         <TextView

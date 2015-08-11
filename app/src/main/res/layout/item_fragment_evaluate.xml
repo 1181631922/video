@@ -9,11 +9,11 @@
         android:layout_height="82dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.cj.dreams.video.view.CircleImageView
             android:id="@+id/evaluate_icon"
-            android:layout_width="71dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="61dp"
             android:layout_height="61dp"
-            android:paddingLeft="10dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/evaluate_icon" />
 

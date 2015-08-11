@@ -1,5 +1,6 @@
 package com.cj.dreams.video.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,9 +10,12 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.cj.dreams.video.R;
@@ -71,13 +75,14 @@ public class EvaluateFragment extends BaseFragment {
     private PullToRefreshLayout ptrl;
     private ListView listView;
     private Handler handler1, handler2;
-    private ImageButton evaluate_ib;
-    private EditText evaluate_input;
+    private EditText evaluate_input, evaluate_send_content;
     private String userInfoId, userInfoName, userInfoImage;
     private LaughSQLiteOpenHelper laughSQLiteOpenHelper;
     private UserTableCourse userTableCourse;
     private UserOperate userOperate;
     private ImageView evaluate_icon;
+    private Button evalaute_send_btn;
+    private LinearLayout evaluate_input_line, evaluate_input_layout;
 //    private OnFragmentInteractionListener mListener;
 
     /**
@@ -182,7 +187,7 @@ public class EvaluateFragment extends BaseFragment {
                     break;
                 case 1:
                     T.showShort(getActivity(), "发送成功！");
-                    evaluateAdapter.update();
+
                     break;
             }
         }
@@ -196,12 +201,15 @@ public class EvaluateFragment extends BaseFragment {
     }
 
     private void initView() {
+        evaluate_input_layout = (LinearLayout) getActivity().findViewById(R.id.evaluate_input_layout);
+        evaluate_input_line = (LinearLayout) getActivity().findViewById(R.id.evaluate_input_line);
+        evaluate_input_line.setOnClickListener(this);
+        evaluate_send_content = (EditText) getActivity().findViewById(R.id.evaluate_send_content);
+        evalaute_send_btn = (Button) getActivity().findViewById(R.id.evalaute_send_btn);
+        evalaute_send_btn.setOnClickListener(this);
         evaluate_icon = (ImageView) getActivity().findViewById(R.id.evaluate_icon);
         SingleImageTaskUtil imageTask = new SingleImageTaskUtil(evaluate_icon);
         imageTask.execute((String) SP.get(getActivity(), SP.USER_DATA_USERICONURL, ""));
-        evaluate_ib = (ImageButton) getActivity().findViewById(R.id.evaluate_ib);
-        evaluate_ib.setOnClickListener(this);
-        evaluate_input = (EditText) getActivity().findViewById(R.id.evaluate_input);
         ptrl = ((PullToRefreshLayout) getActivity().findViewById(R.id.refresh_evaluate_view));
         ptrl.setOnRefreshListener(new MyListener());
         listView = (ListView) getActivity().findViewById(R.id.evaluate_listview);
@@ -216,12 +224,23 @@ public class EvaluateFragment extends BaseFragment {
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.evaluate_ib:
-                UserInput = evaluate_input.getText().toString().trim();
+            case R.id.evaluate_input_line:
+                evaluate_input_layout.setVisibility(View.VISIBLE);
+                evaluate_send_content.setFocusableInTouchMode(true);
+                evaluate_send_content.requestFocus();
+                InputMethodManager inputManager = (InputMethodManager) evaluate_send_content.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(evaluate_send_content, 0);
+                break;
+            case R.id.evalaute_send_btn:
+                UserInput = evaluate_send_content.getText().toString().trim();
                 L.d("获取用户输入的数据", UserInput);
                 L.d(videoid, EncryptUtil.encryptBASE64(UserInput));
-                Thread postThread = new Thread(new PostThread(videoid, EncryptUtil.encryptBASE64(UserInput)));
-                postThread.start();
+                evaluate_send_content.getEditableText().clear();
+                if (UserInput != null && !UserInput.equals("")) {
+                    Thread postThread = new Thread(new PostThread(videoid, EncryptUtil.encryptBASE64(UserInput)));
+                    postThread.start();
+                }
+                evaluate_input_layout.setVisibility(View.GONE);
                 break;
         }
     }

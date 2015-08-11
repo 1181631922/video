@@ -256,6 +256,9 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.personal_exit:
                 SP.put(getActivity(), SP.USER_DATA_LOGINED, false);
+                SP.remove(getActivity(), SP.USER_DATA_USERNAME);
+                SP.remove(getActivity(), SP.USER_DATA_USERID);
+                SP.remove(getActivity(), SP.USER_DATA_USERICONURL);
                 personal_login_linearlayout.setVisibility(View.VISIBLE);
                 personal_exit.setVisibility(View.GONE);
                 personal_logined_linearlayout.setVisibility(View.GONE);

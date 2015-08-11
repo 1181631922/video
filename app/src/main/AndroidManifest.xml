@@ -198,10 +198,10 @@
             android:name=".activity.VideoViewPlayingActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:label="PlayingActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>

@@ -18,7 +18,7 @@ import com.cj.dreams.video.util.SP;
 import com.cj.dreams.video.util.T;
 
 public class AboutUsActivity extends BaseCustomActivity {
-    private TextView about_wechat_text, about_email_text, about_test_text;
+    private TextView about_wechat_text, about_email_text, about_test_text, about_us_version;
     private String ourEmail, ourChat;
     private LinearLayout about_test_linearlayout;
 
@@ -34,6 +34,8 @@ public class AboutUsActivity extends BaseCustomActivity {
 
     private void initView() {
         about_test_linearlayout = (LinearLayout) findViewById(R.id.about_test_linearlayout);
+        about_us_version = (TextView) findViewById(R.id.about_us_version);
+        about_us_version.setText("爆笑女神 V" + appVersion);
         about_wechat_text = (TextView) findViewById(R.id.about_wechat_text);
         about_wechat_text.setOnClickListener(this);
         about_email_text = (TextView) findViewById(R.id.about_email_text);

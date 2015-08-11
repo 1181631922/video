@@ -8,77 +8,120 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cj.dreams.video.activity.AboutUsActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/red"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:src="@drawable/app_start_icon" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#dcdce0"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo_wechat" />
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:paddingTop="20dp"
+                android:src="@drawable/about_us_icon" />
 
             <TextView
-                android:id="@+id/about_wechat_text"
+                android:id="@+id/about_us_version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="爆笑女神公众号"
-                android:textSize="20sp" />
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:paddingBottom="28dp"
+                android:paddingTop="13dp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/personal_item_background"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="30dp"
+                        android:src="@drawable/about_us_wechat" />
+
+                    <TextView
+                        android:id="@+id/about_wechat_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="爆笑女神"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/personal_item_background"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="30dp"
+                        android:src="@drawable/about_us_email" />
+
+                    <TextView
+                        android:id="@+id/about_email_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="iBoXiao"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/about_test_linearlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logo_tumblr" />
+
+                <TextView
+                    android:id="@+id/about_test_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="正常浏览模式（团队测试版仅供测试）"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal">
+    </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logo_email" />
-
-            <TextView
-                android:id="@+id/about_email_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="爆笑女神官方邮箱"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/about_test_linearlayout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logo_tumblr" />
-
-            <TextView
-                android:id="@+id/about_test_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="正常浏览模式（团队测试版仅供测试）"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-
+    <TextView
+        android:id="@+id/about_us_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:textSize="12dp"
+        android:text="Copyright @ 2015 SanQiRen All rights Reserved" />
 </RelativeLayout>

@@ -2,23 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="vertical">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="#dcdce0" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:orientation="vertical"
         android:paddingLeft="10.5dp"
-        android:paddingRight="10.5dp"
-        android:orientation="vertical">
+        android:paddingRight="10.5dp">
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -35,13 +36,12 @@
                 android:id="@+id/evaluate_input_line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@drawable/evaluate_input_background"
                 android:layout_toRightOf="@+id/evaluate_icon"
-                android:layout_toLeftOf="@+id/evaluate_ib"
+                android:background="@drawable/evaluate_input_background"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -50,23 +50,15 @@
                     android:paddingLeft="1dp"
                     android:src="@drawable/evaluate_input_icon" />
 
-                <EditText
+                <TextView
                     android:id="@+id/evaluate_input"
-                    android:background="@android:color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:hint="我来说几句" />
             </LinearLayout>
 
 
-            <ImageButton
-                android:id="@+id/evaluate_ib"
-                android:layout_width="51dp"
-                android:layout_height="25dp"
-                android:background="@drawable/evaluate_send"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -76,30 +68,78 @@
         android:layout_height="4dp"
         android:background="#dcdce0" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <com.cj.dreams.video.layout.PullToRefreshLayout
-            android:id="@+id/refresh_evaluate_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-            <include layout="@layout/refresh_head" />
+            <com.cj.dreams.video.layout.PullToRefreshLayout
+                android:id="@+id/refresh_evaluate_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <com.cj.dreams.video.view.PullableListView
-                android:id="@+id/evaluate_listview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@color/white"
-                android:cacheColorHint="#00000000"
-                android:dividerHeight="1px" />
+                <include layout="@layout/refresh_head" />
+
+                <com.cj.dreams.video.view.PullableListView
+                    android:id="@+id/evaluate_listview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/white"
+                    android:cacheColorHint="#00000000"
+                    android:dividerHeight="1px" />
 
 
-            <include layout="@layout/load_more" />
+                <include layout="@layout/load_more" />
 
-        </com.cj.dreams.video.layout.PullToRefreshLayout>
-    </LinearLayout>
+            </com.cj.dreams.video.layout.PullToRefreshLayout>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/evaluate_input_layout"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/umeng_fb_item_line_height"
+                android:background="@color/umeng_fb_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp">
+
+                <Button
+                    android:id="@+id/evalaute_send_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/umeng_fb_send"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/umeng_fb_item_content_size" />
+
+                <EditText
+                    android:id="@+id/evaluate_send_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/evalaute_send_btn"
+                    android:layout_toStartOf="@id/evalaute_send_btn"
+                    android:hint="@string/umeng_fb_feedback"
+                    android:textSize="@dimen/umeng_fb_item_content_size" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
