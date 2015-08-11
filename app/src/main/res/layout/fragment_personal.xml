@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white">
@@ -25,27 +26,27 @@
 
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:text="我的"
                     android:textColor="@color/white"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/textView" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/personal_exit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:text="退出登录"
-                    android:textColor="@color/white"
                     android:layout_alignBottom="@+id/textView"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:paddingRight="10.5dp"
-                    android:visibility="gone"
-                    android:layout_alignParentEnd="true" />
+                    android:text="退出登录"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -53,8 +54,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:background="#dcdce0"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#dcdce0">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -64,40 +65,40 @@
                 <LinearLayout
                     android:id="@+id/personal_logined_linearlayout"
                     android:layout_width="wrap_content"
-                    android:paddingTop="1.5dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="1.5dp"
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:id="@+id/personal_logined_relativelayout"
-                        android:background="@drawable/personal_item_background"
                         android:layout_width="match_parent"
-                        android:layout_height="124dp">
+                        android:layout_height="124dp"
+                        android:background="@drawable/personal_item_background"
+                        android:paddingTop="10dp">
 
-                        <ImageView
-                            android:paddingTop="20dp"
-                            android:layout_width="match_parent"
+                        <com.cj.dreams.video.view.CircleImageView
+
+                            android:id="@+id/personal_user_icon"
+                            android:layout_width="75dp"
                             android:layout_height="75dp"
-                            android:gravity="center_horizontal"
-                            android:src="@drawable/personal_icon"
                             android:layout_alignParentTop="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:id="@+id/personal_user_icon" />
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:src="@drawable/personal_icon" />
 
                         <TextView
                             android:id="@+id/personal_user_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="登陆者名字"
-                            android:gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:paddingTop="10dp"
-                            android:layout_below="@+id/personal_user_icon"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/personal_user_icon"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="10dp"
+                            android:text="登陆者名字"
+                            android:textColor="@color/black" />
                     </RelativeLayout>
 
 
@@ -106,41 +107,40 @@
                 <LinearLayout
                     android:id="@+id/personal_login_linearlayout"
                     android:layout_width="fill_parent"
-                    android:paddingTop="1.5dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="6.5dp"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:paddingBottom="6.5dp"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="1.5dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_login_relativelayout"
-                        android:background="@drawable/personal_item_background"
                         android:layout_width="match_parent"
-                        android:layout_height="124dp">
+                        android:layout_height="124dp"
+                        android:background="@drawable/personal_item_background">
 
                         <ImageView
-                            android:paddingTop="20dp"
+                            android:id="@+id/personal_user_ico"
                             android:layout_width="match_parent"
                             android:layout_height="75dp"
-                            android:gravity="center_horizontal"
-                            android:src="@drawable/personal_icon"
-                            android:layout_alignParentTop="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
-                            android:id="@+id/personal_user_ico" />
+                            android:layout_alignParentTop="true"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="20dp"
+                            android:src="@drawable/personal_icon" />
 
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="登陆"
-                            android:gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:paddingTop="10dp"
-                            android:layout_below="@+id/personal_user_ico"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/personal_user_ico"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="10dp"
+                            android:text="登陆"
+                            android:textColor="@color/black" />
 
 
                     </RelativeLayout>
@@ -149,370 +149,370 @@
                 <LinearLayout
                     android:id="@+id/personal_setting_linearlayout"
                     android:layout_width="fill_parent"
-                    android:paddingTop="1.5dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="1.5dp"
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:id="@+id/personal_setting_relativelayout"
                         android:layout_width="fill_parent"
+                        android:layout_height="43dp"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
                         android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:paddingTop="9dp">
 
                         <ImageView
+                            android:id="@+id/personal_setting_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/personal_setting"
                             android:paddingLeft="13.5dp"
-                            android:id="@+id/personal_setting_icon" />
+                            android:src="@drawable/personal_setting" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="设置"
-                            android:paddingLeft="4dp"
                             android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/personal_setting_icon"
                             android:layout_toRightOf="@+id/personal_setting_icon"
-                            android:layout_toEndOf="@+id/personal_setting_icon" />
+                            android:paddingLeft="4dp"
+                            android:text="设置" />
 
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentTop="true"
+                            android:paddingRight="13.5dp"
+                            android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:paddingTop="1.5dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="1.5dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_history_relativelayout"
                         android:layout_width="fill_parent"
+                        android:layout_height="43dp"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
                         android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:paddingTop="9dp">
 
                         <ImageView
+                            android:id="@+id/personal_history_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/personal_history"
                             android:paddingLeft="13.5dp"
-                            android:id="@+id/personal_history_icon" />
+                            android:src="@drawable/personal_history" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="播放记录"
-                            android:paddingLeft="4dp"
                             android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/personal_history_icon"
                             android:layout_toRightOf="@+id/personal_history_icon"
-                            android:layout_toEndOf="@+id/personal_history_icon" />
+                            android:paddingLeft="4dp"
+                            android:text="播放记录" />
 
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentTop="true"
+                            android:paddingRight="13.5dp"
+                            android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:paddingTop="8dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="8dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_favorate_relativelayout"
                         android:layout_width="fill_parent"
+                        android:layout_height="43dp"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
                         android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:paddingTop="9dp">
 
                         <ImageView
+                            android:id="@+id/personal_favorite_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/personal_favorite"
                             android:paddingLeft="13.5dp"
-                            android:id="@+id/personal_favorite_icon" />
+                            android:src="@drawable/personal_favorite" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="我的收藏"
-                            android:paddingLeft="4dp"
                             android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/personal_favorite_icon"
                             android:layout_toRightOf="@+id/personal_favorite_icon"
-                            android:layout_toEndOf="@+id/personal_favorite_icon" />
+                            android:paddingLeft="4dp"
+                            android:text="我的收藏" />
 
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentTop="true"
+                            android:paddingRight="13.5dp"
+                            android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:paddingTop="1.5dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="1.5dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_empty_relativelayout"
                         android:layout_width="fill_parent"
+                        android:layout_height="43dp"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
                         android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:paddingTop="9dp">
 
                         <ImageView
+                            android:id="@+id/personal_empty_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/personal_empty"
                             android:paddingLeft="13.5dp"
-                            android:id="@+id/personal_empty_icon" />
+                            android:src="@drawable/personal_empty" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="清空缓存"
-                            android:paddingLeft="4dp"
                             android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/personal_empty_icon"
                             android:layout_toRightOf="@+id/personal_empty_icon"
-                            android:layout_toEndOf="@+id/personal_empty_icon" />
+                            android:paddingLeft="4dp"
+                            android:text="清空缓存" />
 
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentTop="true"
+                            android:paddingRight="13.5dp"
+                            android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:paddingTop="1.5dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="1.5dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_grade_relativelayout"
                         android:layout_width="fill_parent"
+                        android:layout_height="43dp"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
                         android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:paddingTop="9dp">
 
                         <ImageView
+                            android:id="@+id/personal_grade_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/personal_grade"
                             android:paddingLeft="13.5dp"
-                            android:id="@+id/personal_grade_icon" />
+                            android:src="@drawable/personal_grade" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="打个分"
-                            android:paddingLeft="4dp"
                             android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/personal_grade_icon"
                             android:layout_toRightOf="@+id/personal_grade_icon"
-                            android:layout_toEndOf="@+id/personal_grade_icon" />
+                            android:paddingLeft="4dp"
+                            android:text="打个分" />
 
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentTop="true"
+                            android:paddingRight="13.5dp"
+                            android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:paddingTop="1.5dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="1.5dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_feedback_relativelayout"
                         android:layout_width="fill_parent"
+                        android:layout_height="43dp"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
                         android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:paddingTop="9dp">
 
                         <ImageView
+                            android:id="@+id/personal_feedback_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/personal_feedback"
                             android:paddingLeft="13.5dp"
-                            android:id="@+id/personal_feedback_icon" />
+                            android:src="@drawable/personal_feedback" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="用户反馈"
-                            android:paddingLeft="4dp"
                             android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/personal_feedback_icon"
                             android:layout_toRightOf="@+id/personal_feedback_icon"
-                            android:layout_toEndOf="@+id/personal_feedback_icon" />
+                            android:paddingLeft="4dp"
+                            android:text="用户反馈" />
 
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentTop="true"
+                            android:paddingRight="13.5dp"
+                            android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:paddingTop="1.5dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="1.5dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_about_relativelayout"
                         android:layout_width="fill_parent"
+                        android:layout_height="43dp"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
                         android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:paddingTop="9dp">
 
                         <ImageView
+                            android:id="@+id/personal_about_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/personal_about"
                             android:paddingLeft="13.5dp"
-                            android:id="@+id/personal_about_icon" />
+                            android:src="@drawable/personal_about" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="关于我们"
-                            android:paddingLeft="4dp"
                             android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/personal_about_icon"
                             android:layout_toRightOf="@+id/personal_about_icon"
-                            android:layout_toEndOf="@+id/personal_about_icon" />
+                            android:paddingLeft="4dp"
+                            android:text="关于我们" />
 
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentTop="true"
+                            android:paddingRight="13.5dp"
+                            android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:paddingTop="8dp"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="10.5dp"
                     android:paddingRight="10.5dp"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="8dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_declare_relativelayout"
                         android:layout_width="fill_parent"
+                        android:layout_height="43dp"
                         android:background="@drawable/personal_item_background"
-                        android:paddingTop="9dp"
                         android:paddingBottom="9dp"
-                        android:layout_height="43dp">
+                        android:paddingTop="9dp">
 
                         <ImageView
+                            android:id="@+id/personal_declare_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/personal_declare"
                             android:paddingLeft="13.5dp"
-                            android:id="@+id/personal_declare_icon" />
+                            android:src="@drawable/personal_declare" />
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="免责声明"
-                            android:paddingLeft="4dp"
                             android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/personal_declare_icon"
                             android:layout_toRightOf="@+id/personal_declare_icon"
-                            android:layout_toEndOf="@+id/personal_declare_icon" />
+                            android:paddingLeft="4dp"
+                            android:text="免责声明" />
 
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_jt"
-                            android:paddingRight="13.5dp"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:layout_alignParentTop="true"
+                            android:paddingRight="13.5dp"
+                            android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/custom_test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/custom_test"
-                    android:text="一般测试用的按钮"/>
+                    android:text="一般测试用的按钮" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

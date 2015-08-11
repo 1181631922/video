@@ -293,8 +293,10 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                  * agent.startFeedbackActivity();
                  * 重新自定义的反馈界面
                  */
-                Intent intent6 = new Intent(getActivity(), FeedBackActivity.class);
-                startActivity(intent6);
+                FeedbackAgent agent = new FeedbackAgent(getActivity());
+                agent.startFeedbackActivity();
+//                Intent intent6 = new Intent(getActivity(), FeedBackActivity.class);
+//                startActivity(intent6);
                 break;
             case R.id.personal_about_relativelayout:
                 Intent intent4 = new Intent(getActivity(), AboutUsActivity.class);

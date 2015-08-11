@@ -24,7 +24,7 @@
             android:layout_width="fill_parent"
             android:layout_height="45dp">
 
-            <ImageView
+            <com.cj.dreams.video.view.CircleImageView
                 android:id="@+id/evaluate_icon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
