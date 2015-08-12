@@ -86,7 +86,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:gravity="center_horizontal"
-                            android:src="@drawable/personal_icon" />
+                            android:src="@drawable/tx_dl" />
 
                         <TextView
                             android:id="@+id/personal_user_name"

@@ -60,6 +60,8 @@ import com.cj.dreams.video.fragment.RecommendFragment;
 import com.cj.dreams.video.util.CommonUtil;
 import com.cj.dreams.video.util.L;
 import com.cj.dreams.video.util.PostUtil;
+import com.cj.dreams.video.util.SP;
+import com.cj.dreams.video.util.SingleImageTaskUtil;
 import com.cj.dreams.video.util.T;
 
 import org.json.JSONException;
@@ -140,6 +142,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private LaughSQLiteOpenHelper laughSQLiteOpenHelper;
     private CollectOperate collectOperate;
     private GoodOperate goodOperate;
+    private String type;
 
     private GestureDetector gestureDetector;
 
@@ -240,7 +243,9 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         title_info = intent.getStringExtra("title_info");
         good_info = intent.getStringExtra("good_info");
         collect_info = intent.getStringExtra("collect_info");
-
+        if (intent.getStringExtra("type_info") != null) {
+            type = intent.getStringExtra("type_info");
+        }
         L.d("得到的图片的网址", image_info);
 
         mIsHwDecode = getIntent().getBooleanExtra("isHW", false);
@@ -527,6 +532,14 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         mDuration = (TextView) findViewById(R.id.time_total);
         mCurrPostion = (TextView) findViewById(R.id.time_current);
         time_rest = (TextView) findViewById(R.id.time_rest);
+
+        if (type!=null&&type.equals("notnone")) {
+            video_play_collect.setVisibility(View.GONE);
+            video_play_collect_text.setVisibility(View.GONE);
+            video_play_good.setVisibility(View.GONE);
+            video_play_good_text.setVisibility(View.GONE);
+        }
+
         registerCallbackForControl();
         /**
          * 设置ak及sk的前16位
@@ -742,6 +755,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             //显示其他组件
             video_down_linearlayout.setVisibility(View.VISIBLE);
+            video_playing_back_relativelayout.setVisibility(View.GONE);
+            video_view_title.setVisibility(View.GONE);
         }
     }
 
@@ -1058,15 +1073,17 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             //显示其他组件
             video_down_linearlayout.setVisibility(View.VISIBLE);
+            video_playing_back_relativelayout.setVisibility(View.GONE);
+            video_view_title.setVisibility(View.GONE);
         }
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // 点击后变横屏
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 设置当前activity为横屏
             // 当横屏时 把除了视频以外的都隐藏
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

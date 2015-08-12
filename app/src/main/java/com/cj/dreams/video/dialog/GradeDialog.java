@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.activity.MainActivity;
@@ -23,10 +24,12 @@ import com.cj.dreams.video.activity.MainActivity;
 public class GradeDialog extends Dialog implements View.OnClickListener {
     int layoutRes;
     Context context;
+    private RelativeLayout dialog_out;
     private Button main_tab_retroaction;
     private Button main_tab_bottom;
     private Button main_tab_exit;
     private Button main_tab_cancel;
+
 
     public GradeDialog(Context context) {
         super(context);
@@ -59,7 +62,7 @@ public class GradeDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(layoutRes);
-
+        dialog_out = (RelativeLayout) findViewById(R.id.dialog_out);
         main_tab_retroaction = (Button) findViewById(R.id.main_tab_retroaction);
         main_tab_bottom = (Button) findViewById(R.id.main_tab_bottom);
         main_tab_exit = (Button) findViewById(R.id.main_tab_exit);
@@ -70,6 +73,7 @@ public class GradeDialog extends Dialog implements View.OnClickListener {
         main_tab_exit.setTextColor(0xff1E90FF);
         main_tab_cancel.setTextColor(0xff1E90FF);
 
+        dialog_out.setOnClickListener(this);
         main_tab_retroaction.setOnClickListener(this);
         main_tab_bottom.setOnClickListener(this);
         main_tab_exit.setOnClickListener(this);
@@ -85,7 +89,7 @@ public class GradeDialog extends Dialog implements View.OnClickListener {
         // 设置显示位置
         this.onWindowAttributesChanged(wl);
         // 设置点击外围解散
-        this.setCanceledOnTouchOutside(true);
+        GradeDialog.this.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -101,6 +105,9 @@ public class GradeDialog extends Dialog implements View.OnClickListener {
                 GradeDialog.this.dismiss();
                 break;
             case R.id.main_tab_cancel:
+                GradeDialog.this.dismiss();
+                break;
+            case R.id.dialog_out:
                 GradeDialog.this.dismiss();
                 break;
         }

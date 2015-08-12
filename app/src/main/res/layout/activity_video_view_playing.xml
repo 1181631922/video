@@ -6,9 +6,10 @@
 
     <RelativeLayout
         android:id="@+id/root1"
-        android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -23,24 +24,25 @@
             <RelativeLayout
                 android:id="@+id/video_playing_back_relativelayout"
                 android:layout_width="fill_parent"
-                android:background="#20000000"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:background="#20000000">
 
                 <ImageButton
                     android:id="@+id/video_playing_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#00000000"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
+                    android:background="#00000000"
                     android:src="@drawable/video_playing_back" />
+
                 <TextView
                     android:id="@+id/video_view_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/video_playing_back"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/video_playing_back" />
             </RelativeLayout>
 
 
@@ -55,9 +57,9 @@
 
             <com.baidu.cyberplayer.core.BVideoView
                 android:id="@+id/video_view"
-                android:background="#a0a0a0"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_height="fill_parent"
+                android:background="#a0a0a0" />
         </RelativeLayout>
 
         <LinearLayout
@@ -77,9 +79,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="18dp"
                 android:gravity="center"
-                android:visibility="gone"
                 android:orientation="horizontal"
-                android:paddingTop="4dip">
+                android:paddingTop="4dip"
+                android:visibility="gone">
 
 
                 <ImageButton
@@ -113,17 +115,17 @@
                 <RelativeLayout
                     android:id="@+id/play_btn_relativelayout"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="28dp">
+                    android:layout_height="28dp"
+                    android:layout_gravity="center_vertical">
 
                     <ImageButton
                         android:id="@+id/play_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="12dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginTop="8dp"
                         android:background="#00000000"
                         android:paddingLeft="10.5dp"
-                        android:layout_gravity="center_vertical"
                         android:src="@drawable/pause_btn_style" />
                 </RelativeLayout>
 
@@ -136,24 +138,24 @@
                     android:paddingRight="4dip"
                     android:paddingTop="4dip"
                     android:text="00:00"
-                    android:visibility="gone"
-                    android:textSize="14sp"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
 
                 <SeekBar
                     android:id="@+id/media_progress"
                     android:layout_width="0dip"
                     android:layout_height="20dp"
-                    android:paddingLeft="30dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
-                    android:thumb="@drawable/seekbar_thumb"
-                    android:progressDrawable="@drawable/seekbar_contral"
                     android:layout_weight="0.73"
                     android:maxHeight="0.1px"
-                    android:minHeight="0.1px" />
+                    android:minHeight="0.1px"
+                    android:paddingLeft="30dp"
+                    android:progressDrawable="@drawable/seekbar_contral"
+                    android:thumb="@drawable/seekbar_thumb" />
 
 
                 <TextView
@@ -165,10 +167,10 @@
                     android:paddingRight="4dip"
                     android:paddingTop="4dip"
                     android:text="00:00"
-                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/time_rest"
@@ -204,80 +206,110 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:gravity="center_vertical"
-            android:layout_height="45dp">
+            android:layout_height="45dp"
+            android:gravity="center_vertical">
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="45dp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/video_palying_title"
-                    android:layout_width="200dp"
+                    android:layout_width="240dp"
                     android:layout_height="45dp"
-                    android:text="速度与激情主题花絮"
-                    android:textColor="@color/black"
-                    android:paddingLeft="10.5dp"
-                    android:maxLines="2"
-                    android:layout_centerVertical="true"
-                    android:ellipsize="marquee"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:ellipsize="marquee"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:paddingLeft="10.5dp"
+                    android:text="速度与激情主题花絮"
+                    android:textColor="@color/black" />
 
 
-                <ImageView
-                    android:id="@+id/video_play_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="26dp"
-                    android:src="@drawable/icon_fx"
-                    android:layout_alignBottom="@+id/video_play_collect"
-                    android:layout_toLeftOf="@+id/video_play_collect"
-                    android:layout_toStartOf="@+id/video_play_collect"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginEnd="26dp" />
-
-
-                <ImageView
-                    android:id="@+id/video_play_collect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="26dp"
-                    android:src="@drawable/icon_sc_bf"
-                    android:layout_alignTop="@+id/video_play_good"
-                    android:layout_toLeftOf="@+id/video_play_good"
-                    android:layout_toStartOf="@+id/video_play_good"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginEnd="28dp" />
-
-                <TextView
-                    android:id="@+id/video_play_collect_text"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/video_play_collect"
-                    android:layout_toLeftOf="@+id/video_play_good"
-                     />
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/video_play_good"
-                    android:layout_width="wrap_content"
-                    android:layout_height="26dp"
-                    android:src="@drawable/icon_zan"
-                    android:paddingRight="10.5dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                     />
+                    <ImageView
+                        android:id="@+id/video_play_collect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignTop="@+id/video_play_good"
+                        android:layout_marginEnd="26dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_toLeftOf="@+id/video_play_good"
+                        android:layout_toStartOf="@+id/video_play_good"
+                        android:src="@drawable/icon_sc_bf" />
 
-                <TextView
-                    android:id="@+id/video_play_good_text"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/video_play_collect_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/video_play_collect"
+                        android:layout_alignRight="@+id/video_play_collect"
+                        android:layout_below="@+id/video_play_collect"
+                        android:text="收藏" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/video_play_collect"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/video_play_good"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:paddingRight="10.5dp"
+                        android:src="@drawable/icon_zan" />
+
+                    <TextView
+                        android:id="@+id/video_play_good_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/video_play_good"
+                        android:layout_alignStart="@+id/video_play_good"
+                        android:layout_below="@+id/video_play_good"
+                        android:text="点赞" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/video_play_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_alignBottom="@+id/video_play_collect"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="26dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_toLeftOf="@+id/video_play_collect"
+                        android:layout_toStartOf="@+id/video_play_collect"
+                        android:src="@drawable/icon_fx" />
+
+                    <TextView
+                        android:id="@+id/video_play_share_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/video_play_share"
+                        android:layout_alignStart="@+id/video_play_share"
+                        android:layout_below="@+id/video_play_good"
+                        android:text="分享" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -292,8 +324,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/video_recommend_img"
@@ -302,19 +334,19 @@
 
                 <TextView
                     android:id="@+id/video_recommend"
-                    android:text="小编推荐"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
                     android:gravity="center"
+                    android:text="小编推荐"
+                    android:textColor="@color/black"
                     android:textSize="18dp" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/video_evaluate_img"
@@ -323,12 +355,12 @@
 
                 <TextView
                     android:id="@+id/video_evaluate"
-                    android:text="我要评论"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
                     android:gravity="center"
+                    android:text="我要评论"
+                    android:textColor="@color/black"
                     android:textSize="18dp" />
             </RelativeLayout>
 

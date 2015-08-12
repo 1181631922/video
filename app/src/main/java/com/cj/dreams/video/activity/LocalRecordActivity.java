@@ -140,6 +140,7 @@ public class LocalRecordActivity extends BaseNoActionbarActivity {
                     intent.putExtra("id_info", (String) map.get("id_info"));
                     intent.putExtra("title_info", (String) map.get("title_info"));
                     intent.putExtra("image_info", (String) map.get("image_info"));
+                    intent.putExtra("type_info", "notnone");
                 }
             }
             startActivity(intent);

@@ -137,7 +137,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@id/evalaute_send_btn"
                     android:layout_toStartOf="@id/evalaute_send_btn"
-                    android:hint="@string/umeng_fb_feedback"
+                    android:hint="发表评论"
                     android:textSize="@dimen/umeng_fb_item_content_size" />
             </RelativeLayout>
         </LinearLayout>

@@ -22,7 +22,8 @@ public class TestClass {
 
 
     private static void testEncode() {
-        S.pl("测试加密64", EncryptUtil.encryptBASE64("password"));
+        String i=" "+1+1;
+//        S.pl("测试加密64", EncryptUtil.encryptBASE64("password"));
     }
 
     private static void testSplit() {

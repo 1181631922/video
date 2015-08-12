@@ -493,6 +493,8 @@ public class EvaluateFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        SingleImageTaskUtil imageTask = new SingleImageTaskUtil(evaluate_icon);
+        imageTask.execute((String) SP.get(getActivity(), SP.USER_DATA_USERICONURL, ""));
     }
 
     @Override
