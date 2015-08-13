@@ -15,9 +15,9 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
  */
 public class ABaseAdapter extends BaseAdapter {
     protected Context context;
-//    protected String BaseUrl = "http://test.baoxiaons.com/";
+    protected String BaseUrl = "http://test.baoxiaons.com/";
 //    protected String BaseUrl = "http://www.baoxiaons.com/";
-    protected String BaseUrl = "http://video.ktdsp.com/";
+//    protected String BaseUrl = "http://video.ktdsp.com/";
 
     protected String GetHomeInfo = "get_home_videoInfo.php";
     protected String GetRealUrl = "video_api/url_to_m3u8.php";

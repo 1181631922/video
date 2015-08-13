@@ -198,6 +198,7 @@
             android:name=".activity.VideoViewPlayingActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
+            android:windowSoftInputMode="stateUnspecified|stateUnchanged|stateHidden|stateAlwaysHidden|stateVisible|stateAlwaysVisible|adjustUnspecified|adjustResize|adjustPan"
             android:label="PlayingActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

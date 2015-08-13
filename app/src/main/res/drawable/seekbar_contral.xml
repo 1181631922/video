@@ -1,11 +1,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@android:id/background"
-        android:drawable="@drawable/slip_line" />
+        android:drawable="@color/played_color" />
     <item
         android:id="@android:id/progress"
-        android:drawable="@drawable/slip_line" />
+        android:drawable="@color/played_color" />
+    <!-- 未播放的背景色-->
     <item
         android:id="@android:id/secondaryProgress"
-        android:drawable="@drawable/slip_line" />
+        android:drawable="@color/played_color" />
 </layer-list>  

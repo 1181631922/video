@@ -359,24 +359,17 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         public void onPageSelected(int index) {
 
             switch (index) {
-                /**
-                 * 由于要兼容4.0或者以下的版本，有些使用的过时方法，迫不得已
-                 */
                 case 0:
                     video_recommend.setTextColor(selectedColor);
-//                    video_recommend_img.setBackground(selectedButton);
                     video_recommend_img.setBackgroundDrawable(selectedButton);
                     video_evaluate.setTextColor(unSelectedColor);
-//                    video_evaluate_img.setBackground(unSelectedButton);
                     video_evaluate_img.setBackgroundDrawable(unSelectedButton);
                     break;
                 case 1:
                     video_recommend.setTextColor(unSelectedColor);
                     video_recommend_img.setBackgroundDrawable(unSelectedButton);
-//                    video_recommend_img.setBackground(unSelectedButton);
                     video_evaluate.setTextColor(selectedColor);
                     video_evaluate_img.setBackgroundDrawable(selectedButton);
-//                    video_evaluate_img.setBackground(selectedButton);
                     break;
             }
         }
@@ -523,6 +516,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         video_play_good_text = (TextView) findViewById(R.id.video_play_good_text);
         video_play_good_text.setText(good_info);
         video_playing_back_relativelayout = (RelativeLayout) findViewById(R.id.video_playing_back_relativelayout);
+        video_playing_back_relativelayout.setVisibility(View.GONE);
         video_playing_back_relativelayout.setOnClickListener(this);
         video_palying_title = (TextView) findViewById(R.id.video_palying_title);
         full_screen_btn = (ImageButton) findViewById(R.id.full_screen_btn);
@@ -833,6 +827,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             mLastPos = mVV.getCurrentPosition();
             mVV.stopPlayback();
         }
+
+        mVV.pause();
     }
 
     @Override
@@ -983,6 +979,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         if (mSensorManager != null) {// 取消监听器
             mSensorManager.unregisterListener(sensorEventListener);
         }
+
+        mVV.pause();
     }
 
     @Override
@@ -1155,6 +1153,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         }
     }
 
+
+
     class MyOrientationEventListener extends OrientationEventListener {
 
         public MyOrientationEventListener(Context context, int rate) {
@@ -1166,8 +1166,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         public void onOrientationChanged(int arg0) {
             // TODO Auto-generated method stub
 
-            L.d("onOrientationChanged生命周期实现");
-            L.d(orientation);
+//            L.d("onOrientationChanged生命周期实现");
+//            L.d(orientation);
 
             if (orientation == OrientationEventListener.ORIENTATION_UNKNOWN) {
                 return;  //手机平放时，检测不到有效的角度

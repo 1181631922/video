@@ -326,12 +326,14 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="4dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:background="#dcdce0" />
 
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="fill_parent"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -380,6 +382,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="6dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:background="#dcdce0" />
 
         <android.support.v4.view.ViewPager
@@ -387,6 +390,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_weight="1.0"
             android:background="@color/white"
             android:flipInterval="30"
