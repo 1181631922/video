@@ -63,7 +63,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="260dp"
+            android:layout_height="248dp"
             android:layout_weight="1"
             android:background="@color/white"
             android:orientation="vertical">
@@ -99,7 +99,7 @@
             <TextView
                 android:id="@+id/index_left_up_tv"
                 android:layout_width="170dp"
-                android:layout_height="30dp"
+                android:layout_height="27dp"
                 android:layout_gravity="center"
                 android:background="#ffffff"
                 android:ellipsize="marquee"
@@ -108,10 +108,9 @@
                 android:textColor="#515151"
                 android:textSize="11dp" />
 
-
             <View
                 android:layout_width="match_parent"
-                android:layout_height="4dp" />
+                android:layout_height="2dp" />
 
             <RelativeLayout
                 android:layout_width="170dp"
@@ -146,7 +145,7 @@
             <TextView
                 android:id="@+id/index_left_down_tv"
                 android:layout_width="170dp"
-                android:layout_height="30dp"
+                android:layout_height="27dp"
                 android:layout_gravity="center"
                 android:background="#ffffff"
                 android:ellipsize="marquee"
@@ -160,7 +159,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="260dp"
+            android:layout_height="248dp"
             android:layout_weight="1"
             android:background="@color/white"
             android:orientation="vertical">
@@ -199,7 +198,7 @@
             <TextView
                 android:id="@+id/index_right_up_tv"
                 android:layout_width="170dp"
-                android:layout_height="30dp"
+                android:layout_height="27dp"
                 android:layout_gravity="center"
                 android:background="#ffffff"
                 android:ellipsize="marquee"
@@ -208,10 +207,9 @@
                 android:textColor="#515151"
                 android:textSize="11dp" />
 
-
             <View
                 android:layout_width="match_parent"
-                android:layout_height="4dp" />
+                android:layout_height="2dp" />
 
             <RelativeLayout
                 android:layout_width="170dp"
@@ -247,7 +245,7 @@
             <TextView
                 android:id="@+id/index_right_down_tv"
                 android:layout_width="170dp"
-                android:layout_height="30dp"
+                android:layout_height="27dp"
                 android:layout_gravity="center"
                 android:background="#ffffff"
                 android:ellipsize="marquee"

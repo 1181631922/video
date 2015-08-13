@@ -43,9 +43,9 @@ public class AboutUsActivity extends BaseCustomActivity {
         about_test_text = (TextView) findViewById(R.id.about_test_text);
         about_test_text.setOnClickListener(this);
         if ((boolean) SP.get(this, SP.TeamTestType, false)) {
-            about_test_text.setText("正常浏览（团队测试版仅供测试）");
+            about_test_text.setText("正常浏览");
         } else {
-            about_test_text.setText("团队测试（团队测试版仅供测试）");
+            about_test_text.setText("团队测试");
         }
         if (UserType.equals("official")) {
             about_test_linearlayout.setVisibility(View.GONE);

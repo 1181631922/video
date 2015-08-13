@@ -181,9 +181,7 @@ public class EvaluateFragment extends BaseFragment {
                     /**
                      * 不登陆不允许评论
                      */
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-
+                    T.showShort(getActivity(), "发送失败！");
                     break;
                 case 1:
                     T.showShort(getActivity(), "发送成功！");
@@ -232,15 +230,20 @@ public class EvaluateFragment extends BaseFragment {
                 inputManager.showSoftInput(evaluate_send_content, 0);
                 break;
             case R.id.evalaute_send_btn:
-                UserInput = evaluate_send_content.getText().toString().trim();
-                L.d("获取用户输入的数据", UserInput);
-                L.d(videoid, EncryptUtil.encryptBASE64(UserInput));
-                evaluate_send_content.getEditableText().clear();
-                if (UserInput != null && !UserInput.equals("")) {
-                    Thread postThread = new Thread(new PostThread(videoid, EncryptUtil.encryptBASE64(UserInput)));
-                    postThread.start();
+                if ((boolean) SP.get(getActivity(), SP.USER_DATA_LOGINED, false)) {
+                    UserInput = evaluate_send_content.getText().toString().trim();
+                    L.d("获取用户输入的数据", UserInput);
+                    L.d(videoid, EncryptUtil.encryptBASE64(UserInput));
+                    evaluate_send_content.getEditableText().clear();
+                    if (UserInput != null && !UserInput.equals("")) {
+                        Thread postThread = new Thread(new PostThread(videoid, EncryptUtil.encryptBASE64(UserInput)));
+                        postThread.start();
+                    }
+                    evaluate_input_layout.setVisibility(View.GONE);
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
                 }
-                evaluate_input_layout.setVisibility(View.GONE);
                 break;
         }
     }
@@ -373,7 +376,7 @@ public class EvaluateFragment extends BaseFragment {
         Message message = Message.obtain();
         message.what = 0;
         message.obj = id;
-        if (message.obj.equals("0")) {
+        if (message.obj.equals("0") && message.obj != null) {
             handler.sendMessage(message);
         } else {
             handler1.sendMessage(message);

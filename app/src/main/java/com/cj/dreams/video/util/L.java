@@ -9,7 +9,7 @@ import android.util.Log;
  */
 public class L {
 
-    private static final String TAG = "---| tag输出:";
+    private static final String TAG = "---| TAG输出:";
     public static boolean isDebug = true;// 是否需要打印bug，可以在application的onCreate函数里面初始化
 
     private L() {

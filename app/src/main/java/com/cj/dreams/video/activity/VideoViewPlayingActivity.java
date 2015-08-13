@@ -26,8 +26,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -134,8 +136,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private int selectedColor, unSelectedColor;
     private Drawable selectedButton, unSelectedButton;
     private ImageView video_recommend_img, video_evaluate_img;
-    private ImageButton full_screen_btn, video_playing_back;
-    private LinearLayout video_playing_titlebar;
+    private ImageButton full_screen_btn, video_playing_back, video_playing_back_normal;
+    private RelativeLayout video_playing_titlebar;
     private RelativeLayout video_playing_back_relativelayout, play_btn_relativelayout;
     private TextView video_play_collect_text, video_play_good_text;
     private ImageView video_play_share, video_play_collect, video_play_good;
@@ -143,8 +145,10 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private CollectOperate collectOperate;
     private GoodOperate goodOperate;
     private String type;
+    private int orientation = ActivityInfo.SCREEN_ORIENTATION_USER;
 
     private GestureDetector gestureDetector;
+    MyOrientationEventListener myOrientationEventListener;
 
     class EventHandler extends Handler {
         public EventHandler(Looper looper) {
@@ -228,6 +232,12 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         laughSQLiteOpenHelper = new LaughSQLiteOpenHelper(this);
         laughSQLiteOpenHelper.getWritableDatabase();
         gestureDetector = new GestureDetector(this, this);
+        myOrientationEventListener = new MyOrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL);
+        if (myOrientationEventListener.canDetectOrientation()) {
+            myOrientationEventListener.enable();
+        } else {
+            Toast.makeText(VideoViewPlayingActivity.this, "Can't Detect Orientation!", Toast.LENGTH_LONG).show();
+        }
 
         Configuration configuration = this.getResources().getConfiguration();
         int ori = configuration.orientation;
@@ -517,10 +527,15 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         video_palying_title = (TextView) findViewById(R.id.video_palying_title);
         full_screen_btn = (ImageButton) findViewById(R.id.full_screen_btn);
         full_screen_btn.setOnClickListener(this);
-        video_playing_titlebar = (LinearLayout) findViewById(R.id.video_playing_titlebar);
+        video_playing_titlebar = (RelativeLayout) findViewById(R.id.video_playing_titlebar);
         video_playing_titlebar.bringToFront();
+        video_playing_titlebar.setOnClickListener(this);
         video_playing_back = (ImageButton) findViewById(R.id.video_playing_back);
+        video_playing_back.bringToFront();
         video_playing_back.setOnClickListener(this);
+        video_playing_back_normal = (ImageButton) findViewById(R.id.video_playing_back_normal);
+        video_playing_back_normal.bringToFront();
+        video_playing_back_normal.setOnClickListener(this);
 
         mPlaybtn = (ImageButton) findViewById(R.id.play_btn);
         play_btn_relativelayout = (RelativeLayout) findViewById(R.id.play_btn_relativelayout);
@@ -533,7 +548,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         mCurrPostion = (TextView) findViewById(R.id.time_current);
         time_rest = (TextView) findViewById(R.id.time_rest);
 
-        if (type!=null&&type.equals("notnone")) {
+        if (type != null && type.equals("notnone")) {
             video_play_collect.setVisibility(View.GONE);
             video_play_collect_text.setVisibility(View.GONE);
             video_play_good.setVisibility(View.GONE);
@@ -706,8 +721,21 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                     video_down_linearlayout.setVisibility(View.VISIBLE);
                 }
                 break;
+            case R.id.video_playing_titlebar:
+                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {// 当屏幕是竖屏时
+                    finish();
+                } else {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    //显示其他组件
+                    video_down_linearlayout.setVisibility(View.VISIBLE);
+                }
+                break;
             case R.id.video_playing_back_relativelayout:
 //                finish();
+                break;
+            case R.id.video_playing_back_normal:
+                finish();
                 break;
             case R.id.video_play_collect:
                 Thread loadThread = new Thread(new LoadThread(id_info, "collect"));
@@ -746,17 +774,24 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             //隐藏其他组件的代码
             video_down_linearlayout.setVisibility(View.GONE);
+            video_playing_back_relativelayout.setVisibility(View.VISIBLE);
             video_playing_back_relativelayout.bringToFront();
+            video_playing_back.bringToFront();
+            video_view_title.setVisibility(View.VISIBLE);
             video_view_title.setText(title_info);
             video_view_title.bringToFront();
-
+            video_playing_back.setVisibility(View.VISIBLE);
+            video_playing_back_normal.setVisibility(View.GONE);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             //显示其他组件
+            video_playing_back.bringToFront();
             video_down_linearlayout.setVisibility(View.VISIBLE);
             video_playing_back_relativelayout.setVisibility(View.GONE);
             video_view_title.setVisibility(View.GONE);
+            video_playing_back.setVisibility(View.VISIBLE);
+            video_playing_back_normal.setVisibility(View.VISIBLE);
         }
     }
 
@@ -804,6 +839,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+        L.d("onResume生命周期");
         if (null != mWakeLock && (!mWakeLock.isHeld())) {
             mWakeLock.acquire();
         }
@@ -813,12 +849,29 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             // 第一个参数是Listener，第二个参数是所得传感器类型，第三个参数值获取传感器信息的频率
         }
 
+        getConfigurationInfo();
 
         /**
          * 发起一次播放任务,当然您不一定要在这发起
          */
 //        mEventHandler.sendEmptyMessage(EVENT_PLAY);
     }
+
+    private void getConfigurationInfo() {
+        Configuration configuration = getResources().getConfiguration();
+        //获取屏幕方向
+        int l = configuration.ORIENTATION_LANDSCAPE;
+        int p = configuration.ORIENTATION_PORTRAIT;
+        if (configuration.orientation == l) {
+            System.out.println("现在是横屏");
+        }
+        if (configuration.orientation == p) {
+            System.out.println("现在是竖屏");
+        }
+
+    }
+
+
 
     private long mTouchTime;
     private boolean barShow = true;
@@ -939,6 +992,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
          * 退出后台事件处理线程
          */
         mHandlerThread.quit();
+        myOrientationEventListener.disable();
     }
 
     @Override
@@ -1052,7 +1106,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             super.handleMessage(msg);
             switch (msg.what) {
                 case ROCKPOWER:
-                    fullScreen();
+//                    fullScreen();
 //                    Toast.makeText(VideoViewPlayingActivity.this, "检测到摇晃，执行操作！", Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -1073,25 +1127,66 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
+        L.d("onConfigurationChanged生命周期");
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             //显示其他组件
+            video_playing_back.bringToFront();
             video_down_linearlayout.setVisibility(View.VISIBLE);
             video_playing_back_relativelayout.setVisibility(View.GONE);
             video_view_title.setVisibility(View.GONE);
-        }
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            video_playing_back.setVisibility(View.VISIBLE);
+            video_playing_back_normal.setVisibility(View.VISIBLE);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 设置当前activity为横屏
             // 当横屏时 把除了视频以外的都隐藏
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             //隐藏其他组件的代码
+            video_playing_back.bringToFront();
             video_down_linearlayout.setVisibility(View.GONE);
+            video_playing_back_relativelayout.setVisibility(View.VISIBLE);
             video_playing_back_relativelayout.bringToFront();
+            video_view_title.setVisibility(View.VISIBLE);
             video_view_title.setText(title_info);
             video_view_title.bringToFront();
+            video_playing_back.setVisibility(View.VISIBLE);
+            video_playing_back_normal.setVisibility(View.GONE);
         }
     }
+
+    class MyOrientationEventListener extends OrientationEventListener {
+
+        public MyOrientationEventListener(Context context, int rate) {
+            super(context, rate);
+            // TODO Auto-generated constructor stub
+        }
+
+        @Override
+        public void onOrientationChanged(int arg0) {
+            // TODO Auto-generated method stub
+
+            L.d("onOrientationChanged生命周期实现");
+            L.d(orientation);
+
+            if (orientation == OrientationEventListener.ORIENTATION_UNKNOWN) {
+                return;  //手机平放时，检测不到有效的角度
+            }
+
+            orientation = ActivityInfo.SCREEN_ORIENTATION_USER;
+            VideoViewPlayingActivity.this.setRequestedOrientation(orientation);
+            Display display = getWindowManager().getDefaultDisplay();
+            int width = display.getWidth();
+            int height = display.getHeight();
+            if (width > height) {
+                orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+            } else {
+                orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+            }
+
+        }
+
+    }
+
+
 }

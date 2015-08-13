@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="排行"
+                    android:text="排行榜"
                     android:textSize="13sp"
                     android:textColor="@color/index_text_color" />
             </LinearLayout>
