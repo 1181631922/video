@@ -154,7 +154,7 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
                 case 0:
                     Notification mNotification = new Notification(icon_download, tickerText, System.currentTimeMillis());
                     mNotification.defaults |= Notification.DEFAULT_SOUND;
-                    mNotification.defaults |= Notification.DEFAULT_VIBRATE;
+//                    mNotification.defaults |= Notification.DEFAULT_VIBRATE;
                     mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
                     contentView = new RemoteViews(packageName, R.layout.notification_view_download);
                     contentView.setTextViewText(R.id.notificationTitle, "Download:正在下载中...");
@@ -251,7 +251,7 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
                     case 0:
 //                        Notification mNotification = new Notification(icon_download, tickerText, System.currentTimeMillis());
                         mNotification.defaults |= Notification.DEFAULT_SOUND;
-                        mNotification.defaults |= Notification.DEFAULT_VIBRATE;
+//                        mNotification.defaults |= Notification.DEFAULT_VIBRATE;
                         mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
                         contentView = new RemoteViews(packageName, R.layout.notification_view_download);
                         contentView.setTextViewText(R.id.notificationTitle, "爆笑女神:开始下载...");
@@ -264,7 +264,7 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
                     case 1:
 //                        Notification mNotification = new Notification(icon_download, tickerText, System.currentTimeMillis());
                         mNotification.defaults |= Notification.DEFAULT_SOUND;
-                        mNotification.defaults |= Notification.DEFAULT_VIBRATE;
+//                        mNotification.defaults |= Notification.DEFAULT_VIBRATE;
                         mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
                         contentView = new RemoteViews(packageName, R.layout.notification_view_download);
                         contentView.setTextViewText(R.id.notificationTitle, "爆笑女神:正在下载中...");
@@ -279,7 +279,7 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
                     case 2:
 //                        Notification mNotification = new Notification(icon_download, tickerText, System.currentTimeMillis());
                         mNotification.defaults |= Notification.DEFAULT_SOUND;
-                        mNotification.defaults |= Notification.DEFAULT_VIBRATE;
+//                        mNotification.defaults |= Notification.DEFAULT_VIBRATE;
                         mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
                         contentView = new RemoteViews(packageName, R.layout.notification_view_download);
                         contentView.setTextViewText(R.id.notificationTitle, "Download:爆笑女神安装包下载完成");

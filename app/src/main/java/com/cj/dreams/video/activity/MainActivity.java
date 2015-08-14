@@ -74,6 +74,8 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     private OutputStream outputStream;
     private int fileLength, DownedFileLength;
     private String version, downloadUrl, updateContent;
+    private String versionString="", appVersionString="";
+    private int versionInt, appVersionInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,26 +107,25 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 updateContent = jsonObject.optString("UpdateContent");
                 Message message = Message.obtain();
                 message.what = 0;
-
-                if ((int) version.charAt(0) > (int) appVersion.charAt(0)) {
+                for (int i = 0; i < version.length(); i++) {
+                    if (version.charAt(i) != '.') {
+                        versionString += version.charAt(i);
+                    }
+                }
+                for (int i = 0; i < appVersion.length(); i++) {
+                    if (appVersion.charAt(i) != '.') {
+                        appVersionString += appVersion.charAt(i);
+                    }
+                }
+                versionInt = Integer.parseInt(versionString);
+                L.d("获取版本号--------------------------------------");
+                L.d(versionInt);
+                appVersionInt = Integer.parseInt(appVersionString);
+                L.d(appVersionInt);
+                if (versionInt > appVersionInt) {
                     message.what = 1;
                     updateHandler.sendMessage(message);
-                } else if ((int) version.charAt(0) == (int) appVersion.charAt(0)) {
-                    if ((int) version.charAt(1) > (int) appVersion.charAt(1)) {
-                        message.what = 1;
-                        updateHandler.sendMessage(message);
-                    } else if ((int) version.charAt(1) == (int) appVersion.charAt(1)) {
-                        if ((int) version.charAt(2) > (int) appVersion.charAt(2)) {
-                            message.what = 1;
-                            updateHandler.sendMessage(message);
-                        }
-                    } else {
-
-                    }
-                } else {
-
                 }
-
 
             } catch (JSONException e) {
                 e.printStackTrace();

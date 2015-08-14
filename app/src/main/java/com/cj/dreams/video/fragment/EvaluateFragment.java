@@ -160,16 +160,24 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                     break;
                 case 1:
                     T.showShort(getActivity(), "发送成功！");
-
+                    Thread loadThread = new Thread(new nowLoadThread());
+                    loadThread.start();
                     break;
             }
         }
     };
 
+    class nowLoadThread implements Runnable {
+        @Override
+        public void run() {
+            loadData("update_comment", "0", 1);
+        }
+    }
+
     class LoadThread implements Runnable {
         @Override
         public void run() {
-            loadData("update_comment", "0");
+            loadData("update_comment", "0", 0);
         }
     }
 
@@ -217,19 +225,18 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                     postThread.start();
                 }
                 evaluate_input_layout.setVisibility(View.GONE);
-                Thread loadThread = new Thread(new LoadThread());
-                loadThread.start();
+//                Thread loadThread = new Thread(new LoadThread());
+//                loadThread.start();
                 break;
         }
     }
-
 
 
     private void initData() {
 
     }
 
-    private String loadData(String updatetype, String id) {
+    private String loadData(String updatetype, String id, int k) {
         Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("videoid", videoid);
         map.put("updatetype", updatetype);
@@ -244,6 +251,9 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                 L.d(commentinfo.toString());
                 evaluateUserBeanList_loadmore.clear();
                 userInfoBeanList.clear();
+                if (k != 0) {
+                    evaluateUserBeanList.clear();
+                }
                 for (int i = 0; i < commentinfo.length(); i++) {
                     EvaluateUserBean evaluateUserBean = new EvaluateUserBean(null, null, null, null);
                     JSONObject periodicalinfo = commentinfo.getJSONObject(i);
@@ -328,7 +338,7 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
     class LoadMore implements Runnable {
         @Override
         public void run() {
-            loadData("update_comment_2down", MinId);
+            loadData("update_comment_2down", MinId, 0);
         }
     }
 
@@ -352,7 +362,8 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                 JSONObject jsonObject = new JSONObject(backMsg);
                 JSONArray commentinfo = jsonObject.getJSONArray("commentinfo");
                 L.d(commentinfo.toString());
-                evaluateUserBeanList_loadmore.clear();
+                evaluateUserBeanList.clear();
+//                evaluateUserBeanList_loadmore.clear();
                 userInfoBeanList.clear();
                 for (int i = 0; i < commentinfo.length(); i++) {
                     EvaluateUserBean evaluateUserBean = new EvaluateUserBean(null, null, null, null);
@@ -371,7 +382,7 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                     evaluateUserBean.setEvaluateTime(periodicalinfo.getString("comment_date"));
                     evaluateUserBean.setEvaluateDetail(EncryptUtil.decryptBASE64(periodicalinfo.getString("comment_content")));
                     evaluateUserBean.setEvaluateGoodTimes(periodicalinfo.getString("comment_praise_number"));
-                    evaluateUserBeanList.clear();
+//                    evaluateUserBeanList.clear();
                     evaluateUserBeanList.add(evaluateUserBean);
                 }
                 Message message = Message.obtain();

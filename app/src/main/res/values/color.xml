@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="played_color">#df2b36</color>
+
+    <color name="played_color">#af1e27</color>
     <color name="index_background_color">#dcdbe0</color>
     <color name="index_text_color">#df2b36</color>
     <color name="back">#DEDEDD</color>
