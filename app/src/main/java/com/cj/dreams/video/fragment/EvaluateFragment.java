@@ -225,6 +225,13 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                     postThread.start();
                 }
                 evaluate_input_layout.setVisibility(View.GONE);
+
+                InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm.isActive()) {
+                    imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+
+                }
+
 //                Thread loadThread = new Thread(new LoadThread());
 //                loadThread.start();
                 break;
