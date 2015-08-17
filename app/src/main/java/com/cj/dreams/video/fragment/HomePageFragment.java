@@ -58,6 +58,7 @@ public class HomePageFragment extends BaseFragment {
     private ListView listView;
     private IndexListViewAdapter indexListViewAdapter;
     private List<IndexListViewBean> indexListViewBeanList = new ArrayList<IndexListViewBean>();
+    private List<IndexListViewBean> indexListViewBeanList_first = new ArrayList<IndexListViewBean>();
     private List<IndexListViewBean> indexListViewBeanList_loadmore = new ArrayList<IndexListViewBean>();
     private List<IndexListViewBean> indexListViewBeanList_final = new ArrayList<IndexListViewBean>();
     private List<List<Map<String, Object>>> showListList = new ArrayList<List<Map<String, Object>>>();
@@ -564,7 +565,7 @@ public class HomePageFragment extends BaseFragment {
                     idmap.put("periodicalid", periodicalinfo.getString("id"));
                     moreVideoList.add(idmap);
                     if (id.equals("0")) {
-                        indexListViewBeanList.add(indexListViewBean);
+                        indexListViewBeanList_first.add(indexListViewBean);
                     } else {
                         indexListViewBeanList_loadmore.add(indexListViewBean);
                     }
@@ -699,11 +700,15 @@ public class HomePageFragment extends BaseFragment {
             switch (msg.what) {
                 case 0:
                     if (msg.obj.equals("0")) {
+                        indexListViewBeanList.addAll(indexListViewBeanList_first);
                         indexListViewAdapter.update();
                         listView.addFooterView(LayoutInflater.from(getActivity()).inflate(R.layout.item_listview_footer, null));
                     }
                     break;
                 case 1:
+                    break;
+                case 2:
+
                     break;
                 case 8:
                     listview_footer.setText("已经全部加载");

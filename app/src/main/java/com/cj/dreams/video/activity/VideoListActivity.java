@@ -40,6 +40,7 @@ public class VideoListActivity extends BaseNoActionbarActivity {
     private ListView listView;
     private VideoListAdapter videoListAdapter;
     private List<VideoListBean> videoListBeanList = new ArrayList<VideoListBean>();
+    private List<VideoListBean> videoListBeanList_first = new ArrayList<VideoListBean>();
     private List<VideoListBean> videoListBeanList_more = new ArrayList<VideoListBean>();
     private String periodicalid;
     //    private List<VideoListBean> videoListBeanList = new ArrayList<VideoListBean>();
@@ -184,7 +185,7 @@ public class VideoListActivity extends BaseNoActionbarActivity {
                     videoInfoList.add(idmap);
 
                     if (video.equals("0")) {
-                        videoListBeanList.add(videoListBean);
+                        videoListBeanList_first.add(videoListBean);
                     } else {
                         videoListBeanList_more.add(videoListBean);
                     }
@@ -214,6 +215,7 @@ public class VideoListActivity extends BaseNoActionbarActivity {
             switch (msg.what) {
                 case 0:
                     if (msg.obj.equals("0")) {
+                        videoListBeanList.addAll(videoListBeanList_first);
                         videoListAdapter.update();
                     }
                     break;

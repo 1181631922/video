@@ -507,12 +507,12 @@
 
                     </RelativeLayout>
                 </LinearLayout>
-
                 <Button
                     android:id="@+id/custom_test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="一般测试用的按钮" />
+                    android:text="一般测试\n用的按钮" />
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

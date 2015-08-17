@@ -85,6 +85,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
     private void initView() {
 
         custom_test = (Button) getActivity().findViewById(R.id.custom_test);
+        custom_test.setText("测试按钮"+"\n"+"一般的测试按钮");
         custom_test.setOnClickListener(this);
 
         personal_user_icon = (ImageView) getActivity().findViewById(R.id.personal_user_icon);

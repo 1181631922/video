@@ -40,6 +40,7 @@ public class RankingFragment extends BaseFragment {
     private ListView listView;
     private VideoListAdapter videoListAdapter;
     private List<VideoListBean> videoListBeanList = new ArrayList<VideoListBean>();
+    private List<VideoListBean> videoListBeanList_first = new ArrayList<VideoListBean>();
     private List<VideoListBean> videoListBeanList_more = new ArrayList<VideoListBean>();
     private List<Map<String, Object>> videoInfoList = new ArrayList<Map<String, Object>>();
     private String id_info, url_info, title_info, image_info;
@@ -139,7 +140,7 @@ public class RankingFragment extends BaseFragment {
                     videoListBean.setVideoCollectTimes(Integer.parseInt(object.getString("collect_num")) + "");
                     videoListBean.setVideoPlayTimes(Integer.parseInt(object.getString("play_number")) + "");
                     videoListBean.setVideoGoodTimes(Integer.parseInt(object.getString("praise_num")) + "");
-                    videoListBeanList.add(videoListBean);
+                    videoListBeanList_first.add(videoListBean);
 
                     Map<String, Object> idmap = new HashMap<String, Object>();
                     idmap.put("url_info", object.getString("url"));
@@ -169,6 +170,7 @@ public class RankingFragment extends BaseFragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    videoListBeanList.addAll(videoListBeanList_first);
                     videoListAdapter.update();
                     break;
             }

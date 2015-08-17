@@ -65,6 +65,10 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
     private float temp;
     Notification mNotification = new Notification(icon_download, tickerText, System.currentTimeMillis());
 
+    /**
+     *
+     * @param context
+     */
     public CheckUpdateDialog(Context context) {
         super(context);
         this.context = context;
@@ -91,6 +95,16 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
         this.layoutRes = resLayout;
     }
 
+    /**
+     *
+     * @param context
+     * @param theme
+     * @param layoutRes
+     * @param isNewVersion
+     * @param downloadUrl
+     * @param updateContent
+     * @param packageName
+     */
     public CheckUpdateDialog(Context context, int theme, int layoutRes, Boolean isNewVersion, String downloadUrl, String updateContent, String packageName) {
         super(context, theme);
         this.layoutRes = layoutRes;
@@ -111,7 +125,9 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
         dialog_exit_detail = (TextView) findViewById(R.id.dialog_exit_detail);
 
         if (isNewVersion) {
-            dialog_exit_detail.setText(updateContent);
+            String content =updateContent.replace('n','\n');
+//            String content1=content.replace("",);
+            dialog_exit_detail.setText(content);
         } else {
             dialog_exit_detail.setText(nowText);
         }

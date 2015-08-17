@@ -52,6 +52,7 @@ public class RecommendFragment extends BaseFragment {
     private ListView recommend_listview;
     private VideoListAdapter videoListAdapter;
     private List<VideoListBean> videoListBeanList = new ArrayList<VideoListBean>();
+    private List<VideoListBean> videoListBeanList_first = new ArrayList<VideoListBean>();
     private List<Map<String, Object>> videoInfoList = new ArrayList<Map<String, Object>>();
     private ImageView add;
     private LaughSQLiteOpenHelper laughSQLiteOpenHelper;
@@ -177,7 +178,7 @@ public class RecommendFragment extends BaseFragment {
                     videoListBean.setVideoCollectTimes(Integer.parseInt(object.getString("collect_num")) + "");
                     videoListBean.setVideoPlayTimes(Integer.parseInt(object.getString("play_number")) + "");
                     videoListBean.setVideoGoodTimes(Integer.parseInt(object.getString("praise_num")) + "");
-                    videoListBeanList.add(videoListBean);
+                    videoListBeanList_first.add(videoListBean);
 
                     Map<String, Object> idmap = new HashMap<String, Object>();
                     idmap.put("url_info", object.getString("url"));
@@ -205,6 +206,7 @@ public class RecommendFragment extends BaseFragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    videoListBeanList.addAll(videoListBeanList_first);
                     videoListAdapter.update();
                     break;
             }
