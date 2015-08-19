@@ -57,3 +57,6 @@ periodicalid：update_home时传0  update_home_2down时传最小的期刊id  upd
 12.根据id获取播放地址
     get_videobyvideoid.php
     videoid={视频的id}
+13.检测升级，获取不同的下载名称
+    get_android_version.php
+    channelid={渠道的名称}

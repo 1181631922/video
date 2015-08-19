@@ -31,16 +31,16 @@ android {
     }
 
     buildTypes {
-        debug {
-            // 显示Log
-            buildConfigField "boolean", "LOG_DEBUG", "true"
+//        debug {
+        // 显示Log
+//            buildConfigField "boolean", "LOG_DEBUG", "true"
 
-            versionNameSuffix "-debug"
-            minifyEnabled false
-            zipAlignEnabled false
-            shrinkResources false
-            signingConfig signingConfigs.configSign
-        }
+//            versionNameSuffix "-debug"
+//            minifyEnabled false
+//            zipAlignEnabled false
+//            shrinkResources false
+//            signingConfig signingConfigs.configSign
+//        }
 
         release {
             minifyEnabled false
@@ -60,28 +60,33 @@ android {
         }
 
     }
-
     productFlavors {
-        gw {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "gw"]
+        ctest {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "test"]
         }
-        xiaomi {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
-        }
-        _360 {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_360"]
-        }
-        baidu {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
-        }
-        wandoujia {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
-        }
+//        cofficial {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "official"]
+//        }
+//        chuawei {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
+//        }
+//        cxiaomi {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+//        }
+//        c360 {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"]
+//        }
+//        cbaidu {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+//        }
+//        cwandoujia {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+//        }
     }
 
-    productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-    }
+//    productFlavors.all {
+//        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+//    }
 
 //友盟
     repositories {

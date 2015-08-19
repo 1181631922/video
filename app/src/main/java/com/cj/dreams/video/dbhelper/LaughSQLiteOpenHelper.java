@@ -15,6 +15,7 @@ public class LaughSQLiteOpenHelper extends BaseSQLiteOpenHelper {
     private static final String table_collect = "t_collect";
     private static final String table_good = "t_good";
     private static final String table_user="t_user";
+    private static final String table_config="t_config";
 
     public LaughSQLiteOpenHelper(Context context) {
         super(context, DATABASENAME, null, DATABASEVERSION);
@@ -50,10 +51,17 @@ public class LaughSQLiteOpenHelper extends BaseSQLiteOpenHelper {
                 + "user_image    VARCHAR(50)   NOT NULL"
                 + ")";
 
+        String create_config_sql = "CREATE TABLE " + table_config + "("
+                + "_id           INTEGER      PRIMARY KEY,"
+                + "config_appname       VARCHAR(50)   NOT NULL,"
+                + "config_appurl        VARCHAR(50)   NOT NULL"
+                + ")";
+
         db.execSQL(create_record_sql);
         db.execSQL(create_collect_sql);
         db.execSQL(create_good_sql);
         db.execSQL(create_user_sql);
+        db.execSQL(create_config_sql);
     }
 
     @Override
@@ -62,10 +70,12 @@ public class LaughSQLiteOpenHelper extends BaseSQLiteOpenHelper {
         String create_collect_sql = "DROP TABLE IF EXISTS" + table_collect;
         String create_good_sql = "DROP TABLE IF EXISTS" + table_good;
         String create_user_sql = "DROP TABLE IF EXISTS" + table_user;
+        String create_config_sql = "DROP TABLE IF EXISTS" + table_config;
         db.execSQL(create_record_sql);
         db.execSQL(create_collect_sql);
         db.execSQL(create_good_sql);
         db.execSQL(create_user_sql);
+        db.execSQL(create_config_sql);
         this.onCreate(db);
     }
 }

@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cj.dreams.video.R;
+import com.cj.dreams.video.bean.AppGradeBean;
 import com.cj.dreams.video.dialog.CheckNetDialog;
 import com.cj.dreams.video.dialog.CheckTheNetDialog;
 import com.cj.dreams.video.dialog.CheckUpdateDialog;
@@ -28,6 +29,7 @@ import com.cj.dreams.video.fragment.RankingFragment;
 import com.cj.dreams.video.util.L;
 import com.cj.dreams.video.util.PostUtil;
 import com.cj.dreams.video.util.S;
+import com.cj.dreams.video.util.SP;
 import com.cj.dreams.video.util.T;
 
 import org.json.JSONException;
@@ -42,6 +44,8 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
 
@@ -74,8 +78,10 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     private OutputStream outputStream;
     private int fileLength, DownedFileLength;
     private String version, downloadUrl, updateContent;
-    private String versionString="", appVersionString="";
+    private String versionString = "", appVersionString = "";
     private int versionInt, appVersionInt;
+    private AppGradeBean appGradeBean;
+    private String Appshopname, Appshopurl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,15 +102,19 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     }
 
     public void getNewVersion() {
-
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        map.put("channelid", channelId);
         try {
-            String backMsg = PostUtil.postData(BaseUrl + GetServerVersion, null);
+            String backMsg = PostUtil.postData(BaseUrl + GetServerVersion, map);
             L.d(backMsg.toString());
             try {
                 JSONObject jsonObject = new JSONObject(backMsg);
                 version = jsonObject.optString("Version");
                 downloadUrl = jsonObject.optString("DownloadUrl");
                 updateContent = jsonObject.optString("UpdateContent");
+                Appshopurl = jsonObject.optString("Appshopurl");
+                Appshopname = jsonObject.optString("Appshopname");
+                SP.put(this, SP.Appshopname, Appshopname);
                 Message message = Message.obtain();
                 message.what = 0;
                 for (int i = 0; i < version.length(); i++) {

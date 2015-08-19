@@ -472,7 +472,7 @@ public class HomePageFragment extends BaseFragment {
         map.put("updatetype", updatetype);
         map.put("periodicalid", id);
         //邯郸团队测试包测试固定值
-        if (!(boolean) SP.get(getActivity(), SP.TeamTestType, false)) {
+        if ((boolean) SP.get(getActivity(), SP.TeamTestType, false)) {
             map.put("testvideo", "1");
         }
         try {

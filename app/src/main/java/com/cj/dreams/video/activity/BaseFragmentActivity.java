@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -31,6 +32,7 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 public class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener {
     protected String UserType, appVersion;
     protected String appPackageName;
+    protected String channelId;
     protected static String BaseUrl;
     //    protected String BaseUrl = "http://video.ktdsp.com/";
 //    protected String BaseUrl = "http://test.baoxiaons.com/";
@@ -108,14 +110,13 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
             e.printStackTrace();
         }
 
-        ActivityInfo activityInfo = null;
         try {
-            activityInfo = this.getPackageManager().getActivityInfo(this.getComponentName(), PackageManager.GET_META_DATA);
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            channelId = appInfo.metaData.getString("UMENG_CHANNEL");
+            L.d("Tag", " app channelId : " + channelId);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        String UMENG_CHANNEL_VALUE = activityInfo.metaData.getString("UMENG_MESSAGE_SECRET");
-        L.d(UMENG_CHANNEL_VALUE);
     }
 
     @Override

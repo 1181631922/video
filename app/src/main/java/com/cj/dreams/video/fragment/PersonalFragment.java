@@ -287,7 +287,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 dialog1.show();
                 break;
             case R.id.personal_grade_relativelayout:
-                GradeDialog gradedialog = new GradeDialog(getActivity(), R.style.transparentFrameWindowStyle, R.layout.dialog_exit_choose);
+                GradeDialog gradedialog = new GradeDialog(getActivity(), R.style.transparentFrameWindowStyle, R.layout.dialog_appshop);
                 gradedialog.show();
                 break;
             case R.id.personal_feedback_relativelayout:

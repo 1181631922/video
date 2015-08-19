@@ -3,6 +3,7 @@ package com.cj.dreams.video;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cj.dreams.video.dialog.CheckTheNetDialog;
+import com.cj.dreams.video.util.L;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.IOException;
@@ -25,7 +27,9 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class ABaseActivity extends Activity implements View.OnClickListener {
     protected String UserType, appVersion;
+    protected String channelId;
     protected static String BaseUrl;
+
     //    protected String BaseUrl = "http://www.baoxiaons.com/";
 //    protected String BaseUrl = "http://test.baoxiaons.com/";
 //    protected String BaseUrl = "http://video.ktdsp.com/";
@@ -112,6 +116,14 @@ public class ABaseActivity extends Activity implements View.OnClickListener {
         try {
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
             appVersion = info.versionName;   //版本名
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            channelId = appInfo.metaData.getString("UMENG_CHANNEL");
+            L.d("Tag", " app channelId : " + channelId);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

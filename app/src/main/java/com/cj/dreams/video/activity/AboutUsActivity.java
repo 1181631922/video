@@ -42,15 +42,15 @@ public class AboutUsActivity extends BaseCustomActivity {
         about_email_text.setOnClickListener(this);
         about_test_text = (TextView) findViewById(R.id.about_test_text);
         about_test_text.setOnClickListener(this);
-        if ((boolean) SP.get(this, SP.TeamTestType, false)) {
-            about_test_text.setText("正常浏览");
+        if (!(boolean) SP.get(this, SP.TeamTestType, false)) {
+            about_test_text.setText("正常浏览模式");
         } else {
-            about_test_text.setText("团队测试");
+            about_test_text.setText("团队测试模式");
         }
-        if (UserType.equals("official")) {
-            about_test_linearlayout.setVisibility(View.GONE);
-        } else if (UserType.equals("preview")) {
+        if (channelId.equals("test")) {
             about_test_linearlayout.setVisibility(View.VISIBLE);
+        } else {
+            about_test_linearlayout.setVisibility(View.GONE);
         }
     }
 

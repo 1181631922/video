@@ -24,7 +24,7 @@
             android:background="@drawable/photo_gallery_selector"
             android:paddingBottom="10dip"
             android:paddingTop="10dip"
-            android:text="360市场"
+            android:text="检测升级"
             android:textSize="16sp" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:background="@drawable/photo_center_selector"
             android:paddingBottom="10dip"
             android:paddingTop="10dip"
-            android:text="安智市场"
+            android:text="反馈"
             android:textSize="16sp" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:background="@drawable/photo_camera_selector"
             android:paddingBottom="10dip"
             android:paddingTop="10dip"
-            android:text="安卓市场"
+            android:text="退出爆笑女神"
             android:textSize="16sp" />
 
 
