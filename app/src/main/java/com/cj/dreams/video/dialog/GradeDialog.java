@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,12 +93,16 @@ public class GradeDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.appshop_name:
+                Uri uri = Uri.parse((String) SP.get(getContext(), SP.Appshopurl, ""));
+                Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                getContext().startActivity(it);
                 GradeDialog.this.dismiss();
                 break;
             case R.id.appshop_cancel:
                 GradeDialog.this.dismiss();
                 break;
             case R.id.dialog_appshop:
+                GradeDialog.this.dismiss();
                 break;
         }
     }

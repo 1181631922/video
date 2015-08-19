@@ -22,6 +22,7 @@ import com.cj.dreams.video.bean.AppGradeBean;
 import com.cj.dreams.video.dialog.CheckNetDialog;
 import com.cj.dreams.video.dialog.CheckTheNetDialog;
 import com.cj.dreams.video.dialog.CheckUpdateDialog;
+import com.cj.dreams.video.dialog.ExitChooseDialog;
 import com.cj.dreams.video.dialog.MainExitDialog;
 import com.cj.dreams.video.fragment.HomePageFragment;
 import com.cj.dreams.video.fragment.PersonalFragment;
@@ -115,6 +116,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 Appshopurl = jsonObject.optString("Appshopurl");
                 Appshopname = jsonObject.optString("Appshopname");
                 SP.put(this, SP.Appshopname, Appshopname);
+                SP.put(this, SP.Appshopurl, Appshopurl);
                 Message message = Message.obtain();
                 message.what = 0;
                 for (int i = 0; i < version.length(); i++) {
@@ -312,7 +314,8 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 ConfirmExit();
                 break;
             case KeyEvent.KEYCODE_MENU:
-                ConfirmExit();
+                ExitChooseDialog gradedialog = new ExitChooseDialog(this, R.style.transparentFrameWindowStyle, R.layout.dialog_exit_choose);
+                gradedialog.show();
                 break;
         }
 
@@ -324,82 +327,9 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         dialog.show();
     }
 
-    private void DownFile(String durl) {
-        try {
-            URL url = new URL(durl);
-            connection = url.openConnection();
-            inputStream = connection.getInputStream();
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String downloadDir = Environment.getExternalStorageDirectory().getPath() + "/download";
-        File file1 = new File(downloadDir);
-        if (!file1.exists()) {
-            file1.mkdir();
-        }
-        String filePath = downloadDir + "/laugh.apk";
-        File file = new File(filePath);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Message message = new Message();
-        try {
-            outputStream = new FileOutputStream(file);
-            fileLength = connection.getContentLength();
-            int bufferLen = 1024;
-            byte[] buffer = new byte[bufferLen];
-            message.what = 0;
-            progressHandler.sendMessage(message);
-            int count = 0;
-            while ((count = inputStream.read(buffer)) != -1) {
-                DownedFileLength += count;
-                outputStream.write(buffer, 0, count);
-                Message message1 = new Message();
-                message1.what = 1;
-                progressHandler.sendMessage(message1);
-            }
 
-            Message message2 = new Message();
-            message2.what = 2;
-            progressHandler.sendMessage(message2);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private Handler progressHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            if (!Thread.currentThread().isInterrupted()) {
-                switch (msg.what) {
-                    case 0:
-//                      notificationProgress.setMax(fileLength);
-                        break;
-                    case 1:
-//                      notificationProgress.setProgress(DownedFileLength);
-                        int x = DownedFileLength * 100 / fileLength;
-                        break;
-                    case 2:
-//                      progressBar.setVisibility(View.GONE);
-                        break;
-                    case 3:
-//                      if (alertDialog.isShowing()) {
-//                          alertDialog.cancel();
-//                      }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    };
+
 
     @Override
     protected void onResume() {

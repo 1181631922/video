@@ -20,7 +20,8 @@ public class SP {
     public static final String USER_DATA_USERID = "userid";
     public static final String USER_DATA_USERICONURL = "usericonurl";
     public static final String TeamTestType="true";
-    public static final String Appshopname=null;
+    public static final String Appshopname="应用市场名称";
+    public static final String Appshopurl="";
 
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
