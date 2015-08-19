@@ -55,6 +55,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener{
     protected String GetShareUrl="/share.php";
     protected String GetServerVersion="get_android_version.php";
     protected String SendUserInfo="set_userinfo.php";
+    protected String GetVideoInfo="get_videobyvideoid.php";
     protected String mobileState="mobileState",wifiState="wifiState",noState="noState";
 
 //    private OnFragmentInteractionListener mListener;

@@ -28,6 +28,7 @@ public class ABaseAdapter extends BaseAdapter {
     protected String PostVideoInfo = "update_videoInfo.php";
     protected String PostVideoComment = "user_comment.php";
     protected String PostShareId = "share.php?id=";
+    protected String GetVideoInfo="get_videobyvideoid.php";
 
 
     public void update() {

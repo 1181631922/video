@@ -9,6 +9,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.cj.dreams.video.R;
+import com.cj.dreams.video.activity.GetBackViewPlayingActivity;
 import com.cj.dreams.video.activity.TestActivity;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.IUmengUnregisterCallback;
@@ -100,7 +101,8 @@ public class UmengApplication extends BaseApplication {
             @Override
             public void openActivity(Context context, UMessage uMessage) {
                 super.openActivity(context, uMessage);
-                Intent i = new Intent(context, TestActivity.class);  //自定义打开的界面
+                Intent i = new Intent(context, GetBackViewPlayingActivity.class);  //自定义打开的界面
+//                Intent i = new Intent(context, TestActivity.class);  //自定义打开的界面
 //                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

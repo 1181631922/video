@@ -45,7 +45,7 @@
                     android:paddingRight="10.5dp"
                     android:text="退出登录"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="13dp"
                     android:visibility="gone" />
 
             </RelativeLayout>
@@ -66,16 +66,15 @@
                     android:id="@+id/personal_logined_linearlayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
                     android:paddingTop="1.5dp"
+                    android:paddingBottom="6.5dp"
                     android:visibility="gone">
 
                     <RelativeLayout
                         android:id="@+id/personal_logined_relativelayout"
                         android:layout_width="match_parent"
                         android:layout_height="124dp"
-                        android:background="@drawable/personal_item_background"
+                        android:background="@color/white"
                         android:paddingTop="10dp">
 
                         <com.cj.dreams.video.view.CircleImageView
@@ -100,8 +99,6 @@
                             android:text="登陆者名字"
                             android:textColor="@color/black" />
                     </RelativeLayout>
-
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -109,15 +106,13 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="6.5dp"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
                     android:paddingTop="1.5dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_login_relativelayout"
                         android:layout_width="match_parent"
                         android:layout_height="124dp"
-                        android:background="@drawable/personal_item_background">
+                        android:background="@color/white">
 
                         <ImageView
                             android:id="@+id/personal_user_ico"
@@ -196,15 +191,13 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
                     android:paddingTop="1.5dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_history_relativelayout"
                         android:layout_width="fill_parent"
                         android:layout_height="43dp"
-                        android:background="@drawable/personal_item_background"
+                        android:background="@color/white"
                         android:paddingBottom="9dp"
                         android:paddingTop="9dp">
 
@@ -241,15 +234,14 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
+                    android:orientation="vertical"
                     android:paddingTop="8dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_favorate_relativelayout"
                         android:layout_width="fill_parent"
                         android:layout_height="43dp"
-                        android:background="@drawable/personal_item_background"
+                        android:background="@color/white"
                         android:paddingBottom="9dp"
                         android:paddingTop="9dp">
 
@@ -281,20 +273,34 @@
                             android:src="@drawable/icon_jt" />
 
                     </RelativeLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
-                    android:paddingTop="1.5dp">
+                    android:layout_height="2px"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="2px"
+                        android:background="@color/white" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="2px"
+                        android:background="#dcdbe0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
 
                     <RelativeLayout
                         android:id="@+id/personal_empty_relativelayout"
                         android:layout_width="fill_parent"
                         android:layout_height="43dp"
-                        android:background="@drawable/personal_item_background"
+                        android:background="@color/white"
                         android:paddingBottom="9dp"
                         android:paddingTop="9dp">
 
@@ -330,16 +336,29 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
-                    android:paddingTop="1.5dp">
+                    android:layout_height="2px"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="2px"
+                        android:background="@color/white" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="2px"
+                        android:background="#dcdbe0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
 
                     <RelativeLayout
                         android:id="@+id/personal_grade_relativelayout"
                         android:layout_width="fill_parent"
                         android:layout_height="43dp"
-                        android:background="@drawable/personal_item_background"
+                        android:background="@color/white"
                         android:paddingBottom="9dp"
                         android:paddingTop="9dp">
 
@@ -375,16 +394,29 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
-                    android:paddingTop="1.5dp">
+                    android:layout_height="2px"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="2px"
+                        android:background="@color/white" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="2px"
+                        android:background="#dcdbe0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
 
                     <RelativeLayout
                         android:id="@+id/personal_feedback_relativelayout"
                         android:layout_width="fill_parent"
                         android:layout_height="43dp"
-                        android:background="@drawable/personal_item_background"
+                        android:background="@color/white"
                         android:paddingBottom="9dp"
                         android:paddingTop="9dp">
 
@@ -420,16 +452,29 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
-                    android:paddingTop="1.5dp">
+                    android:layout_height="2px"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="2px"
+                        android:background="@color/white" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="2px"
+                        android:background="#dcdbe0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
 
                     <RelativeLayout
                         android:id="@+id/personal_about_relativelayout"
                         android:layout_width="fill_parent"
                         android:layout_height="43dp"
-                        android:background="@drawable/personal_item_background"
+                        android:background="@color/white"
                         android:paddingBottom="9dp"
                         android:paddingTop="9dp">
 
@@ -466,15 +511,13 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10.5dp"
-                    android:paddingRight="10.5dp"
                     android:paddingTop="8dp">
 
                     <RelativeLayout
                         android:id="@+id/personal_declare_relativelayout"
                         android:layout_width="fill_parent"
                         android:layout_height="43dp"
-                        android:background="@drawable/personal_item_background"
+                        android:background="@color/white"
                         android:paddingBottom="9dp"
                         android:paddingTop="9dp">
 
@@ -507,11 +550,13 @@
 
                     </RelativeLayout>
                 </LinearLayout>
+
                 <Button
                     android:id="@+id/custom_test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="一般测试\n用的按钮" />
+                    android:visibility="gone"
+                    android:text="一般测试用的按钮" />
 
             </LinearLayout>
         </ScrollView>

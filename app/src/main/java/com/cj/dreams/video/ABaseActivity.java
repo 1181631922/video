@@ -40,6 +40,7 @@ public class ABaseActivity extends Activity implements View.OnClickListener {
     protected String PostShareId = "share.php?id=";
     protected String GetServerVersion = "get_android_version.php";
     protected String SendUserInfo = "set_userinfo.php";
+    protected String GetVideoInfo="get_videobyvideoid.php";
     protected String mobileState = "mobileState", wifiState = "wifiState", noState = "noState";
 
 

@@ -1,7 +1,9 @@
 package com.cj.dreams.video.activity;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -15,6 +17,7 @@ import android.view.View;
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.dialog.CheckNetDialog;
 import com.cj.dreams.video.dialog.CheckTheNetDialog;
+import com.cj.dreams.video.util.L;
 import com.cj.dreams.video.util.SP;
 import com.umeng.analytics.MobclickAgent;
 
@@ -42,7 +45,8 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
     protected String PostVideoComment = "user_comment.php";
     protected String PostShareId = "share.php?id=";
     protected String GetServerVersion = "get_android_version.php";
-    protected String SendUserInfo="set_userinfo.php";
+    protected String SendUserInfo = "set_userinfo.php";
+    protected String GetVideoInfo = "get_videobyvideoid.php";
     protected String mobileState = "mobileState", wifiState = "wifiState", noState = "noState";
 
     @Override
@@ -103,6 +107,15 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        ActivityInfo activityInfo = null;
+        try {
+            activityInfo = this.getPackageManager().getActivityInfo(this.getComponentName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String UMENG_CHANNEL_VALUE = activityInfo.metaData.getString("UMENG_MESSAGE_SECRET");
+        L.d(UMENG_CHANNEL_VALUE);
     }
 
     @Override

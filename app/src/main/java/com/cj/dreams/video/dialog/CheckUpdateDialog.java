@@ -300,7 +300,7 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
                         contentView = new RemoteViews(packageName, R.layout.notification_view_download);
                         contentView.setTextViewText(R.id.notificationTitle, "Download:爆笑女神安装包下载完成");
                         // notification显示
-                        contentView.setTextViewText(R.id.notificationPercent, "下载完毕");
+                        contentView.setTextViewText(R.id.notificationPercent, "");
                         contentView.setImageViewResource(R.id.notificationImage, R.drawable.ic_launcher);
                         mNotification.icon = R.drawable.ic_launcher;
                         contentView.setProgressBar(R.id.notificationProgress, fileLength, DownedFileLength, false);

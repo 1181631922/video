@@ -35,9 +35,10 @@
 
 
             <LinearLayout
+                android:id="@+id/item_background"
                 android:layout_width="match_parent"
                 android:layout_height="18dp"
-                android:background="#e5e5e5"
+                android:background="#c5c5c5"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -67,7 +68,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    android:text="播放次数"
+                    android:text="1"
                     android:textColor="@color/black"
                     android:textSize="11sp" />
 
@@ -98,7 +99,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    android:text="播放次数"
+                    android:text="1"
                     android:textColor="@color/black"
                     android:textSize="11sp" />
 
@@ -129,7 +130,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    android:text="播放次数"
+                    android:text="1"
                     android:textColor="@color/black"
                     android:textSize="11sp" />
             </LinearLayout>

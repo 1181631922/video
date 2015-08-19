@@ -1,6 +1,7 @@
 package com.cj.dreams.video.activity;
 
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -27,6 +28,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.View;
@@ -69,13 +71,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
-public class VideoViewPlayingActivity extends BaseFragmentActivity implements OnPreparedListener, OnCompletionListener, OnErrorListener, OnInfoListener, OnPlayingBufferCacheListener, OnClickListener, SensorEventListener, GestureDetector.OnGestureListener {
+public class GetBackViewPlayingActivity extends BaseFragmentActivity implements OnPreparedListener, OnCompletionListener, OnErrorListener, OnInfoListener, OnPlayingBufferCacheListener, OnClickListener, SensorEventListener, GestureDetector.OnGestureListener {
     private final String TAG = "VideoViewPlayingActivity";
     private String mVideoSource = null;
     private ImageButton mPlaybtn = null;
@@ -145,6 +148,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
     private GestureDetector gestureDetector;
     MyOrientationEventListener myOrientationEventListener;
+    private String videoIdFromBackground;
 
     class EventHandler extends Handler {
         public EventHandler(Looper looper) {
@@ -232,7 +236,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         if (myOrientationEventListener.canDetectOrientation()) {
             myOrientationEventListener.enable();
         } else {
-            Toast.makeText(VideoViewPlayingActivity.this, "Can't Detect Orientation!", Toast.LENGTH_LONG).show();
+            Toast.makeText(GetBackViewPlayingActivity.this, "Can't Detect Orientation!", Toast.LENGTH_LONG).show();
         }
 
         Configuration configuration = this.getResources().getConfiguration();
@@ -241,26 +245,42 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
         initRock();
 
-        Intent intent = this.getIntent();
-        //获取的数据
-        url_info = intent.getStringExtra("url_info");
-        id_info = intent.getStringExtra("id_info");
-        image_info = intent.getStringExtra("image_info");
-        title_info = intent.getStringExtra("title_info");
-        good_info = intent.getStringExtra("good_info");
-        collect_info = intent.getStringExtra("collect_info");
-        if (intent.getStringExtra("type_info") != null) {
-            type = intent.getStringExtra("type_info");
+        Bundle bun = getIntent().getExtras();
+        if (bun != null) {
+            Set<String> keySet = bun.keySet();
+            for (String key : keySet) {
+                videoIdFromBackground = bun.getString(key);
+                id_info = videoIdFromBackground;
+                L.d("从服务器获取到的数据", videoIdFromBackground);
+            }
         }
-        L.d("得到的图片的网址", image_info);
+
+        Thread loadThread = new Thread(new GetThread());
+        loadThread.start();
+
+//        Intent intent = this.getIntent();
+//        //获取的数据
+//        url_info = intent.getStringExtra("url_info");
+//        id_info = intent.getStringExtra("id_info");
+//        image_info = intent.getStringExtra("image_info");
+//        title_info = intent.getStringExtra("title_info");
+//        good_info = intent.getStringExtra("good_info");
+//        collect_info = intent.getStringExtra("collect_info");
+//        video_palying_title.setText(intent.getStringExtra("title_info"));
+//        if (intent.getStringExtra("type_info") != null) {
+//            type = intent.getStringExtra("type_info");
+//        }
+//        L.d("得到的图片的网址", image_info);
+
 
         mIsHwDecode = getIntent().getBooleanExtra("isHW", false);
-        Thread loadThread = new Thread(new LoadMore());
-        loadThread.start();
+
+
+//        Thread loadThread = new Thread(new LoadMore());
+//        loadThread.start();
         initTextView();
         initUI();
         //获取的数据
-        video_palying_title.setText(intent.getStringExtra("title_info"));
         initViewPager();
         /**
          * 开启后台事件处理线程
@@ -271,6 +291,63 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
     }
 
+    class GetThread implements Runnable {
+        @Override
+        public void run() {
+            getData();
+        }
+    }
+
+    private void getData() {
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        map.put("videoid", videoIdFromBackground);
+        try {
+            String backMsg = PostUtil.postData(BaseUrl + GetVideoInfo, map);
+            L.d(backMsg);
+            try {
+                JSONObject jsonObject = new JSONObject(backMsg);
+                url_info = jsonObject.optString("url");
+                image_info = jsonObject.optString("image");
+                title_info = jsonObject.optString("title");
+                collect_info = jsonObject.optString("collect_num");
+                good_info = jsonObject.optString("praise_num");
+                Message message = Message.obtain();
+                message.what = 0;
+                getHandler.sendMessage(message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    Handler getHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    video_palying_title.setText(title_info);
+                    video_play_collect = (ImageView) findViewById(R.id.video_play_collect);
+                    if (new CollectTableCourse(laughSQLiteOpenHelper.getReadableDatabase()).searchCollect(id_info)) {
+                        video_play_collect.setImageResource(R.drawable.icon_sc_bf);
+                    } else {
+                        video_play_collect.setImageResource(R.drawable.icon_sc_bfh);
+                    }
+                    video_play_good = (ImageView) findViewById(R.id.video_play_good);
+                    if (new GoodTableCourse(laughSQLiteOpenHelper.getReadableDatabase()).searchGood(id_info)) {
+                        video_play_good.setImageResource(R.drawable.icon_zan);
+                    } else {
+                        video_play_good.setImageResource(R.drawable.icon_zanh);
+                    }
+                    Thread loadThread = new Thread(new LoadMore());
+                    loadThread.start();
+                    break;
+            }
+        }
+    };
+
     protected void showShare() {
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
@@ -279,7 +356,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         oks.setTitleUrl(BaseUrl + PostShareId + id_info);
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
-            public void onShare(Platform platform, cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
+            public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
                 System.out.println(platform.getName().toString());
                 if ("SinaWeibo".equals(platform.getName())) {
                     paramsToShare.setText(title_info + "\r\n" + "猛戳☞" + BaseUrl + PostShareId + id_info);
@@ -324,7 +401,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         video_evaluate.setOnClickListener(new MyOnClickListener(1));
     }
 
-    private class MyOnClickListener implements View.OnClickListener {
+    private class MyOnClickListener implements OnClickListener {
         private int index = 0;
 
         public MyOnClickListener(int i) {
@@ -481,7 +558,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             Bundle bundle = msg.getData();
             switch (msg.what) {
                 case 0:
-                    T.showLong(VideoViewPlayingActivity.this, "视频解析失败");
+                    T.showLong(GetBackViewPlayingActivity.this, "视频解析失败");
                     break;
                 case 1:
                     mVideoSource = bundle.getString("m3u8");
@@ -503,18 +580,18 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         root1.setOnClickListener(this);
         video_down_linearlayout = (LinearLayout) findViewById(R.id.video_down_linearlayout);
         video_play_collect = (ImageView) findViewById(R.id.video_play_collect);
-        if (new CollectTableCourse(laughSQLiteOpenHelper.getReadableDatabase()).searchCollect(id_info)) {
-            video_play_collect.setImageResource(R.drawable.icon_sc_bf);
-        } else {
-            video_play_collect.setImageResource(R.drawable.icon_sc_bfh);
-        }
+//        if (new CollectTableCourse(laughSQLiteOpenHelper.getReadableDatabase()).searchCollect(id_info)) {
+//            video_play_collect.setImageResource(R.drawable.icon_sc_bf);
+//        } else {
+//            video_play_collect.setImageResource(R.drawable.icon_sc_bfh);
+//        }
         video_play_collect.setOnClickListener(this);
         video_play_good = (ImageView) findViewById(R.id.video_play_good);
-        if (new GoodTableCourse(laughSQLiteOpenHelper.getReadableDatabase()).searchGood(id_info)) {
-            video_play_good.setImageResource(R.drawable.icon_zan);
-        } else {
-            video_play_good.setImageResource(R.drawable.icon_zanh);
-        }
+//        if (new GoodTableCourse(laughSQLiteOpenHelper.getReadableDatabase()).searchGood(id_info)) {
+//            video_play_good.setImageResource(R.drawable.icon_zan);
+//        } else {
+//            video_play_good.setImageResource(R.drawable.icon_zanh);
+//        }
         video_play_good.setOnClickListener(this);
         video_play_share = (ImageView) findViewById(R.id.video_play_share);
         video_play_share.setOnClickListener(this);
@@ -713,8 +790,17 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                 break;
             case R.id.video_playing_back:
 //                finish();
-                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {// 当屏幕是竖屏时
-                    finish();
+                if (CommonUtil.isScreenOriatationPortrait(GetBackViewPlayingActivity.this)) {// 当屏幕是竖屏时
+                    try {
+                        Intent inten = new Intent(Intent.ACTION_MAIN);
+                        ComponentName componentName = new ComponentName(
+                                "com.cj.dreams.video",
+                                "com.cj.dreams.video.activity.GuideActivity");
+                        inten.setComponent(componentName);
+                        this.startActivity(inten);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "手机未安装爆笑女神", Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -723,8 +809,17 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                 }
                 break;
             case R.id.video_playing_titlebar:
-                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {// 当屏幕是竖屏时
-                    finish();
+                if (CommonUtil.isScreenOriatationPortrait(GetBackViewPlayingActivity.this)) {// 当屏幕是竖屏时
+                    try {
+                        Intent inten = new Intent(Intent.ACTION_MAIN);
+                        ComponentName componentName = new ComponentName(
+                                "com.cj.dreams.video",
+                                "com.cj.dreams.video.activity.GuideActivity");
+                        inten.setComponent(componentName);
+                        this.startActivity(inten);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "手机未安装爆笑女神", Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -736,7 +831,16 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 //                finish();
                 break;
             case R.id.video_playing_back_normal:
-                finish();
+                try {
+                    Intent inten = new Intent(Intent.ACTION_MAIN);
+                    ComponentName componentName = new ComponentName(
+                            "com.cj.dreams.video",
+                            "com.cj.dreams.video.activity.GuideActivity");
+                    inten.setComponent(componentName);
+                    this.startActivity(inten);
+                } catch (Exception e) {
+                    Toast.makeText(this, "手机未安装爆笑女神", Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.video_play_collect:
                 Thread loadThread = new Thread(new LoadThread(id_info, "collect"));
@@ -768,7 +872,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     }
 
     private void fullScreen() {
-        if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {// 当屏幕是竖屏时
+        if (CommonUtil.isScreenOriatationPortrait(GetBackViewPlayingActivity.this)) {// 当屏幕是竖屏时
             // 点击后变横屏
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 设置当前activity为横屏
             // 当横屏时 把除了视频以外的都隐藏
@@ -1132,6 +1236,25 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                try {
+                    Intent inten = new Intent(Intent.ACTION_MAIN);
+                    ComponentName componentName = new ComponentName(
+                            "com.cj.dreams.video",
+                            "com.cj.dreams.video.activity.GuideActivity");
+                    inten.setComponent(componentName);
+                    this.startActivity(inten);
+                } catch (Exception e) {
+                    Toast.makeText(this, "手机未安装爆笑女神", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         L.d("onConfigurationChanged生命周期");
@@ -1182,7 +1305,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             }
 
             orientation = ActivityInfo.SCREEN_ORIENTATION_USER;
-            VideoViewPlayingActivity.this.setRequestedOrientation(orientation);
+            GetBackViewPlayingActivity.this.setRequestedOrientation(orientation);
             Display display = getWindowManager().getDefaultDisplay();
             int width = display.getWidth();
             int height = display.getHeight();

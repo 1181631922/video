@@ -54,3 +54,6 @@ periodicalid：update_home时传0  update_home_2down时传最小的期刊id  upd
 11.登录向服务器传数据接口
     set_userinfo.php
     userid={用户的id},userimage={用户头像，16进制},username={用户的姓名}
+12.根据id获取播放地址
+    get_videobyvideoid.php
+    videoid={视频的id}

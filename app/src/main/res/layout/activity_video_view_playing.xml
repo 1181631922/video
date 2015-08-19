@@ -120,7 +120,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="18dp"
+                android:layout_height="24dp"
                 android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
 
@@ -133,8 +133,8 @@
                     <ImageButton
                         android:id="@+id/play_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="12dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="24dp"
+                        android:gravity="center_vertical"
                         android:layout_marginTop="8dp"
                         android:background="#00000000"
                         android:paddingLeft="10.5dp"
@@ -165,6 +165,7 @@
                     android:layout_weight="0.73"
                     android:maxHeight="0.1px"
                     android:minHeight="0.1px"
+                    android:gravity="center_vertical"
                     android:paddingLeft="30dp"
                     android:progressDrawable="@drawable/seekbar_contral"
                     android:thumb="@drawable/seekbar_thumb" />
@@ -343,18 +344,25 @@
                 <ImageView
                     android:id="@+id/video_recommend_img"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="38dp" />
 
                 <TextView
                     android:id="@+id/video_recommend"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="38dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="小编推荐"
                     android:textColor="@color/black"
                     android:textSize="18dp" />
+                <ImageView
+                    android:id="@+id/video_recommend_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/red"
+                    android:layout_alignParentBottom="true"/>
             </RelativeLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -375,15 +383,15 @@
                     android:text="我要评论"
                     android:textColor="@color/black"
                     android:textSize="18dp" />
+                <ImageView
+                    android:id="@+id/video_evaluate_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:layout_alignParentBottom="true"/>
             </RelativeLayout>
 
         </LinearLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="6dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="#dcdce0" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/video_playing_viewpager"

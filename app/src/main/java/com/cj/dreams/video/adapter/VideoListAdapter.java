@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cj.dreams.video.R;
@@ -74,7 +75,6 @@ public class VideoListAdapter extends ABaseAdapter {
     }
 
 
-
     @Override
     public int getCount() {
         return videoListBeanList.size();
@@ -97,6 +97,7 @@ public class VideoListAdapter extends ABaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.item_activity_video_list, null);
             holder = new ViewHolder();
             view.setTag(holder);
+            holder.item_background=(LinearLayout)view.findViewById(R.id.item_background);
             holder.videoListIcon = (ImageView) view.findViewById(R.id.videolist_icon);
             holder.videoListTitle = (TextView) view.findViewById(R.id.videolist_title);
             holder.videoPlayTimes = (TextView) view.findViewById(R.id.videolist_play_times);
@@ -126,11 +127,12 @@ public class VideoListAdapter extends ABaseAdapter {
 
         holder.videoGoodIcon.setOnClickListener(new goodClick(position));
         if (new GoodTableCourse(laughSQLiteOpenHelper.getReadableDatabase()).searchGood(videoListBeanList.get(position).getVideoId())) {
-            holder.videoGoodIcon.setImageResource(R.drawable.icon_zan);
+            holder.videoGoodIcon.setImageResource(R.drawable.icon_z);
         } else {
-            holder.videoGoodIcon.setImageResource(R.drawable.icon_zanh);
+            holder.videoGoodIcon.setImageResource(R.drawable.icon_z_d);
         }
         loadBitmap(videoListBeanList.get(position).getVideoImage(), holder.videoListIcon);
+        holder.item_background.getBackground().setAlpha(115);
         holder.videoListTitle.setText(videoListBeanList.get(position).getVideoTitle());
         holder.videoPlayTimes.setText(videoListBeanList.get(position).getVideoPlayTimes());
         holder.videoCollectTimes.setText(videoListBeanList.get(position).getVideoCollectTimes());
@@ -183,11 +185,11 @@ public class VideoListAdapter extends ABaseAdapter {
                 if (new GoodTableCourse(laughSQLiteOpenHelper.getReadableDatabase()).searchGood(videoListBeanList.get(position).getVideoId())) {
                     goodOperate = new GoodOperate(laughSQLiteOpenHelper.getReadableDatabase());
                     goodOperate.insert(videoListBeanList.get(position).getVideoId());
-                    holder.videoGoodIcon.setImageResource(R.drawable.icon_zanh);
+                    holder.videoGoodIcon.setImageResource(R.drawable.icon_z_d);
                 } else {
                     goodOperate = new GoodOperate(laughSQLiteOpenHelper.getReadableDatabase());
                     goodOperate.delete(videoListBeanList.get(position).getVideoId());
-                    holder.videoGoodIcon.setImageResource(R.drawable.icon_zan);
+                    holder.videoGoodIcon.setImageResource(R.drawable.icon_z);
                 }
                 notifyDataSetChanged();
             }
@@ -235,6 +237,7 @@ public class VideoListAdapter extends ABaseAdapter {
     }
 
     class ViewHolder {
+        LinearLayout item_background;
         ImageView videoListIcon;
         TextView videoListTitle;
         TextView videoPlayTimes;
