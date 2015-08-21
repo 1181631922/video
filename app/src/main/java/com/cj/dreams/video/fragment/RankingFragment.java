@@ -48,6 +48,8 @@ public class RankingFragment extends BaseFragment {
     private RecordOperate recordOperate;
     private LinearLayout fragment_ranking_linearlayout;
     private TextView ranking_header;
+    private Handler handler2;
+    private boolean isLoad = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,8 +63,12 @@ public class RankingFragment extends BaseFragment {
         this.laughSQLiteOpenHelper = new LaughSQLiteOpenHelper(getActivity());
         laughSQLiteOpenHelper.getWritableDatabase();
         initView();
-        Thread loadThread = new Thread(new LoadThread());
-        loadThread.start();
+        if (!CheckNetworkState().equals(noState)) {
+            isLoad=true;
+            Thread loadThread = new Thread(new LoadThread());
+            loadThread.start();
+        }
+
         initData();
     }
 
@@ -109,14 +115,21 @@ public class RankingFragment extends BaseFragment {
         }
     }
 
-    class LoadThread implements Runnable {
+    class refreshLoadThread implements Runnable {
         @Override
         public void run() {
-            loadData();
+            loadData(0);
         }
     }
 
-    private void loadData() {
+    class LoadThread implements Runnable {
+        @Override
+        public void run() {
+            loadData(1);
+        }
+    }
+
+    private void loadData(int refresh) {
         try {
             String backMsg = PostUtil.postData(BaseUrl + GetTopVideo, null);
             L.d("播放排名得到的返回参数", backMsg.toString());
@@ -155,6 +168,7 @@ public class RankingFragment extends BaseFragment {
 
         Message message = Message.obtain();
         message.what = 0;
+        message.arg1 = refresh;
         handler.sendMessage(message);
     }
 
@@ -166,6 +180,12 @@ public class RankingFragment extends BaseFragment {
                 case 0:
                     videoListBeanList.addAll(videoListBeanList_first);
                     videoListAdapter.update();
+                    if (msg.arg1 == 0) {
+                        isLoad = true;
+                        Message message = Message.obtain();
+                        message.what = 0;
+                        handler2.sendMessage(message);
+                    }
                     break;
             }
         }
@@ -210,7 +230,23 @@ public class RankingFragment extends BaseFragment {
                 @Override
                 public void handleMessage(Message msg) {
                     if (!CheckNetworkState().equals(noState)) {
-                        pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        if (!isLoad) {
+                            Thread loadThread = new Thread(new refreshLoadThread());
+                            loadThread.start();
+                        }else {
+                            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        }
+                        handler2 = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                switch (msg.what) {
+                                    case 0:
+                                        pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                                        break;
+                                }
+                            }
+                        };
                     } else {
                         pullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
                     }
