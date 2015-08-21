@@ -52,20 +52,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link EvaluateFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EvaluateFragment extends BaseFragment implements View.OnTouchListener {
-    // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "videoid";
     private static final String ARG_PARAM2 = "param2";
 
     private String videoid;
-    private String MaxId, MinId, UserInput;
+    private String MaxId = null, MinId = null, UserInput;
     private List<EvaluateUserBean> evaluateUserBeanList = new ArrayList<EvaluateUserBean>();
     private List<EvaluateUserBean> evaluateUserBeanList_loadmore = new ArrayList<EvaluateUserBean>();
     private List<UserInfoBean> userInfoBeanList = new ArrayList<UserInfoBean>();
@@ -106,8 +98,11 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
         this.laughSQLiteOpenHelper = new LaughSQLiteOpenHelper(getActivity());
         laughSQLiteOpenHelper.getWritableDatabase();
         initView();
-        Thread loadThread = new Thread(new LoadThread());
-        loadThread.start();
+        if (!CheckNetworkState().equals(noState)) {
+            Thread loadThread = new Thread(new LoadThread());
+            loadThread.start();
+        } else {
+        }
         initData();
     }
 
@@ -231,9 +226,6 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                     imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
 
                 }
-
-//                Thread loadThread = new Thread(new LoadThread());
-//                loadThread.start();
                 break;
         }
     }
@@ -370,7 +362,6 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                 JSONArray commentinfo = jsonObject.getJSONArray("commentinfo");
                 L.d(commentinfo.toString());
                 evaluateUserBeanList.clear();
-//                evaluateUserBeanList_loadmore.clear();
                 userInfoBeanList.clear();
                 for (int i = 0; i < commentinfo.length(); i++) {
                     EvaluateUserBean evaluateUserBean = new EvaluateUserBean(null, null, null, null);
@@ -389,7 +380,6 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
                     evaluateUserBean.setEvaluateTime(periodicalinfo.getString("comment_date"));
                     evaluateUserBean.setEvaluateDetail(EncryptUtil.decryptBASE64(periodicalinfo.getString("comment_content")));
                     evaluateUserBean.setEvaluateGoodTimes(periodicalinfo.getString("comment_praise_number"));
-//                    evaluateUserBeanList.clear();
                     evaluateUserBeanList.add(evaluateUserBean);
                 }
                 Message message = Message.obtain();
@@ -427,23 +417,28 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    Thread refresh = new Thread(new Refresh());
-                    refresh.start();
-                    handler2 = new Handler() {
-                        @Override
-                        public void handleMessage(Message msg) {
-                            super.handleMessage(msg);
-                            switch (msg.what) {
-                                case 0:
-                                    evaluateAdapter = new EvaluateAdapter(getActivity(), evaluateUserBeanList);
-                                    listView.setAdapter(evaluateAdapter);
-                                    evaluateAdapter.update();
-                                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                                    break;
+                    if (!CheckNetworkState().equals(noState)) {
+                        Thread refresh = new Thread(new Refresh());
+                        refresh.start();
+
+                        handler2 = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                switch (msg.what) {
+                                    case 0:
+                                        evaluateAdapter = new EvaluateAdapter(getActivity(), evaluateUserBeanList);
+                                        listView.setAdapter(evaluateAdapter);
+                                        evaluateAdapter.update();
+                                        pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                                        break;
+                                }
                             }
-                        }
-                    };
-                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        };
+                    } else {
+
+                        pullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
+                    }
                 }
             }.sendEmptyMessageDelayed(0, 500);
         }
@@ -453,22 +448,32 @@ public class EvaluateFragment extends BaseFragment implements View.OnTouchListen
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    Thread lodeMore = new Thread(new LoadMore());
-                    lodeMore.start();
-
-                    handler1 = new Handler() {
-                        @Override
-                        public void handleMessage(Message msg) {
-                            super.handleMessage(msg);
-                            switch (msg.what) {
-                                case 0:
-                                    evaluateUserBeanList.addAll(evaluateUserBeanList_loadmore);
-                                    evaluateAdapter.update();
-                                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                                    break;
-                            }
+                    if (!CheckNetworkState().equals(noState)) {
+                        if (MinId != null) {
+                            Thread lodeMore = new Thread(new LoadMore());
+                            lodeMore.start();
+                        } else {
+                            pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                         }
-                    };
+
+                        handler1 = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                switch (msg.what) {
+                                    case 0:
+                                        evaluateUserBeanList.addAll(evaluateUserBeanList_loadmore);
+                                        evaluateAdapter.update();
+                                        pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                                        break;
+                                }
+                            }
+                        };
+                    } else {
+                        pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                    }
+
+
                 }
             }.sendEmptyMessageDelayed(0, 500);
         }
