@@ -22,10 +22,9 @@ public class BaseDialog extends Dialog implements View.OnClickListener {
     protected String newVersion = "发现新版本", nowVersion = "已经是最新版本", nowText = "当前已是最新版本";
     protected String UserType, appVersion;
     protected String channelId;
-    protected static String BaseUrl;
 
-    //    protected String BaseUrl = "http://www.baoxiaons.com/";
-//    protected String BaseUrl = "http://test.baoxiaons.com/";
+    protected String BaseUrl = "http://www.baoxiaons.com/";
+    //    protected String BaseUrl = "http://test.baoxiaons.com/";
 //    protected String BaseUrl = "http://video.ktdsp.com/";
     protected String GetHomeInfo = "get_home_videoInfo.php";
     protected String GetRealUrl = "video_api/url_to_m3u8.php";

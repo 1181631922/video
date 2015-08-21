@@ -87,13 +87,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private TextView mCurrPostion = null;
     private TextView time_rest;
     private String url_info, id_info, image_info, title_info, good_info, collect_info;
-    private String BaseUrl = "http://video.ktdsp.com/";
-    private String GetHomeInfo = "get_home_videoInfo.php";
     private String GetRealUrl = "video_api/url_to_m3u8.php";
-    private String GetMoreVideoInfo = "get_more_videoInfo.php";
-    private String GetTopVideo = "playtop100.php";
-    private String GetRecommendVideo = "recommended_video.php";
-    private String GetUserEvaluate = "get_user_comment.php";
     private LinearLayout video_down_linearlayout;
     private RelativeLayout root1;
     private int count;
@@ -101,15 +95,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private SensorManager mSensorManager;
     private Vibrator mVibrator;
     private final int ROCKPOWER = 15;
-    /**
-     * 记录播放位置
-     */
     private int mLastPos = 0;
 
-
-    /**
-     * 播放状态
-     */
     private enum PLAYER_STATUS {
         PLAYER_IDLE, PLAYER_PREPARING, PLAYER_PREPARED,
     }
@@ -124,7 +111,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private boolean mIsHwDecode = false;
     private final int EVENT_PLAY = 0;
     private final int UI_EVENT_UPDATE_CURRPOSITION = 1;
-
     private ViewPager video_playing_viewpager;
     private List<Fragment> fragmentList;
     private TextView video_recommend, video_evaluate, video_palying_title, video_view_title;
@@ -141,10 +127,33 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private CollectOperate collectOperate;
     private GoodOperate goodOperate;
     private String type;
+    private int state = 0;
     private int orientation = ActivityInfo.SCREEN_ORIENTATION_USER;
 
     private GestureDetector gestureDetector;
     MyOrientationEventListener myOrientationEventListener;
+
+    Handler uiHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle bundle = msg.getData();
+            switch (msg.what) {
+                case 0:
+                    state = 0;
+                    T.showLong(VideoViewPlayingActivity.this, "视频解析失败");
+                    break;
+                case 1:
+                    state = 1;
+                    mVideoSource = bundle.getString("m3u8");
+                    mHandlerThread = new HandlerThread("event handler thread", Process.THREAD_PRIORITY_BACKGROUND);
+                    mHandlerThread.start();
+                    mEventHandler = new EventHandler(mHandlerThread.getLooper());
+                    mEventHandler.sendEmptyMessage(EVENT_PLAY);
+                    break;
+            }
+        }
+    };
 
     class EventHandler extends Handler {
         public EventHandler(Looper looper) {
@@ -155,38 +164,21 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case EVENT_PLAY:
-                    /**
-                     * 如果已经播放了，等待上一次播放结束
-                     */
                     if (mPlayerStatus != PLAYER_STATUS.PLAYER_IDLE) {
                         synchronized (SYNC_Playing) {
                             try {
                                 SYNC_Playing.wait();
-                                Log.v(TAG, "wait player status to idle");
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                         }
                     }
-                    /**
-                     * 设置播放url
-                     */
                     mVV.setVideoPath(mVideoSource);
-                    /**
-                     * 续播，如果需要如此
-                     */
                     if (mLastPos > 0) {
                         mVV.seekTo(mLastPos);
                         mLastPos = 0;
                     }
-                    /**
-                     * 显示或者隐藏缓冲提示
-                     */
                     mVV.showCacheInfo(true);
-                    /**
-                     * 开始播放
-                     */
                     mVV.start();
                     mPlayerStatus = PLAYER_STATUS.PLAYER_PREPARING;
                     break;
@@ -199,9 +191,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     Handler mUIHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                /**
-                 * 更新进度及时间
-                 */
                 case UI_EVENT_UPDATE_CURRPOSITION:
                     int currPosition = mVV.getCurrentPosition();
                     int duration = mVV.getDuration();
@@ -237,12 +226,9 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
         Configuration configuration = this.getResources().getConfiguration();
         int ori = configuration.orientation;
-
-
         initRock();
 
         Intent intent = this.getIntent();
-        //获取的数据
         url_info = intent.getStringExtra("url_info");
         id_info = intent.getStringExtra("id_info");
         image_info = intent.getStringExtra("image_info");
@@ -252,22 +238,14 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         if (intent.getStringExtra("type_info") != null) {
             type = intent.getStringExtra("type_info");
         }
-        L.d("得到的图片的网址", image_info);
 
         mIsHwDecode = getIntent().getBooleanExtra("isHW", false);
-        Thread loadThread = new Thread(new LoadMore());
-        loadThread.start();
         initTextView();
         initUI();
-        //获取的数据
         video_palying_title.setText(intent.getStringExtra("title_info"));
         initViewPager();
-        /**
-         * 开启后台事件处理线程
-         */
-        mHandlerThread = new HandlerThread("event handler thread", Process.THREAD_PRIORITY_BACKGROUND);
-        mHandlerThread.start();
-//        mEventHandler = new EventHandler(mHandlerThread.getLooper());
+        Thread loadThread = new Thread(new LoadMore());
+        loadThread.start();
 
     }
 
@@ -277,6 +255,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         oks.disableSSOWhenAuthorize();
         oks.setTitle("爆笑女神");
         oks.setTitleUrl(BaseUrl + PostShareId + id_info);
+//        oks.setText(title_info + '\n' + "猛戳☞" + BaseUrl + PostShareId + id_info);
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
             public void onShare(Platform platform, cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
@@ -313,12 +292,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         video_recommend_img = (ImageView) findViewById(R.id.video_recommend_img);
         video_evaluate_img = (ImageView) findViewById(R.id.video_evaluate_img);
         video_recommend.setTextColor(selectedColor);
-////        video_recommend_img.setBackground(selectedButton);
-//        video_recommend_img.setBackgroundDrawable(selectedButton);
         video_recommend_view.setBackgroundColor(redColor);
         video_evaluate.setTextColor(unSelectedColor);
-//        video_evaluate_img.setBackground(unSelectedButton);
-//        video_evaluate_img.setBackgroundDrawable(unSelectedButton);
         video_evaluate_view.setBackgroundColor(grayColor);
         video_recommend.setOnClickListener(new MyOnClickListener(0));
         video_evaluate.setOnClickListener(new MyOnClickListener(1));
@@ -363,27 +338,20 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             switch (index) {
                 case 0:
                     video_recommend.setTextColor(selectedColor);
-//                    video_recommend_img.setBackgroundDrawable(selectedButton);
                     video_recommend_view.setBackgroundColor(redColor);
                     video_evaluate.setTextColor(unSelectedColor);
-//                    video_evaluate_img.setBackgroundDrawable(unSelectedButton);
                     video_evaluate_view.setBackgroundColor(grayColor);
                     break;
                 case 1:
                     video_recommend.setTextColor(unSelectedColor);
-//                    video_recommend_img.setBackgroundDrawable(unSelectedButton);
                     video_recommend_view.setBackgroundColor(grayColor);
                     video_evaluate.setTextColor(selectedColor);
-//                    video_evaluate_img.setBackgroundDrawable(selectedButton);
                     video_evaluate_view.setBackgroundColor(redColor);
                     break;
             }
         }
     }
 
-    /**
-     * 定义适配器
-     */
     class OurPagerAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragmentList;
         private FragmentManager fragmentManager;
@@ -393,9 +361,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             this.fragmentList = fragmentList;
         }
 
-        /**
-         * 得到每个页面
-         */
         @Override
         public Fragment getItem(int arg0) {
             return (fragmentList == null || fragmentList.size() == 0) ? null
@@ -416,17 +381,11 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             notifyDataSetChanged();
         }
 
-        /**
-         * 每个页面的title
-         */
         @Override
         public CharSequence getPageTitle(int position) {
             return null;
         }
 
-        /**
-         * 页面的总个数
-         */
         @Override
         public int getCount() {
             return fragmentList == null ? 0 : fragmentList.size();
@@ -474,27 +433,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         }
     }
 
-    Handler uiHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Bundle bundle = msg.getData();
-            switch (msg.what) {
-                case 0:
-                    T.showLong(VideoViewPlayingActivity.this, "视频解析失败");
-                    break;
-                case 1:
-                    mVideoSource = bundle.getString("m3u8");
-                    mEventHandler = new EventHandler(mHandlerThread.getLooper());
-                    mEventHandler.sendEmptyMessage(EVENT_PLAY);
-                    break;
-            }
-        }
-    };
 
-    /**
-     * 初始化界面
-     */
     private void initUI() {
 
         video_view_title = (TextView) findViewById(R.id.video_view_title);
@@ -557,95 +496,68 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         }
 
         registerCallbackForControl();
-        /**
-         * 设置ak及sk的前16位
-         */
         BVideoView.setAKSK("j5wt2l88mbhlO2qcUONvfI1j", "aQ6WG4w2KMIF37hr");
-        /**
-         *获取BVideoView对象
-         */
         mVV = (BVideoView) findViewById(R.id.video_view);
-        /**
-         * 注册listener
-         */
         mVV.setOnPreparedListener(this);
         mVV.setOnCompletionListener(this);
         mVV.setOnErrorListener(this);
         mVV.setOnInfoListener(this);
-        /**
-         * 设置解码模式
-         */
         mVV.setDecodeMode(mIsHwDecode ? BVideoView.DECODE_HW : BVideoView.DECODE_SW);
     }
 
 
-    /**
-     * 为控件注册回调处理函数
-     */
     private void registerCallbackForControl() {
         mPlaybtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                if (mVV.isPlaying()) {
-                    mPlaybtn.setImageResource(R.drawable.play_btn_style);
-                    mPlaybtn.setAdjustViewBounds(true);
-                    mPlaybtn.setMaxHeight(48);
-                    mPlaybtn.setMaxWidth(48);
-                    /**
-                     * 暂停播放
-                     */
-                    mVV.pause();
+                if (mVV.getCurrentPosition() == 0 && state == 1) {
+
+                    if (mVV.isPlaying()) {
+                        mPlaybtn.setImageResource(R.drawable.play_btn_style);
+                        mPlaybtn.setAdjustViewBounds(true);
+                        mPlaybtn.setMaxHeight(48);
+                        mPlaybtn.setMaxWidth(48);
+                        mVV.pause();
+                    } else {
+                        mPlaybtn.setImageResource(R.drawable.pause_btn_style);
+                        mPlaybtn.setAdjustViewBounds(true);
+                        mPlaybtn.setMaxHeight(48);
+                        mPlaybtn.setMaxWidth(48);
+                        mVV.resume();
+                    }
                 } else {
-                    mPlaybtn.setImageResource(R.drawable.pause_btn_style);
-                    mPlaybtn.setAdjustViewBounds(true);
-                    mPlaybtn.setMaxHeight(48);
-                    mPlaybtn.setMaxWidth(48);
-                    /**
-                     * 继续播放
-                     */
-                    mVV.resume();
+                    mVV.setVideoPath(mVideoSource);
+                    L.d("是否打印了，打印，--------------------------------------------");
                 }
             }
         });
 
         play_btn_relativelayout.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                if (mVV.isPlaying()) {
-                    mPlaybtn.setImageResource(R.drawable.play_btn_style);
-                    mPlaybtn.setAdjustViewBounds(true);
-                    mPlaybtn.setMaxHeight(48);
-                    mPlaybtn.setMaxWidth(48);
-                    /**
-                     * 暂停播放
-                     */
-                    mVV.pause();
-                } else {
-                    mPlaybtn.setImageResource(R.drawable.pause_btn_style);
-                    mPlaybtn.setAdjustViewBounds(true);
-                    mPlaybtn.setMaxHeight(48);
-                    mPlaybtn.setMaxWidth(48);
-                    /**
-                     * 继续播放
-                     */
-                    mVV.resume();
+                if (mVV.getCurrentPosition() == 0 && state == 1) {
+                    if (mVV.isPlaying()) {
+                        mPlaybtn.setImageResource(R.drawable.play_btn_style);
+                        mPlaybtn.setAdjustViewBounds(true);
+                        mPlaybtn.setMaxHeight(48);
+                        mPlaybtn.setMaxWidth(48);
+                        mVV.pause();
+                    } else {
+                        mPlaybtn.setImageResource(R.drawable.pause_btn_style);
+                        mPlaybtn.setAdjustViewBounds(true);
+                        mPlaybtn.setMaxHeight(48);
+                        mPlaybtn.setMaxWidth(48);
+                        mVV.resume();
+                    }
+                } else  {
+                    mVV.setVideoPath(mVideoSource);
+                    L.d("是否打印了，打印，--------------------------------------------");
                 }
             }
         });
-        /**
-         * 实现切换示例
-         */
         mPrebtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                /**
-                 * 如果已经播放了，等待上一次播放结束
-                 */
                 if (mPlayerStatus != PLAYER_STATUS.PLAYER_IDLE) {
                     mVV.stopPlayback();
                 }
-                /**
-                 * 发起一次新的播放任务
-                 */
                 if (mEventHandler.hasMessages(EVENT_PLAY))
                     mEventHandler.removeMessages(EVENT_PLAY);
                 mEventHandler.sendEmptyMessage(EVENT_PLAY);
@@ -653,34 +565,22 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         });
         mForwardbtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
             }
         });
         OnSeekBarChangeListener osbc1 = new OnSeekBarChangeListener() {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // TODO Auto-generated method stub
-                //Log.v(TAG, "progress: " + progress);
                 updateTextViewWithTimeFormat(mCurrPostion, progress);
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-                /**
-                 * SeekBar开始seek时停止更新
-                 */
                 mUIHandler.removeMessages(UI_EVENT_UPDATE_CURRPOSITION);
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
                 int iseekPos = seekBar.getProgress();
-                /**
-                 * SeekBark完成seek时执行seekTo操作并更新界面
-                 *
-                 */
                 mVV.seekTo(iseekPos);
-                Log.v(TAG, "seek to " + iseekPos);
                 mUIHandler.sendEmptyMessage(UI_EVENT_UPDATE_CURRPOSITION);
             }
         };
@@ -712,28 +612,24 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                 showShare();
                 break;
             case R.id.video_playing_back:
-//                finish();
-                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {// 当屏幕是竖屏时
+                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {
                     finish();
                 } else {
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                    //显示其他组件
                     video_down_linearlayout.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.video_playing_titlebar:
-                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {// 当屏幕是竖屏时
+                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {
                     finish();
                 } else {
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                    //显示其他组件
                     video_down_linearlayout.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.video_playing_back_relativelayout:
-//                finish();
                 break;
             case R.id.video_playing_back_normal:
                 finish();
@@ -786,7 +682,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            //显示其他组件
             video_playing_back.bringToFront();
             video_down_linearlayout.setVisibility(View.VISIBLE);
             video_playing_back_relativelayout.setVisibility(View.GONE);
@@ -817,7 +712,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         map.put("type", buttonType);
         try {
             String backMsg = PostUtil.postData(BaseUrl + PostVideoInfo, map);
-            L.d("运行到此，点赞，收藏加1");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -827,9 +721,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
-        /**
-         * 在停止播放前 你可以先记录当前播放的位置,以便以后可以续播
-         */
         if (mPlayerStatus == PLAYER_STATUS.PLAYER_PREPARED) {
             mLastPos = mVV.getCurrentPosition();
             mVV.stopPlayback();
@@ -847,9 +738,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             mWakeLock.acquire();
         }
 
-        if (mSensorManager != null) {// 注册监听器
+        if (mSensorManager != null) {
             mSensorManager.registerListener(sensorEventListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
-            // 第一个参数是Listener，第二个参数是所得传感器类型，第三个参数值获取传感器信息的频率
         }
 
         getConfigurationInfo();
@@ -858,18 +748,19 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         /**
          * 发起一次播放任务,当然您不一定要在这发起
          */
-//        mEventHandler.sendEmptyMessage(EVENT_PLAY);
+        if (mVideoSource != null) {
+            mEventHandler.sendEmptyMessage(EVENT_PLAY);
+        }
     }
 
     private void getConfigurationInfo() {
         Configuration configuration = getResources().getConfiguration();
-        //获取屏幕方向
         int l = configuration.ORIENTATION_LANDSCAPE;
         int p = configuration.ORIENTATION_PORTRAIT;
         if (configuration.orientation == l) {
             System.out.println("现在是横屏");
         }
-        if (configuration.orientation == p) {
+        if (configuration.orientation == 0) {
             System.out.println("现在是竖屏");
         }
 
@@ -879,26 +770,17 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private long mTouchTime;
     private boolean barShow = true;
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            mTouchTime = System.currentTimeMillis();
-////            updateControlBar(!barShow);
-//        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-//            long time = System.currentTimeMillis() - mTouchTime;
-//            if (time < 200) {
-//                updateControlBar(!barShow);
-////                fullScreen();
-//            } else if (200 < time || time < 1000) {
-//                fullScreen();
-//            }
-//        }
-//        return true;
-//    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
+        if (event.getAction() == MotionEvent.ACTION_DOWN)
+            mTouchTime = System.currentTimeMillis();
+        else if (event.getAction() == MotionEvent.ACTION_UP) {
+            long time = System.currentTimeMillis() - mTouchTime;
+            if (time < 400) {
+                updateControlBar(!barShow);
+            }
+        }
+        return true;
     }
 
     @Override
@@ -920,7 +802,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         double x1 = e1.getX();
         double x2 = e2.getX();
-//大于0快进
         if (x2 - x1 > 0) {
 
         } else {
@@ -951,7 +832,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                 } else if (count == 2) {
                     secClick = System.currentTimeMillis();
                     if (secClick - firClick < 1000) {
-                        //双击事件
                         fullScreen();
                     }
                     count = 0;
@@ -973,11 +853,9 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         if (show) {
             mController.setVisibility(View.VISIBLE);
             video_playing_back_relativelayout.setVisibility(View.VISIBLE);
-//            video_playing_titlebar.setVisibility(View.VISIBLE);
         } else {
             mController.setVisibility(View.INVISIBLE);
             video_playing_back_relativelayout.setVisibility(View.INVISIBLE);
-//            video_playing_titlebar.setVisibility(View.INVISIBLE);
         }
         barShow = show;
     }
@@ -985,7 +863,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     @Override
     protected void onStop() {
         super.onStop();
-        if (mSensorManager != null) {// 取消监听器
+        if (mSensorManager != null) {
             mSensorManager.unregisterListener(sensorEventListener);
         }
 
@@ -995,25 +873,15 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /**
-         * 退出后台事件处理线程
-         */
         mHandlerThread.quit();
         myOrientationEventListener.disable();
     }
 
     @Override
     public boolean onInfo(int what, int extra) {
-        // TODO Auto-generated method stub
         switch (what) {
-            /**
-             * 开始缓冲
-             */
             case BVideoView.MEDIA_INFO_BUFFERING_START:
                 break;
-            /**
-             * 结束缓冲
-             */
             case BVideoView.MEDIA_INFO_BUFFERING_END:
                 break;
             default:
@@ -1022,22 +890,13 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         return true;
     }
 
-    /**
-     * 当前缓冲的百分比， 可以配合onInfo中的开始缓冲和结束缓冲来显示百分比到界面
-     */
     @Override
     public void onPlayingBufferCache(int percent) {
-        // TODO Auto-generated method stub
 
     }
 
-    /**
-     * 播放出错
-     */
     @Override
     public boolean onError(int what, int extra) {
-        // TODO Auto-generated method stub
-        Log.v(TAG, "onError");
         synchronized (SYNC_Playing) {
             SYNC_Playing.notify();
         }
@@ -1046,13 +905,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         return true;
     }
 
-    /**
-     * 播放完成
-     */
     @Override
     public void onCompletion() {
-        // TODO Auto-generated method stub
-        Log.v(TAG, "onCompletion");
         synchronized (SYNC_Playing) {
             SYNC_Playing.notify();
         }
@@ -1060,13 +914,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         mUIHandler.removeMessages(UI_EVENT_UPDATE_CURRPOSITION);
     }
 
-    /**
-     * 准备播放就绪
-     */
     @Override
     public void onPrepared() {
-        // TODO Auto-generated method stub
-        Log.v(TAG, "onPrepared");
         mPlayerStatus = PLAYER_STATUS.PLAYER_PREPARED;
         mUIHandler.sendEmptyMessage(UI_EVENT_UPDATE_CURRPOSITION);
     }
@@ -1085,15 +934,12 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            // 传感器信息改变时执行该方法
             float[] values = event.values;
-            float x = values[0]; // x轴方向的重力加速度，向右为正
-            float y = values[1]; // y轴方向的重力加速度，向前为正
-            float z = values[2]; // z轴方向的重力加速度，向上为正
-            // 一般在这三个方向的重力加速度达到40就达到了摇晃手机的状态。
-            int medumValue = 10;// 如果不敏感请自行调低该数值,低于10的话就不行了,因为z轴上的加速度本身就已经达到10了
+            float x = values[0];
+            float y = values[1];
+            float z = values[2];
+            int medumValue = 10;
             if (Math.abs(x) > medumValue || Math.abs(y) > medumValue || Math.abs(z) > medumValue) {
-//                mVibrator.vibrate(200);
                 Message msg = new Message();
                 msg.what = ROCKPOWER;
                 handler.sendMessage(msg);
@@ -1113,8 +959,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             super.handleMessage(msg);
             switch (msg.what) {
                 case ROCKPOWER:
-//                    fullScreen();
-//                    Toast.makeText(VideoViewPlayingActivity.this, "检测到摇晃，执行操作！", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -1134,11 +978,13 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        L.d("onConfigurationChanged生命周期");
+        changeScreen(newConfig);
+    }
+
+    private void changeScreen(Configuration newConfig) {
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            //显示其他组件
             video_playing_back.bringToFront();
             video_down_linearlayout.setVisibility(View.VISIBLE);
             video_playing_back_relativelayout.setVisibility(View.GONE);
@@ -1146,10 +992,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             video_playing_back.setVisibility(View.VISIBLE);
             video_playing_back_normal.setVisibility(View.VISIBLE);
         } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 设置当前activity为横屏
-            // 当横屏时 把除了视频以外的都隐藏
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            //隐藏其他组件的代码
             video_playing_back.bringToFront();
             video_down_linearlayout.setVisibility(View.GONE);
             video_playing_back_relativelayout.setVisibility(View.VISIBLE);
@@ -1162,25 +1006,17 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         }
     }
 
-
     class MyOrientationEventListener extends OrientationEventListener {
 
         public MyOrientationEventListener(Context context, int rate) {
             super(context, rate);
-            // TODO Auto-generated constructor stub
         }
 
         @Override
         public void onOrientationChanged(int arg0) {
-            // TODO Auto-generated method stub
-
-//            L.d("onOrientationChanged生命周期实现");
-//            L.d(orientation);
-
             if (orientation == OrientationEventListener.ORIENTATION_UNKNOWN) {
-                return;  //手机平放时，检测不到有效的角度
+                return;
             }
-
             orientation = ActivityInfo.SCREEN_ORIENTATION_USER;
             VideoViewPlayingActivity.this.setRequestedOrientation(orientation);
             Display display = getWindowManager().getDefaultDisplay();
@@ -1191,9 +1027,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             } else {
                 orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
             }
-
         }
-
     }
 
 

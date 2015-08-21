@@ -117,6 +117,20 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 Appshopname = jsonObject.optString("Appshopname");
                 SP.put(this, SP.Appshopname, Appshopname);
                 SP.put(this, SP.Appshopurl, Appshopurl);
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d("-------------------------------------------------");
+                L.d((String) SP.get(this, SP.Appshopname, ""));
+                L.d((String) SP.get(this, SP.Appshopurl, ""));
                 Message message = Message.obtain();
                 message.what = 0;
                 for (int i = 0; i < version.length(); i++) {
@@ -326,9 +340,6 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         MainExitDialog dialog = new MainExitDialog(this, R.style.mystyle, R.layout.dialog_exit_main);
         dialog.show();
     }
-
-
-
 
 
     @Override

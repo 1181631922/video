@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.adapter.VideoListAdapter;
@@ -45,11 +46,12 @@ public class VideoListActivity extends BaseNoActionbarActivity {
     private String periodicalid;
     //    private List<VideoListBean> videoListBeanList = new ArrayList<VideoListBean>();
     private List<Map<String, Object>> videoInfoList = new ArrayList<Map<String, Object>>();
-    private String MaxId, MinId, id_info, title_info, image_info, url_info;
+    private String MaxId, MinId, id_info, title_info, image_info, url_info, name;
     private Handler handler1, handler2;
     private ImageView video_list_back;
     private LaughSQLiteOpenHelper laughSQLiteOpenHelper;
     private RecordOperate recordOperate;
+    private TextView video_list_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public class VideoListActivity extends BaseNoActionbarActivity {
     private void initView() {
         Intent intent = this.getIntent();
         periodicalid = intent.getStringExtra("periodicalid");
+        name = intent.getStringExtra("name");
+        video_list_title = (TextView) findViewById(R.id.video_list_title);
+        video_list_title.setText(name);
         video_list_back = (ImageView) findViewById(R.id.video_list_back);
         video_list_back.setOnClickListener(this);
         ptrl = ((PullToRefreshLayout) findViewById(R.id.refresh_videolist_view));

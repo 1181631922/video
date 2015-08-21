@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.activity.MainActivity;
 import com.cj.dreams.video.bean.AppGradeBean;
+import com.cj.dreams.video.util.L;
 import com.cj.dreams.video.util.SP;
 
 
@@ -67,6 +68,19 @@ public class GradeDialog extends Dialog implements View.OnClickListener {
         dialog_appshop = (RelativeLayout) findViewById(R.id.dialog_appshop);
         appshop_name = (Button) findViewById(R.id.appshop_name);
         appshop_cancel = (Button) findViewById(R.id.appshop_cancel);
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d("-------------------------------------------------");
+        L.d((String) SP.get(getContext(), SP.Appshopname, ""));
         appshop_name.setText((String) SP.get(getContext(), SP.Appshopname, ""));
 
         appshop_name.setTextColor(0xff1E90FF);

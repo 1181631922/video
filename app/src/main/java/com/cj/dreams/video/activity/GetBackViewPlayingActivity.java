@@ -90,7 +90,6 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
     private TextView mCurrPostion = null;
     private TextView time_rest;
     private String url_info, id_info, image_info, title_info, good_info, collect_info;
-    private String BaseUrl = "http://video.ktdsp.com/";
     private String GetHomeInfo = "get_home_videoInfo.php";
     private String GetRealUrl = "video_api/url_to_m3u8.php";
     private String GetMoreVideoInfo = "get_more_videoInfo.php";
@@ -309,8 +308,8 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
                 url_info = jsonObject.optString("url");
                 image_info = jsonObject.optString("image");
                 title_info = jsonObject.optString("title");
-                collect_info = jsonObject.optString("collect_num");
-                good_info = jsonObject.optString("praise_num");
+                collect_info = Integer.parseInt(jsonObject.optString("collect_num")) + "";
+                good_info = Integer.parseInt(jsonObject.optString("praise_num")) + "";
                 Message message = Message.obtain();
                 message.what = 0;
                 getHandler.sendMessage(message);
@@ -341,6 +340,8 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
                     } else {
                         video_play_good.setImageResource(R.drawable.icon_zanh);
                     }
+                    video_play_collect_text.setText(collect_info);
+                    video_play_good_text.setText(good_info);
                     Thread loadThread = new Thread(new LoadMore());
                     loadThread.start();
                     break;
@@ -596,9 +597,9 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
         video_play_share = (ImageView) findViewById(R.id.video_play_share);
         video_play_share.setOnClickListener(this);
         video_play_collect_text = (TextView) findViewById(R.id.video_play_collect_text);
-        video_play_collect_text.setText(collect_info);
+//        video_play_collect_text.setText(collect_info);
         video_play_good_text = (TextView) findViewById(R.id.video_play_good_text);
-        video_play_good_text.setText(good_info);
+//        video_play_good_text.setText(good_info);
         video_playing_back_relativelayout = (RelativeLayout) findViewById(R.id.video_playing_back_relativelayout);
         video_playing_back_relativelayout.setVisibility(View.GONE);
         video_playing_back_relativelayout.setOnClickListener(this);
@@ -789,15 +790,16 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
                 showShare();
                 break;
             case R.id.video_playing_back:
-//                finish();
                 if (CommonUtil.isScreenOriatationPortrait(GetBackViewPlayingActivity.this)) {// 当屏幕是竖屏时
                     try {
+
                         Intent inten = new Intent(Intent.ACTION_MAIN);
                         ComponentName componentName = new ComponentName(
                                 "com.cj.dreams.video",
                                 "com.cj.dreams.video.activity.GuideActivity");
                         inten.setComponent(componentName);
                         this.startActivity(inten);
+                        finish();
                     } catch (Exception e) {
                         Toast.makeText(this, "手机未安装爆笑女神", Toast.LENGTH_LONG).show();
                     }
@@ -809,6 +811,7 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
                 }
                 break;
             case R.id.video_playing_titlebar:
+
                 if (CommonUtil.isScreenOriatationPortrait(GetBackViewPlayingActivity.this)) {// 当屏幕是竖屏时
                     try {
                         Intent inten = new Intent(Intent.ACTION_MAIN);
@@ -817,6 +820,7 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
                                 "com.cj.dreams.video.activity.GuideActivity");
                         inten.setComponent(componentName);
                         this.startActivity(inten);
+                        finish();
                     } catch (Exception e) {
                         Toast.makeText(this, "手机未安装爆笑女神", Toast.LENGTH_LONG).show();
                     }
@@ -838,6 +842,7 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
                             "com.cj.dreams.video.activity.GuideActivity");
                     inten.setComponent(componentName);
                     this.startActivity(inten);
+                    finish();
                 } catch (Exception e) {
                     Toast.makeText(this, "手机未安装爆笑女神", Toast.LENGTH_LONG).show();
                 }
@@ -1246,6 +1251,7 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
                             "com.cj.dreams.video.activity.GuideActivity");
                     inten.setComponent(componentName);
                     this.startActivity(inten);
+                    finish();
                 } catch (Exception e) {
                     Toast.makeText(this, "手机未安装爆笑女神", Toast.LENGTH_LONG).show();
                 }

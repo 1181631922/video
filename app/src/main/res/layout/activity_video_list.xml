@@ -25,21 +25,27 @@
 
 
                 <ImageView
-                    android:id="@+id/video_list_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10.5dp"
                     android:src="@drawable/video_playing_back" />
 
+                <ImageView
+                    android:id="@+id/video_list_back"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent" />
+
                 <TextView
+                    android:id="@+id/video_list_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:text="更多视频"
                     android:textColor="@color/white"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:textSize="15dp" />
 
 
             </RelativeLayout>
@@ -74,9 +80,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:background="@color/white"
-                    android:focusable="true"
                     android:cacheColorHint="#00000000"
-                    android:dividerHeight="1px" />
+                    android:dividerHeight="1px"
+                    android:focusable="true" />
 
 
                 <include layout="@layout/load_more" />

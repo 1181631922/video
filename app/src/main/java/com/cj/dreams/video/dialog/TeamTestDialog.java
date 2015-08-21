@@ -65,10 +65,10 @@ public class TeamTestDialog extends BaseDialog implements View.OnClickListener {
         dialog_exit_detail = (TextView) findViewById(R.id.dialog_exit_detail);
         if (!(boolean) SP.get(context, SP.TeamTestType, false)) {
             dialog_exit_title.setText("通知");
-            dialog_exit_detail.setText("是否进入正常模式进行浏览");
+            dialog_exit_detail.setText("是否进入测试模式查看发布的期刊");
         } else {
             dialog_exit_title.setText("通知");
-            dialog_exit_detail.setText("是否进入测试模式查看发布的期刊");
+            dialog_exit_detail.setText("是否进入正常模式进行浏览");
         }
 
         confirmBtn = (Button) findViewById(R.id.confirm_btn);

@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.cj.dreams.video.dialog.CheckTheNetDialog;
 import com.cj.dreams.video.util.L;
+import com.cj.dreams.video.util.SP;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.IOException;

@@ -50,6 +50,9 @@ public class GuideActivity extends BaseNoActionbarActivity implements View.OnTou
         PushAgent mPushAgent = PushAgent.getInstance(this);
         mPushAgent.enable();
         PushAgent.getInstance(this).onAppStart();
+        L.d(channelId);
+        L.d("----------------------------------------------------");
+        AnalyticsConfig.setChannel(channelId);
 //        友盟统计
         context = this;
         MobclickAgent.setDebugMode(true);

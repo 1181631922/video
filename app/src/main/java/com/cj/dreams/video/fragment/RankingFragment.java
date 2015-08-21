@@ -44,10 +44,8 @@ public class RankingFragment extends BaseFragment {
     private List<VideoListBean> videoListBeanList_more = new ArrayList<VideoListBean>();
     private List<Map<String, Object>> videoInfoList = new ArrayList<Map<String, Object>>();
     private String id_info, url_info, title_info, image_info;
-    //操作数据库
     private LaughSQLiteOpenHelper laughSQLiteOpenHelper;
     private RecordOperate recordOperate;
-
     private LinearLayout fragment_ranking_linearlayout;
     private TextView ranking_header;
 
@@ -76,12 +74,8 @@ public class RankingFragment extends BaseFragment {
         ptrl.setOnRefreshListener(new MyListener());
         listView = (ListView) getActivity().findViewById(R.id.ranking_listview);
 
-//        LinearLayout footerParent = new LinearLayout(getActivity());
-//        footerParent.addView(ranking_header);
         videoListAdapter = new VideoListAdapter(getActivity(), videoListBeanList);
-//        listView.addHeaderView(footerParent);
         listView.setAdapter(videoListAdapter);
-//        listView.addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.item_index_header, null));
         listView.setFocusable(true);
         listView.setOnItemClickListener(new IndexOnItemClickListener());
     }
@@ -215,8 +209,11 @@ public class RankingFragment extends BaseFragment {
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-
-                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    if (!CheckNetworkState().equals(noState)) {
+                        pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    } else {
+                        pullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
+                    }
                 }
             }.sendEmptyMessageDelayed(0, 500);
         }
@@ -226,8 +223,11 @@ public class RankingFragment extends BaseFragment {
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-
-                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    if (!CheckNetworkState().equals(noState)) {
+                        pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    } else {
+                        pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                    }
                 }
             }.sendEmptyMessageDelayed(0, 500);
         }
