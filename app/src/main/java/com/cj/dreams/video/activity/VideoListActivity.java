@@ -44,14 +44,14 @@ public class VideoListActivity extends BaseNoActionbarActivity {
     private List<VideoListBean> videoListBeanList_first = new ArrayList<VideoListBean>();
     private List<VideoListBean> videoListBeanList_more = new ArrayList<VideoListBean>();
     private String periodicalid;
-    //    private List<VideoListBean> videoListBeanList = new ArrayList<VideoListBean>();
     private List<Map<String, Object>> videoInfoList = new ArrayList<Map<String, Object>>();
-    private String MaxId, MinId, id_info, title_info, image_info, url_info, name;
+    private String MaxId = null, MinId = null, id_info, title_info, image_info, url_info, name;
     private Handler handler1, handler2;
     private ImageView video_list_back;
     private LaughSQLiteOpenHelper laughSQLiteOpenHelper;
     private RecordOperate recordOperate;
     private TextView video_list_title;
+    private boolean isLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,12 @@ public class VideoListActivity extends BaseNoActionbarActivity {
         laughSQLiteOpenHelper.getWritableDatabase();
         setContentView(R.layout.activity_video_list);
         initView();
-        Thread loadThread = new Thread(new LoadThread());
-        loadThread.start();
+        if (!CheckNetworkState().equals(noState)) {
+            isLoad = true;
+            Thread loadThread = new Thread(new LoadThread());
+            loadThread.start();
+        } else {
+        }
     }
 
     private void initView() {
@@ -138,21 +142,28 @@ public class VideoListActivity extends BaseNoActionbarActivity {
         }
     }
 
+    class refreshLoadThread implements Runnable {
+        @Override
+        public void run() {
+            loadData("0",0);
+        }
+    }
+
     class LoadThread implements Runnable {
         @Override
         public void run() {
-            loadData("0");
+            loadData("0",1);
         }
     }
 
     class LoadMore implements Runnable {
         @Override
         public void run() {
-            loadData(MaxId);
+            loadData(MaxId,1);
         }
     }
 
-    private String loadData(String video) {
+    private String loadData(String video, int refresh) {
         Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("type", "iphone");
         map.put("periodicalid", periodicalid);
@@ -205,6 +216,7 @@ public class VideoListActivity extends BaseNoActionbarActivity {
         Message message = Message.obtain();
         message.what = 0;
         message.obj = video;
+        message.arg1 = refresh;
         if (message.obj.equals("0")) {
             handler.sendMessage(message);
         } else {
@@ -222,6 +234,11 @@ public class VideoListActivity extends BaseNoActionbarActivity {
                     if (msg.obj.equals("0")) {
                         videoListBeanList.addAll(videoListBeanList_first);
                         videoListAdapter.update();
+                        if (msg.arg1 == 0) {
+                            Message message = Message.obtain();
+                            message.what = 0;
+                            handler2.sendMessage(message);
+                        }
                     }
                     break;
             }
@@ -236,7 +253,28 @@ public class VideoListActivity extends BaseNoActionbarActivity {
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    if (!CheckNetworkState().equals(noState)) {
+                        if (!isLoad) {
+                            isLoad=true;
+                            Thread loadThread = new Thread(new refreshLoadThread());
+                            loadThread.start();
+                            handler2 = new Handler() {
+                                @Override
+                                public void handleMessage(Message msg) {
+                                    super.handleMessage(msg);
+                                    switch (msg.what) {
+                                        case 0:
+                                            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                                            break;
+                                    }
+                                }
+                            };
+                        } else {
+                            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        }
+                    } else {
+                        pullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
+                    }
                 }
             }.sendEmptyMessageDelayed(0, 500);
         }
@@ -246,8 +284,12 @@ public class VideoListActivity extends BaseNoActionbarActivity {
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    Thread lodeMore = new Thread(new LoadMore());
-                    lodeMore.start();
+                    if (!CheckNetworkState().equals(noState) && MaxId != null) {
+                        Thread lodeMore = new Thread(new LoadMore());
+                        lodeMore.start();
+                    } else {
+                        pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                    }
 
                     handler1 = new Handler() {
                         @Override
