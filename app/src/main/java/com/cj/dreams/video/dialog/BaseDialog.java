@@ -7,7 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.View;
 
-import com.cj.dreams.video.util.L;
+import FanYaFeng.L;
 
 import java.io.IOException;
 import java.io.InputStream;

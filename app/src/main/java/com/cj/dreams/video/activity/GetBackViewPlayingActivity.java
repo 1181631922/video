@@ -59,8 +59,8 @@ import com.cj.dreams.video.dboperate.GoodOperate;
 import com.cj.dreams.video.fragment.EvaluateFragment;
 import com.cj.dreams.video.fragment.RecommendFragment;
 import com.cj.dreams.video.util.CommonUtil;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.PostUtil;
+import FanYaFeng.L;
+import FanYaFeng.PostUtil;
 import com.cj.dreams.video.util.T;
 
 import org.json.JSONException;
@@ -73,6 +73,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import FanYaFeng.PostUtil;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -251,7 +252,6 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
 //        if (intent.getStringExtra("type_info") != null) {
 //            type = intent.getStringExtra("type_info");
 //        }
-//        L.d("得到的图片的网址", image_info);
 
 
         mIsHwDecode = getIntent().getBooleanExtra("isHW", false);
@@ -283,7 +283,7 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
         Map<String, String> map = new LinkedHashMap<String, String>();
         map.put("videoid", videoIdFromBackground);
         try {
-            String backMsg = PostUtil.postData(BaseUrl + GetVideoInfo, map);
+            String backMsg = FanYaFeng.PostUtil.postData(BaseUrl + GetVideoInfo, map);
             L.d(backMsg);
             try {
                 JSONObject jsonObject = new JSONObject(backMsg);
@@ -1281,8 +1281,6 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
         public void onOrientationChanged(int arg0) {
             // TODO Auto-generated method stub
 
-//            L.d("onOrientationChanged生命周期实现");
-//            L.d(orientation);
 
             if (orientation == OrientationEventListener.ORIENTATION_UNKNOWN) {
                 return;  //手机平放时，检测不到有效的角度

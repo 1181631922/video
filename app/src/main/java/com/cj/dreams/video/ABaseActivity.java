@@ -2,28 +2,21 @@ package com.cj.dreams.video;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.cj.dreams.video.dialog.CheckTheNetDialog;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.SP;
+import FanYaFeng.L;
+
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 
 public class ABaseActivity extends Activity implements View.OnClickListener {

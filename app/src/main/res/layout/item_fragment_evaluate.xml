@@ -9,7 +9,7 @@
         android:layout_height="82dp"
         android:orientation="horizontal">
 
-        <com.cj.dreams.video.view.CircleImageView
+        <FanYaFeng.CircleImageView
             android:id="@+id/evaluate_icon"
             android:layout_marginLeft="10dp"
             android:layout_width="40dp"

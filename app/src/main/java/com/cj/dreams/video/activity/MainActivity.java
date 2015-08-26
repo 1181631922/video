@@ -1,10 +1,8 @@
 package com.cj.dreams.video.activity;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -20,30 +18,23 @@ import android.widget.TextView;
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.bean.AppGradeBean;
 import com.cj.dreams.video.dialog.CheckNetDialog;
-import com.cj.dreams.video.dialog.CheckTheNetDialog;
 import com.cj.dreams.video.dialog.CheckUpdateDialog;
 import com.cj.dreams.video.dialog.ExitChooseDialog;
 import com.cj.dreams.video.dialog.MainExitDialog;
 import com.cj.dreams.video.fragment.HomePageFragment;
 import com.cj.dreams.video.fragment.PersonalFragment;
 import com.cj.dreams.video.fragment.RankingFragment;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.PostUtil;
-import com.cj.dreams.video.util.S;
-import com.cj.dreams.video.util.SP;
+import FanYaFeng.L;
+import FanYaFeng.PostUtil;
+import FanYaFeng.SP;
 import com.cj.dreams.video.util.T;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLConnection;
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -77,7 +77,7 @@
                         android:background="@color/white"
                         android:paddingTop="10dp">
 
-                        <com.cj.dreams.video.view.CircleImageView
+                        <FanYaFeng.CircleImageView
 
                             android:id="@+id/personal_user_icon"
                             android:layout_width="75dp"

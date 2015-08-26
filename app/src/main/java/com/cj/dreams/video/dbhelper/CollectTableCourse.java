@@ -3,8 +3,6 @@ package com.cj.dreams.video.dbhelper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.cj.dreams.video.util.L;
-
 /**
  * Created by fanyafeng on 2015/7/28/0028.
  */

@@ -3,7 +3,7 @@ package com.cj.dreams.video.dboperate;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.cj.dreams.video.util.L;
+import FanYaFeng.L;
 
 /**
  * Created by fanyafeng on 2015/7/27/0027.

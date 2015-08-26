@@ -21,9 +21,9 @@ import com.cj.dreams.video.dbhelper.RecordTableCourse;
 import com.cj.dreams.video.dboperate.CollectOperate;
 import com.cj.dreams.video.dboperate.GoodOperate;
 import com.cj.dreams.video.dboperate.RecordOperate;
-import com.cj.dreams.video.util.L;
+import FanYaFeng.L;
 import com.cj.dreams.video.util.ListViewImageTaskUtil;
-import com.cj.dreams.video.util.PostUtil;
+import FanYaFeng.PostUtil;
 import com.cj.dreams.video.util.T;
 
 import java.io.IOException;
@@ -137,7 +137,6 @@ public class VideoListAdapter extends ABaseAdapter {
         holder.videoPlayTimes.setText(videoListBeanList.get(position).getVideoPlayTimes());
         holder.videoCollectTimes.setText(videoListBeanList.get(position).getVideoCollectTimes());
         holder.videoGoodTimes.setText(videoListBeanList.get(position).getVideoGoodTimes());
-
         return view;
     }
 

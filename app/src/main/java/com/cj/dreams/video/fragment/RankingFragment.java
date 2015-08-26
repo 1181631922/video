@@ -21,8 +21,8 @@ import com.cj.dreams.video.dbhelper.LaughSQLiteOpenHelper;
 import com.cj.dreams.video.dbhelper.RecordTableCourse;
 import com.cj.dreams.video.dboperate.RecordOperate;
 import com.cj.dreams.video.layout.PullToRefreshLayout;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.PostUtil;
+import FanYaFeng.L;
+import FanYaFeng.PostUtil;
 import com.cj.dreams.video.util.T;
 
 import org.json.JSONArray;

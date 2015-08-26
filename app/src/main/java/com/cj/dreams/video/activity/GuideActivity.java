@@ -17,7 +17,7 @@ import com.cj.dreams.video.app.UmengApplication;
 import com.cj.dreams.video.dialog.CheckNetDialog;
 import com.cj.dreams.video.dialog.MainExitDialog;
 import com.cj.dreams.video.service.UmengPushIntentService;
-import com.cj.dreams.video.util.L;
+import FanYaFeng.L;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;

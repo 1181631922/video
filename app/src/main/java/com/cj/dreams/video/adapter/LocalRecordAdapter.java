@@ -82,7 +82,6 @@ public class LocalRecordAdapter extends ABaseAdapter{
 
         loadBitmap(localRecordBeanList.get(position).getVideoImageUrl(), holder.localRecordBeanListIcon);
         holder.localRecordBeanListTitle.setText(localRecordBeanList.get(position).getVideoTitle());
-
         return view;
     }
 

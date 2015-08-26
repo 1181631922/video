@@ -18,8 +18,8 @@ import android.view.View;
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.dialog.CheckNetDialog;
 import com.cj.dreams.video.dialog.CheckTheNetDialog;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.SP;
+import FanYaFeng.L;
+import FanYaFeng.SP;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.IOException;
@@ -105,7 +105,6 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
             appVersion = info.versionName;   //版本名
             appPackageName = info.packageName;
-//            SP.put(this,SP.PackageName,appPackageName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

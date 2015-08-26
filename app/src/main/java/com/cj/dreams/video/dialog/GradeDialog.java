@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.activity.MainActivity;
 import com.cj.dreams.video.bean.AppGradeBean;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.SP;
+import FanYaFeng.L;
+import FanYaFeng.SP;
 
 
 /**

@@ -2,7 +2,7 @@ package com.cj.dreams.video.util;
 
 import android.content.Context;
 
-public class FileCache extends AbstractFileCache {
+public class FileCache extends FanYaFeng.AbstractFileCache {
 
 	public FileCache(Context context) {
 		super(context);

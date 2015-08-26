@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.activity.MainActivity;
-import com.cj.dreams.video.util.SP;
+import FanYaFeng.SP;
 import com.cj.dreams.video.util.T;
 
 

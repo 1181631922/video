@@ -3,14 +3,6 @@ package com.cj.dreams.video.dbhelper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.cj.dreams.video.bean.LocalRecordBean;
-import com.cj.dreams.video.util.L;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by fanyafeng on 2015/7/27/0027.
  */

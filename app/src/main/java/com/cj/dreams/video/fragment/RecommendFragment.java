@@ -19,8 +19,8 @@ import com.cj.dreams.video.bean.VideoListBean;
 import com.cj.dreams.video.dbhelper.LaughSQLiteOpenHelper;
 import com.cj.dreams.video.dbhelper.RecordTableCourse;
 import com.cj.dreams.video.dboperate.RecordOperate;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.PostUtil;
+import FanYaFeng.L;
+import FanYaFeng.PostUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;

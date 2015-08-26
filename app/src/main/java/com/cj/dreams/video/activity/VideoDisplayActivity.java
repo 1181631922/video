@@ -17,8 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cj.dreams.video.R;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.PostUtil;
+import FanYaFeng.L;
+import FanYaFeng.PostUtil;
 import com.cj.dreams.video.util.T;
 
 import org.json.JSONException;

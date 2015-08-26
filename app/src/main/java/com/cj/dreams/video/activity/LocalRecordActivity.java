@@ -1,6 +1,5 @@
 package com.cj.dreams.video.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,12 +19,9 @@ import android.widget.TextView;
 
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.adapter.LocalRecordAdapter;
-import com.cj.dreams.video.bean.IndexListViewBean;
 import com.cj.dreams.video.bean.LocalRecordBean;
 import com.cj.dreams.video.dbhelper.LaughSQLiteOpenHelper;
-import com.cj.dreams.video.dbhelper.RecordTableCourse;
 import com.cj.dreams.video.dboperate.RecordOperate;
-import com.cj.dreams.video.util.L;
 
 import java.util.ArrayList;
 import java.util.HashMap;

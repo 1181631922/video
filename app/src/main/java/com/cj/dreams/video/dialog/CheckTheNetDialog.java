@@ -1,7 +1,5 @@
 package com.cj.dreams.video.dialog;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cj.dreams.video.R;
-import com.cj.dreams.video.activity.MainActivity;
-import com.cj.dreams.video.util.StringTools;
 import com.cj.dreams.video.util.T;
 
 

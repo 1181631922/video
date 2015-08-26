@@ -1,24 +1,24 @@
 package com.cj.dreams.video.Test;
 
-import android.content.Intent;
-import android.util.Base64;
+//import android.content.Intent;
+import FanYaFeng.S;
 
-import com.cj.dreams.video.util.EncryptUtil;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.S;
+import FanYaFeng.EncryptUtil;
+//import com.cj.dreams.video.util.S;
 
-import java.io.UnsupportedEncodingException;
+//import java.io.UnsupportedEncodingException;
 
 /**
  * Created by fanyafeng on 2015/08/04/0004.
  */
 public class TestClass {
     public static void main(String[] args) {
-        System.out.println("测试主程序");
-        System.out.println("-------------------------------------------------------------------");
-//        testSplit();
+        System.out.println("");
+//        S.pl("-------------------------------------------------------------------");
+
+        testSplit();
         testEncode();
-//        Base64
+//        S.l();
     }
 
 
@@ -33,7 +33,7 @@ public class TestClass {
                 testString += version.charAt(i);
             }
         }
-        S.pl(testString);
+        System.out.print(testString);
         testi = Integer.parseInt(testString);
         System.out.print(testi);
 
@@ -42,8 +42,8 @@ public class TestClass {
                 appTestString += appVersion.charAt(i);
             }
         }
-        S.pl(appTestString);
-        S.pl(Integer.parseInt(appTestString));
+        System.out.print(appTestString);
+        System.out.print(Integer.parseInt(appTestString));
     }
 
     private static void testSplit() {
@@ -57,24 +57,24 @@ public class TestClass {
                 item += item;
             }
         }
-        S.p(item);
+        System.out.print(item);
 
         int t = k.length;
-        S.p(t);
-        S.pl(k.toString());
+        System.out.print(t);
+        System.out.print(k.toString());
         if ((int) version.charAt(0) > (int) appVersion.charAt(0) && (int) version.charAt(1) > (int) appVersion.charAt(1) && (int) version.charAt(2) > (int) appVersion.charAt(2)) {
-            S.pl("version比appversion要大");
+            System.out.print("version appversion ");
         }
-        S.l();
+        System.out.print("");
         if ((int) version.charAt(0) > (int) appVersion.charAt(0)) {
-            S.pl("version比appversion要大");
+            System.out.print("version appversion ");
         } else if ((int) version.charAt(0) == (int) appVersion.charAt(0)) {
             if ((int) version.charAt(2) > (int) appVersion.charAt(2)) {
-                S.pl("version比appversion要大");
+                System.out.print("version appversion ");
             } else if ((int) version.charAt(2) == (int) appVersion.charAt(2)) {
                 if ((int) version.charAt(4) > (int) appVersion.charAt(4)) {
 
-                    S.pl("version比appversion要大");
+                    System.out.print("version appversion ");
                 }
             } else {
 

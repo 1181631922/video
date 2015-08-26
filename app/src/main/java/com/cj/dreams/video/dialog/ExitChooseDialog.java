@@ -19,9 +19,9 @@ import android.widget.RelativeLayout;
 
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.activity.MainActivity;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.PostUtil;
-import com.cj.dreams.video.util.SP;
+import FanYaFeng.L;
+import FanYaFeng.PostUtil;
+import FanYaFeng.SP;
 import com.cj.dreams.video.util.T;
 import com.umeng.fb.FeedbackAgent;
 

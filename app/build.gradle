@@ -61,27 +61,36 @@ android {
 
     }
     productFlavors {
-//        ctest {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "test"]
-//        }
-//        cofficial {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "official"]
-//        }
-//        chuawei {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
-//        }
-//        cxiaomi {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
-//        }
-//        cxiaoliang {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaoliang"]
-//        }
+        ctest {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "test"]
+        }
+        cofficial {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "official"]
+        }
+        chuawei {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
+        }
+        cxiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+        cxiaoliang {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaoliang"]
+        }
         c360 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "c360"]
         }
-//        cbaidu {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
-//        }
+        cbaidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+        }
+        c91 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "c91"]
+        }
+        candroidmarket {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "androidmarket"]
+        }
+        cqq {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qq"]
+        }
 //        cwandoujia {
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
 //        }
@@ -105,4 +114,5 @@ dependencies {
     compile files('libs/umeng-analytics-v5.5.3.jar')
     compile files('libs/com.umeng.message.lib_v2.3.0.jar')
     compile files('libs/com.umeng.fb.5.3.0.jar')
+    compile files('libs/fanyafeng.jar')
 }

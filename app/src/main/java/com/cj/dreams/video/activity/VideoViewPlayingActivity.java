@@ -57,8 +57,8 @@ import com.cj.dreams.video.dboperate.GoodOperate;
 import com.cj.dreams.video.fragment.EvaluateFragment;
 import com.cj.dreams.video.fragment.RecommendFragment;
 import com.cj.dreams.video.util.CommonUtil;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.PostUtil;
+import FanYaFeng.L;
+import FanYaFeng.PostUtil;
 import com.cj.dreams.video.util.T;
 
 import org.json.JSONException;
@@ -538,7 +538,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                 }
 //                if (mLastPos!=0){
 //                    mVV.seekTo(mLastPos);
-//                    L.d("是否打印了，打印，--------------------------------------------");
 //                }
             }
         });

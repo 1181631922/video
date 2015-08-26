@@ -14,7 +14,7 @@ import com.cj.dreams.video.dialog.CopyEmailDialog;
 import com.cj.dreams.video.dialog.CopyWechatDialog;
 import com.cj.dreams.video.dialog.TeamTestDialog;
 import com.cj.dreams.video.util.FileManagerUtil;
-import com.cj.dreams.video.util.SP;
+import FanYaFeng.SP;
 import com.cj.dreams.video.util.T;
 
 public class AboutUsActivity extends BaseCustomActivity {
@@ -74,8 +74,6 @@ public class AboutUsActivity extends BaseCustomActivity {
             case R.id.about_test_text:
                 TeamTestDialog teamTestDialog = new TeamTestDialog(this, R.style.mystyle, R.layout.dialog_exit_main);
                 teamTestDialog.show();
-//                T.showLong(this, SP.get(this, SP.TeamTestType, false).toString());
-//                T.showLong(this, appVersion);
                 break;
         }
     }

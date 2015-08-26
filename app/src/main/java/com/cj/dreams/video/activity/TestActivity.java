@@ -26,7 +26,7 @@ import com.cj.dreams.video.R;
 import com.cj.dreams.video.fragment.EvaluateFragment;
 import com.cj.dreams.video.fragment.RecommendFragment;
 import com.cj.dreams.video.util.CommonUtil;
-import com.cj.dreams.video.util.L;
+import FanYaFeng.L;
 import com.cj.dreams.video.util.T;
 
 import java.util.ArrayList;

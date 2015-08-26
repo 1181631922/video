@@ -17,7 +17,7 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.cj.dreams.video.R;
-import com.cj.dreams.video.util.HttpUtil;
+import FanYaFeng.HttpUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;

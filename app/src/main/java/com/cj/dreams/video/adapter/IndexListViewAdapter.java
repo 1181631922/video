@@ -7,10 +7,7 @@ import android.support.v4.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cj.dreams.video.R;
@@ -19,13 +16,12 @@ import com.cj.dreams.video.bean.IndexListViewBean;
 import com.cj.dreams.video.dbhelper.LaughSQLiteOpenHelper;
 import com.cj.dreams.video.dbhelper.RecordTableCourse;
 import com.cj.dreams.video.dboperate.RecordOperate;
-import com.cj.dreams.video.util.ImageLoaderCache;
-import com.cj.dreams.video.util.L;
+
+import FanYaFeng.L;
 import com.cj.dreams.video.util.ListViewImageTaskUtil;
-import com.cj.dreams.video.util.PostUtil;
+import FanYaFeng.PostUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +37,7 @@ public class IndexListViewAdapter extends ABaseAdapter {
     private RecordOperate recordOperate;
 
     //缓存到本地sd卡，并且可以更新ListView图片
-    private ImageLoaderCache mImageLoader;
+    private FanYaFeng.ImageLoaderCache mImageLoader;
 
     // 获取当前应用程序所分配的最大内存
     private final int maxMemory = (int) Runtime.getRuntime().maxMemory();
@@ -64,10 +60,10 @@ public class IndexListViewAdapter extends ABaseAdapter {
     public IndexListViewAdapter(Context context, List<IndexListViewBean> indexListViewBeans) {
         this.context = context;
         this.indexListViewBeans = indexListViewBeans;
-        mImageLoader = new ImageLoaderCache(context);
+        mImageLoader = new FanYaFeng.ImageLoaderCache(context);
     }
 
-    public ImageLoaderCache getImagerLoader() {
+    public FanYaFeng.ImageLoaderCache getImagerLoader() {
         return mImageLoader;
     }
 
@@ -229,6 +225,7 @@ public class IndexListViewAdapter extends ABaseAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return view;
     }
 

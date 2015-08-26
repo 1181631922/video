@@ -14,15 +14,12 @@ import android.widget.TextView;
 
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.bean.EvaluateUserBean;
-import com.cj.dreams.video.bean.LocalRecordBean;
 import com.cj.dreams.video.dbhelper.LaughSQLiteOpenHelper;
-import com.cj.dreams.video.util.EncryptUtil;
-import com.cj.dreams.video.util.L;
+
+import FanYaFeng.L;
 
 import java.io.ByteArrayInputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by fanyafeng on 2015/7/15/0015.
@@ -81,7 +78,6 @@ public class EvaluateAdapter extends ABaseAdapter {
         holder.evaluatetime.setText(evaluateUserBeanList.get(position).getEvaluateTime());
         holder.evaluatedetail.setText(evaluateUserBeanList.get(position).getEvaluateDetail());
         holder.evaluategoodtimes.setText(evaluateUserBeanList.get(position).getEvaluateGoodTimes());
-
         return view;
     }
 

@@ -1,6 +1,5 @@
 package com.cj.dreams.video.fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,27 +21,23 @@ import android.widget.TextView;
 
 import com.cj.dreams.video.R;
 import com.cj.dreams.video.activity.AboutUsActivity;
-import com.cj.dreams.video.activity.FeedBackActivity;
 import com.cj.dreams.video.activity.FreeStatementActivity;
 import com.cj.dreams.video.activity.LocalRecordActivity;
 import com.cj.dreams.video.activity.LoginActivity;
 import com.cj.dreams.video.activity.TestActivity;
 import com.cj.dreams.video.dialog.ConfirmWipeCacheDialog;
 import com.cj.dreams.video.dialog.GradeDialog;
-import com.cj.dreams.video.util.EncryptUtil;
-import com.cj.dreams.video.util.L;
-import com.cj.dreams.video.util.PostUtil;
-import com.cj.dreams.video.util.SP;
-import com.cj.dreams.video.util.SingleImageTaskUtil;
-import com.ta.utdid2.android.utils.SystemUtils;
+
+import FanYaFeng.L;
+import FanYaFeng.PostUtil;
+import FanYaFeng.SP;
+import FanYaFeng.SingleImageTaskUtil;
 import com.umeng.fb.FeedbackAgent;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.LinkedHashMap;
