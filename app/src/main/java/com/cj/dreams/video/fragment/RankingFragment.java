@@ -23,6 +23,7 @@ import com.cj.dreams.video.dboperate.RecordOperate;
 import com.cj.dreams.video.layout.PullToRefreshLayout;
 import com.cj.dreams.video.util.L;
 import com.cj.dreams.video.util.PostUtil;
+import com.cj.dreams.video.util.T;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +65,7 @@ public class RankingFragment extends BaseFragment {
         laughSQLiteOpenHelper.getWritableDatabase();
         initView();
         if (!CheckNetworkState().equals(noState)) {
-            isLoad=true;
+            isLoad = true;
             Thread loadThread = new Thread(new LoadThread());
             loadThread.start();
         }
@@ -233,7 +234,7 @@ public class RankingFragment extends BaseFragment {
                         if (!isLoad) {
                             Thread loadThread = new Thread(new refreshLoadThread());
                             loadThread.start();
-                        }else {
+                        } else {
                             pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                         }
                         handler2 = new Handler() {
@@ -275,10 +276,21 @@ public class RankingFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         videoListAdapter.update();
+        if (CheckNetworkState().equals(noState)) {
+            T.showLong(getActivity(), "无网络服务");
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        laughSQLiteOpenHelper.close();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        laughSQLiteOpenHelper.close();
+
     }
 }

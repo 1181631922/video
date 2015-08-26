@@ -44,7 +44,7 @@
                     android:layout_alignParentRight="true"
                     android:paddingRight="10.5dp"
                     android:text="退出登录"
-                    android:textColor="@color/white"
+                    android:textColor="@color/mygray"
                     android:textSize="13dp"
                     android:visibility="gone" />
 
@@ -66,8 +66,8 @@
                     android:id="@+id/personal_logined_linearlayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="1.5dp"
                     android:paddingBottom="6.5dp"
+                    android:paddingTop="1.5dp"
                     android:visibility="gone">
 
                     <RelativeLayout
@@ -134,7 +134,7 @@
                             android:layout_below="@+id/personal_user_ico"
                             android:gravity="center_horizontal"
                             android:paddingTop="10dp"
-                            android:text="登陆"
+                            android:text="点击登陆"
                             android:textColor="@color/black" />
 
 
@@ -555,8 +555,8 @@
                     android:id="@+id/custom_test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:text="一般测试用的按钮" />
+                    android:text="一般测试用的按钮"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </ScrollView>

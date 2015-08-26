@@ -132,7 +132,7 @@ public class VideoListAdapter extends ABaseAdapter {
             holder.videoGoodIcon.setImageResource(R.drawable.icon_z_d);
         }
         loadBitmap(videoListBeanList.get(position).getVideoImage(), holder.videoListIcon);
-        holder.item_background.getBackground().setAlpha(115);
+        holder.item_background.getBackground().setAlpha(50);
         holder.videoListTitle.setText(videoListBeanList.get(position).getVideoTitle());
         holder.videoPlayTimes.setText(videoListBeanList.get(position).getVideoPlayTimes());
         holder.videoCollectTimes.setText(videoListBeanList.get(position).getVideoCollectTimes());

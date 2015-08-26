@@ -109,6 +109,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private WakeLock mWakeLock = null;
     private static final String POWER_LOCK = "VideoViewPlayingActivity";
     private boolean mIsHwDecode = false;
+    //    private  int EVENT_PLAY = 0;
     private final int EVENT_PLAY = 0;
     private final int UI_EVENT_UPDATE_CURRPOSITION = 1;
     private ViewPager video_playing_viewpager;
@@ -116,7 +117,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private TextView video_recommend, video_evaluate, video_palying_title, video_view_title;
     private int selectedColor, unSelectedColor, redColor, grayColor;
     private ImageView video_evaluate_view, video_recommend_view;
-    private Drawable selectedButton, unSelectedButton;
     private ImageView video_recommend_img, video_evaluate_img;
     private ImageButton full_screen_btn, video_playing_back, video_playing_back_normal;
     private RelativeLayout video_playing_titlebar;
@@ -129,6 +129,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private String type;
     private int state = 0;
     private int orientation = ActivityInfo.SCREEN_ORIENTATION_USER;
+    private ImageView video_playing_back_normal_iv, video_playing_back_iv;
+    private LinearLayout video_share_linearlayout;
 
     private GestureDetector gestureDetector;
     MyOrientationEventListener myOrientationEventListener;
@@ -253,7 +255,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
         oks.disableSSOWhenAuthorize();
-        oks.setTitle("爆笑女神");
+//        oks.setTitle("爆笑女神");
+//        oks.setTitle(title_info);
         oks.setTitleUrl(BaseUrl + PostShareId + id_info);
 //        oks.setText(title_info + '\n' + "猛戳☞" + BaseUrl + PostShareId + id_info);
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
@@ -265,6 +268,12 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                 } else {
                     paramsToShare.setText(title_info);
                 }
+                if ("WechatMoments".equals(platform.getName())){
+                    paramsToShare.setTitle(title_info);
+                }else {
+                    paramsToShare.setTitle("爆笑女神");
+                }
+
             }
         });
         oks.setImageUrl(image_info);
@@ -282,10 +291,8 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         video_recommend_view = (ImageView) findViewById(R.id.video_recommend_view);
         redColor = getResources().getColor(R.color.red);
         grayColor = getResources().getColor(R.color.white);
-        unSelectedColor = getResources().getColor(R.color.black);
-        selectedColor = getResources().getColor(R.color.black);
-        selectedButton = getResources().getDrawable(R.drawable.video_playing_pressed);
-        unSelectedButton = getResources().getDrawable(R.drawable.video_playing_normal);
+        unSelectedColor = getResources().getColor(R.color.videolisttext);
+        selectedColor = getResources().getColor(R.color.red);
 
         video_recommend = (TextView) findViewById(R.id.video_recommend);
         video_evaluate = (TextView) findViewById(R.id.video_evaluate);
@@ -435,6 +442,12 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
 
     private void initUI() {
+        video_share_linearlayout=(LinearLayout)findViewById(R.id.video_share_linearlayout);
+        video_share_linearlayout.setOnClickListener(this);
+        video_playing_back_iv = (ImageView) findViewById(R.id.video_playing_back_iv);
+        video_playing_back_iv.setOnClickListener(this);
+        video_playing_back_normal_iv = (ImageView) findViewById(R.id.video_playing_back_normal_iv);
+        video_playing_back_normal_iv.setOnClickListener(this);
 
         video_view_title = (TextView) findViewById(R.id.video_view_title);
         root1 = (RelativeLayout) findViewById(R.id.root1);
@@ -509,49 +522,45 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     private void registerCallbackForControl() {
         mPlaybtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                if (mVV.getCurrentPosition() == 0 && state == 1) {
 
-                    if (mVV.isPlaying()) {
-                        mPlaybtn.setImageResource(R.drawable.play_btn_style);
-                        mPlaybtn.setAdjustViewBounds(true);
-                        mPlaybtn.setMaxHeight(48);
-                        mPlaybtn.setMaxWidth(48);
-                        mVV.pause();
-                    } else {
-                        mPlaybtn.setImageResource(R.drawable.pause_btn_style);
-                        mPlaybtn.setAdjustViewBounds(true);
-                        mPlaybtn.setMaxHeight(48);
-                        mPlaybtn.setMaxWidth(48);
-                        mVV.resume();
-                    }
+                if (mVV.isPlaying()) {
+                    mPlaybtn.setImageResource(R.drawable.play_btn_style);
+                    mPlaybtn.setAdjustViewBounds(true);
+                    mPlaybtn.setMaxHeight(68);
+                    mPlaybtn.setMaxWidth(68);
+                    mVV.pause();
                 } else {
-                    mVV.setVideoPath(mVideoSource);
-                    L.d("是否打印了，打印，--------------------------------------------");
+                    mPlaybtn.setImageResource(R.drawable.pause_btn_style);
+                    mPlaybtn.setAdjustViewBounds(true);
+                    mPlaybtn.setMaxHeight(68);
+                    mPlaybtn.setMaxWidth(68);
+                    mVV.resume();
                 }
+//                if (mLastPos!=0){
+//                    mVV.seekTo(mLastPos);
+//                    L.d("是否打印了，打印，--------------------------------------------");
+//                }
             }
         });
 
         play_btn_relativelayout.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                if (mVV.getCurrentPosition() == 0 && state == 1) {
-                    if (mVV.isPlaying()) {
-                        mPlaybtn.setImageResource(R.drawable.play_btn_style);
-                        mPlaybtn.setAdjustViewBounds(true);
-                        mPlaybtn.setMaxHeight(48);
-                        mPlaybtn.setMaxWidth(48);
-                        mVV.pause();
-                    } else {
-                        mPlaybtn.setImageResource(R.drawable.pause_btn_style);
-                        mPlaybtn.setAdjustViewBounds(true);
-                        mPlaybtn.setMaxHeight(48);
-                        mPlaybtn.setMaxWidth(48);
-                        mVV.resume();
-                    }
-                } else  {
-                    mVV.setVideoPath(mVideoSource);
-                    L.d("是否打印了，打印，--------------------------------------------");
+
+                if (mVV.isPlaying()) {
+                    mPlaybtn.setImageResource(R.drawable.play_btn_style);
+                    mPlaybtn.setAdjustViewBounds(true);
+                    mPlaybtn.setMaxHeight(48);
+                    mPlaybtn.setMaxWidth(48);
+                    mVV.pause();
+                } else {
+                    mPlaybtn.setImageResource(R.drawable.pause_btn_style);
+                    mPlaybtn.setAdjustViewBounds(true);
+                    mPlaybtn.setMaxHeight(48);
+                    mPlaybtn.setMaxWidth(48);
+                    mVV.resume();
                 }
             }
+
         });
         mPrebtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -578,7 +587,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
                 int iseekPos = seekBar.getProgress();
                 mVV.seekTo(iseekPos);
                 mUIHandler.sendEmptyMessage(UI_EVENT_UPDATE_CURRPOSITION);
@@ -612,13 +620,13 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                 showShare();
                 break;
             case R.id.video_playing_back:
-                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {
-                    finish();
-                } else {
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                    video_down_linearlayout.setVisibility(View.VISIBLE);
-                }
+//                if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {
+                finish();
+//                } else {
+//                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//                    video_down_linearlayout.setVisibility(View.VISIBLE);
+//                }
                 break;
             case R.id.video_playing_titlebar:
                 if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {
@@ -660,16 +668,22 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
                     video_play_good.setImageResource(R.drawable.icon_zan);
                 }
                 break;
+            case R.id.video_playing_back_normal_iv:
+                finish();
+                break;
+            case R.id.video_playing_back_iv:
+                finish();
+                break;
+            case R.id.video_share_linearlayout:
+                showShare();
+                break;
         }
     }
 
     private void fullScreen() {
-        if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {// 当屏幕是竖屏时
-            // 点击后变横屏
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 设置当前activity为横屏
-            // 当横屏时 把除了视频以外的都隐藏
+        if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            //隐藏其他组件的代码
             video_down_linearlayout.setVisibility(View.GONE);
             video_playing_back_relativelayout.setVisibility(View.VISIBLE);
             video_playing_back_relativelayout.bringToFront();
@@ -680,7 +694,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
             video_playing_back.setVisibility(View.VISIBLE);
             video_playing_back_normal.setVisibility(View.GONE);
         } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置当前activity为竖屏
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             video_playing_back.bringToFront();
             video_down_linearlayout.setVisibility(View.VISIBLE);
@@ -719,7 +733,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
     @Override
     protected void onPause() {
-        // TODO Auto-generated method stub
         super.onPause();
         if (mPlayerStatus == PLAYER_STATUS.PLAYER_PREPARED) {
             mLastPos = mVV.getCurrentPosition();
@@ -731,7 +744,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
         L.d("onResume生命周期");
         if (null != mWakeLock && (!mWakeLock.isHeld())) {
@@ -745,9 +757,6 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         getConfigurationInfo();
 
 
-        /**
-         * 发起一次播放任务,当然您不一定要在这发起
-         */
         if (mVideoSource != null) {
             mEventHandler.sendEmptyMessage(EVENT_PLAY);
         }
@@ -760,7 +769,7 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
         if (configuration.orientation == l) {
             System.out.println("现在是横屏");
         }
-        if (configuration.orientation == 0) {
+        if (configuration.orientation == p) {
             System.out.println("现在是竖屏");
         }
 
@@ -852,10 +861,18 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
 
         if (show) {
             mController.setVisibility(View.VISIBLE);
-            video_playing_back_relativelayout.setVisibility(View.VISIBLE);
+            if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {
+                video_playing_back_relativelayout.setVisibility(View.VISIBLE);
+            } else {
+                video_playing_back_relativelayout.setVisibility(View.INVISIBLE);
+            }
         } else {
             mController.setVisibility(View.INVISIBLE);
-            video_playing_back_relativelayout.setVisibility(View.INVISIBLE);
+            if (CommonUtil.isScreenOriatationPortrait(VideoViewPlayingActivity.this)) {
+                video_playing_back_relativelayout.setVisibility(View.INVISIBLE);
+            } else {
+                video_playing_back_relativelayout.setVisibility(View.VISIBLE);
+            }
         }
         barShow = show;
     }
@@ -873,8 +890,11 @@ public class VideoViewPlayingActivity extends BaseFragmentActivity implements On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mHandlerThread.quit();
-        myOrientationEventListener.disable();
+        //有bug
+        if (!CheckNetworkState().equals(noState)) {
+            mHandlerThread.quit();
+            myOrientationEventListener.disable();
+        }
     }
 
     @Override

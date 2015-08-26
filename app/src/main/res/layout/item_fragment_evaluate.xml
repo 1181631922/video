@@ -12,8 +12,8 @@
         <com.cj.dreams.video.view.CircleImageView
             android:id="@+id/evaluate_icon"
             android:layout_marginLeft="10dp"
-            android:layout_width="61dp"
-            android:layout_height="61dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/evaluate_icon" />
 
@@ -65,7 +65,7 @@
                 android:id="@+id/evaluate_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 android:maxLines="1"
                 android:ellipsize="marquee"
                 android:textColor="@color/black"
@@ -75,6 +75,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="1px"
         android:background="#dcdce0" />
 </LinearLayout>

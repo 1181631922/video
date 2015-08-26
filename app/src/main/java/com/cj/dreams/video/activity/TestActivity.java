@@ -71,8 +71,6 @@ public class TestActivity extends FragmentActivity implements OnClickListener, G
 
         unSelectedColor = getResources().getColor(R.color.black);
         selectedColor = getResources().getColor(R.color.red);
-        selectedButton = getResources().getDrawable(R.drawable.video_playing_normal);
-        unSelectedButton = getResources().getDrawable(R.drawable.video_playing_pressed);
 
         test_recommend_img = (ImageView) findViewById(R.id.test_recommend_img);
         test_evaluate_img = (ImageView) findViewById(R.id.test_evaluate_img);

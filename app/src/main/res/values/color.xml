@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="maintext">#828282</color>
+    <color name="videolisttext">#696969</color>
+    <color name="videounselect">#8c8b8b</color>
+    <color name="mygray">#C6C6C6</color>
     <color name="played_color">#af1e27</color>
     <color name="index_background_color">#dcdbe0</color>
     <color name="index_text_color">#df2b36</color>

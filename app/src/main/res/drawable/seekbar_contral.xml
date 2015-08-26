@@ -1,12 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<item-->
+    <!--android:id="@android:id/background"-->
+    <!--android:drawable="@color/played_color" />-->
+    <!--<item-->
+    <!--android:id="@android:id/progress"-->
+    <!--android:drawable="@color/played_color" />-->
+    <!--&lt;!&ndash; 未播放的背景色&ndash;&gt;-->
+    <!--<item-->
+    <!--android:id="@android:id/secondaryProgress"-->
+    <!--android:drawable="@color/played_color" />-->
+    <!--</layer-list>-->
+
     <item
         android:id="@android:id/background"
-        android:drawable="@color/played_color" />
+        android:paddingBottom="3px"
+        android:paddingTop="3px">
+        <shape>
+            <corners android:radius="10dip" />
+            <gradient
+                android:angle="270"
+                android:centerColor="@color/mygray"
+                android:centerY="0.45"
+                android:endColor="#ff808A87"
+                android:startColor="#ffffffff" />
+        </shape>
+    </item>
+
     <item
         android:id="@android:id/progress"
-        android:drawable="@color/played_color" />
-    <!-- 未播放的背景色-->
-    <item
-        android:id="@android:id/secondaryProgress"
-        android:drawable="@color/played_color" />
-</layer-list>  
+        android:paddingBottom="3px"
+        android:paddingTop="3px">
+        <clip>
+            <shape>
+                <corners android:radius="10dip" />
+                <gradient
+                    android:angle="270"
+                    android:centerColor="@color/played_color"
+                    android:centerY="0.45"
+                    android:endColor="#ffAABD00"
+                    android:startColor="#ffffffff" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

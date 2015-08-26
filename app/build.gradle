@@ -22,7 +22,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0.3"
+        versionName "1.0.0"
     }
 
     lintOptions {
@@ -61,9 +61,9 @@ android {
 
     }
     productFlavors {
-        ctest {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "test"]
-        }
+//        ctest {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "test"]
+//        }
 //        cofficial {
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "official"]
 //        }
@@ -73,9 +73,12 @@ android {
 //        cxiaomi {
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
 //        }
-//        c360 {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"]
+//        cxiaoliang {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaoliang"]
 //        }
+        c360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "c360"]
+        }
 //        cbaidu {
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
 //        }

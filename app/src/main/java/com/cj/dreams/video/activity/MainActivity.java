@@ -50,28 +50,22 @@ import java.util.Map;
 
 public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
 
-    //定义3个Fragment的对象
     private HomePageFragment fg1;
     private RankingFragment fg2;
     private PersonalFragment fg3;
-    //帧布局对象,就是用来存放Fragment的容器
     private FrameLayout flayout;
-    //定义底部导航栏的三个布局
     private RelativeLayout course_layout;
     private RelativeLayout found_layout;
     private RelativeLayout settings_layout;
-    //定义底部导航栏中的ImageView与TextView
     private ImageView course_image;
     private ImageView found_image;
     private ImageView settings_image;
     private TextView course_text;
     private TextView settings_text;
     private TextView found_text;
-    //定义要用的颜色值
     private int whirt = 0xFFFFFFFF;
-    private int gray = 0xFF7597B3;
+    private int gray;
     private int blue = 0xFF000000;
-    //定义FragmentManager对象
     FragmentManager fManager;
     private String mainActivity;
     private InputStream inputStream;
@@ -90,6 +84,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         fManager = getSupportFragmentManager();
+        gray=getResources().getColor(R.color.maintext);
         initViews();
         Thread loadThread = new Thread(new LoadThread());
         loadThread.start();
@@ -117,18 +112,6 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 Appshopname = jsonObject.optString("Appshopname");
                 SP.put(this, SP.Appshopname, Appshopname);
                 SP.put(this, SP.Appshopurl, Appshopurl);
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
-                L.d("-------------------------------------------------");
                 L.d((String) SP.get(this, SP.Appshopname, ""));
                 L.d((String) SP.get(this, SP.Appshopurl, ""));
                 Message message = Message.obtain();
@@ -194,9 +177,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         setChioceItem(0);
     }
 
-    //定义一个选中一个item后的处理
     public void setChioceItem(int index) {
-        //重置选项+隐藏所有Fragment
         FragmentTransaction transaction = fManager.beginTransaction();
         clearChioce();
         hideFragments(transaction);
@@ -205,11 +186,9 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 course_image.setImageResource(R.drawable.index_home_press);
                 course_text.setTextColor(this.getResources().getColor(R.color.red));
                 if (fg1 == null) {
-                    // 如果fg1为空，则创建一个并添加到界面上
                     fg1 = new HomePageFragment();
                     transaction.add(R.id.content, fg1);
                 } else {
-                    // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(fg1);
                 }
                 break;
@@ -218,11 +197,9 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 found_image.setImageResource(R.drawable.index_rank_press);
                 found_text.setTextColor(this.getResources().getColor(R.color.red));
                 if (fg2 == null) {
-                    // 如果fg1为空，则创建一个并添加到界面上
                     fg2 = new RankingFragment();
                     transaction.add(R.id.content, fg2);
                 } else {
-                    // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(fg2);
                 }
                 break;
@@ -231,11 +208,9 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 settings_image.setImageResource(R.drawable.index_personal_press);
                 settings_text.setTextColor(this.getResources().getColor(R.color.red));
                 if (fg3 == null) {
-                    // 如果fg1为空，则创建一个并添加到界面上
                     fg3 = new PersonalFragment();
                     transaction.add(R.id.content, fg3);
                 } else {
-                    // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(fg3);
                 }
                 break;
@@ -243,7 +218,6 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         transaction.commit();
     }
 
-    //隐藏所有的Fragment,避免fragment混乱
     private void hideFragments(FragmentTransaction transaction) {
         if (fg1 != null) {
             transaction.hide(fg1);
@@ -256,7 +230,6 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         }
     }
 
-    //定义一个重置所有选项的方法
     public void clearChioce() {
         course_image.setImageResource(R.drawable.index_home_normal);
         course_text.setTextColor(gray);

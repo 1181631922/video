@@ -103,15 +103,8 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
     private SensorManager mSensorManager;
     private Vibrator mVibrator;
     private final int ROCKPOWER = 15;
-    /**
-     * 记录播放位置
-     */
     private int mLastPos = 0;
 
-
-    /**
-     * 播放状态
-     */
     private enum PLAYER_STATUS {
         PLAYER_IDLE, PLAYER_PREPARING, PLAYER_PREPARED,
     }
@@ -132,7 +125,6 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
     private TextView video_recommend, video_evaluate, video_palying_title, video_view_title;
     private int selectedColor, unSelectedColor, redColor, grayColor;
     private ImageView video_evaluate_view, video_recommend_view;
-    private Drawable selectedButton, unSelectedButton;
     private ImageView video_recommend_img, video_evaluate_img;
     private ImageButton full_screen_btn, video_playing_back, video_playing_back_normal;
     private RelativeLayout video_playing_titlebar;
@@ -158,27 +150,17 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case EVENT_PLAY:
-                    /**
-                     * 如果已经播放了，等待上一次播放结束
-                     */
                     if (mPlayerStatus != PLAYER_STATUS.PLAYER_IDLE) {
                         synchronized (SYNC_Playing) {
                             try {
                                 SYNC_Playing.wait();
                                 Log.v(TAG, "wait player status to idle");
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                         }
                     }
-                    /**
-                     * 设置播放url
-                     */
                     mVV.setVideoPath(mVideoSource);
-                    /**
-                     * 续播，如果需要如此
-                     */
                     if (mLastPos > 0) {
                         mVV.seekTo(mLastPos);
                         mLastPos = 0;
@@ -381,22 +363,16 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
         video_recommend_view = (ImageView) findViewById(R.id.video_recommend_view);
         redColor = getResources().getColor(R.color.red);
         grayColor = getResources().getColor(R.color.white);
-        unSelectedColor = getResources().getColor(R.color.black);
-        selectedColor = getResources().getColor(R.color.black);
-        selectedButton = getResources().getDrawable(R.drawable.video_playing_pressed);
-        unSelectedButton = getResources().getDrawable(R.drawable.video_playing_normal);
+        unSelectedColor = getResources().getColor(R.color.videolisttext);
+        selectedColor = getResources().getColor(R.color.red);
 
         video_recommend = (TextView) findViewById(R.id.video_recommend);
         video_evaluate = (TextView) findViewById(R.id.video_evaluate);
         video_recommend_img = (ImageView) findViewById(R.id.video_recommend_img);
         video_evaluate_img = (ImageView) findViewById(R.id.video_evaluate_img);
         video_recommend.setTextColor(selectedColor);
-////        video_recommend_img.setBackground(selectedButton);
-//        video_recommend_img.setBackgroundDrawable(selectedButton);
         video_recommend_view.setBackgroundColor(redColor);
         video_evaluate.setTextColor(unSelectedColor);
-//        video_evaluate_img.setBackground(unSelectedButton);
-//        video_evaluate_img.setBackgroundDrawable(unSelectedButton);
         video_evaluate_view.setBackgroundColor(grayColor);
         video_recommend.setOnClickListener(new MyOnClickListener(0));
         video_evaluate.setOnClickListener(new MyOnClickListener(1));
@@ -963,7 +939,9 @@ public class GetBackViewPlayingActivity extends BaseFragmentActivity implements 
 
         getConfigurationInfo();
 
-
+        if (mVideoSource != null) {
+            mEventHandler.sendEmptyMessage(EVENT_PLAY);
+        }
         /**
          * 发起一次播放任务,当然您不一定要在这发起
          */

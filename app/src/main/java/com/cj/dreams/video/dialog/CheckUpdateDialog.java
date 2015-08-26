@@ -1,7 +1,5 @@
 package com.cj.dreams.video.dialog;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,10 +17,7 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.cj.dreams.video.R;
-import com.cj.dreams.video.activity.BaseFragmentActivity;
-import com.cj.dreams.video.activity.MainActivity;
 import com.cj.dreams.video.util.HttpUtil;
-import com.cj.dreams.video.util.SP;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -287,8 +282,8 @@ public class CheckUpdateDialog extends BaseDialog implements View.OnClickListene
                         contentView.setTextViewText(R.id.notificationTitle, "Download:爆笑女神安装包下载完成");
                         // notification显示
                         contentView.setTextViewText(R.id.notificationPercent, "");
-                        contentView.setImageViewResource(R.id.notificationImage, R.drawable.ic_launcher);
-                        mNotification.icon = R.drawable.ic_launcher;
+                        contentView.setImageViewResource(R.id.notificationImage, R.drawable.my_ic_launcher);
+                        mNotification.icon = R.drawable.my_ic_launcher;
                         contentView.setProgressBar(R.id.notificationProgress, fileLength, DownedFileLength, false);
                         mNotification.contentView = contentView;
                         mNotification.contentIntent = contentIntent;

@@ -45,7 +45,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="爆笑女神"
         android:theme="@style/MyBaseTheme">
         <activity
@@ -67,9 +67,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent100371282" />
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -205,7 +203,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.VideoViewPlayingActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|keyboard"
             android:exported="true"
             android:theme="@style/CustomTheme"
             android:label="PlayingActivity"
@@ -219,7 +217,7 @@
         </activity>
         <activity
             android:name=".activity.GetBackViewPlayingActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|keyboard"
             android:exported="true"
             android:theme="@style/CustomTheme"
             android:label="PlayingActivity"
@@ -288,7 +286,7 @@
         <activity
             android:name=".activity.FeedBackActivity"
             android:label="@string/title_activity_feed_back"
-            android:theme="@style/XTheme"></activity>
+            android:theme="@style/XTheme"/>
     </application>
 
 </manifest>
